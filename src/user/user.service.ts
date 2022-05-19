@@ -1,14 +1,18 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserModel } from './models/user.model';
 import { UserRepository } from './user.repository';
 import * as bcrypt from 'bcryptjs';
 import { CreateUserInput } from './inputs/create-user.input';
 import { UserEntity } from './user.entity';
 import { UpdateUserInput } from './inputs/update-user.input';
+import { TokenPayload } from 'src/auth/types/token-payload.type';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { AuthResponse } from './models/auth-response.model';
 
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository, private jwtService: JwtService,private configService: ConfigService,) {}
 
   getUserByEmail(email: string): Promise<UserModel> {
     return this.userRepository.getUserByEmail(email);
@@ -17,6 +21,37 @@ export class UserService {
   getAllUsers(): Promise<UserModel[]> {
     return this.userRepository.find();
   }
+
+  async validateUser(email: string, pass: string): Promise<any> {
+    const user = await this.getUserByEmail(email);
+
+    if (!user) {
+      throw new UnauthorizedException('Неправильный логин или пароль');
+    }
+
+    const passwordEquals = await bcrypt.compare(pass, user.password);
+
+    if (passwordEquals) {
+      return user;
+    }
+
+    throw new UnauthorizedException('Неправильный логин или пароль');
+  }
+
+  private async getTokenObject (
+    user: UserModel
+  ): Promise<AuthResponse> {
+    const payload: TokenPayload = { email: user.email, id: user.id };
+    return {
+      user: user,
+      accessToken: this.jwtService.sign(payload)
+      }
+    }
+
+    async login(dto: CreateUserInput): Promise<AuthResponse>  {
+      const user: UserModel = await this.validateUser(dto.email, dto.password);
+      return this.getTokenObject(user);
+    }
 
   async updateOneUser(userId: number, dto: UpdateUserInput) {
     const user: UserModel = await this.userRepository.findOneOrFail(userId);
@@ -31,7 +66,7 @@ export class UserService {
     return await this.userRepository.save(newUser);
   }
 
-  async registrateOne(dto: CreateUserInput): Promise<UserModel> {
+  async registrateOne(dto: CreateUserInput) : Promise<AuthResponse> {
     const alreadyExist: UserEntity = await this.getUserByEmail(dto.email);
     if (alreadyExist) {
       throw new BadRequestException(
@@ -39,7 +74,8 @@ export class UserService {
       );
     }
     const hashPassword: string = await bcrypt.hash(dto.password, 5);
-    return this.userRepository.save({ ...dto, password: hashPassword });
+    const newUser: UserModel = await this.userRepository.save({ ...dto, password: hashPassword });
+    return this.getTokenObject(newUser);
   }
 
   findOne(id: number) {

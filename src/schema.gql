@@ -10,19 +10,32 @@ type UserModel {
   password: String!
 }
 
-type Query {
-  getUsers: [UserModel!]!
+type AuthResponse {
+  user: UserModel!
+  accessToken: String!
 }
 
-type Mutation {
-  registrateNewUser(newUserArgs: CreateUserInput!): UserModel!
-  updateUser(updateUserArgs: UpdateUserInput!): UserModel!
+type ResponseUser {
+  id: ID!
+
+  """"""
+  email: String!
+}
+
+type Query {
+  getUsers: [ResponseUser!]!
+  login(loginUserArgs: CreateUserInput!): AuthResponse!
 }
 
 input CreateUserInput {
   """"""
   email: String!
   password: String!
+}
+
+type Mutation {
+  registrateNewUser(newUserArgs: CreateUserInput!): AuthResponse!
+  updateUser(updateUserArgs: UpdateUserInput!): ResponseUser!
 }
 
 input UpdateUserInput {
