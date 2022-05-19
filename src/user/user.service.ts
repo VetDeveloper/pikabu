@@ -22,7 +22,7 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async validateUser(email: string, pass: string): Promise<any> {
+  async validateUser(email: string, pass: string): Promise<UserModel> {
     const user = await this.getUserByEmail(email);
 
     if (!user) {
@@ -38,9 +38,9 @@ export class UserService {
     throw new UnauthorizedException('Неправильный логин или пароль');
   }
 
-  private async getTokenObject (
+  private getTokenObject (
     user: UserModel
-  ): Promise<AuthResponse> {
+  ): AuthResponse {
     const payload: TokenPayload = { email: user.email, id: user.id };
     return {
       user: user,
@@ -53,7 +53,7 @@ export class UserService {
       return this.getTokenObject(user);
     }
 
-  async updateOneUser(userId: number, dto: UpdateUserInput) {
+  async updateOneUser(userId: number, dto: UpdateUserInput) : Promise<UserModel>  {
     const user: UserModel = await this.userRepository.findOneOrFail(userId);
 
     const newUser = this.userRepository.create({
@@ -78,7 +78,7 @@ export class UserService {
     return this.getTokenObject(newUser);
   }
 
-  findOne(id: number) {
+  findOne(id: number) : Promise<UserModel> {
     return this.userRepository.findUserOrFail(id);
   }
 }
