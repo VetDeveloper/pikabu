@@ -5,7 +5,6 @@ import { PostModel } from './models/post.model';
 import { PostRepository } from './post.repository';
 import {
   paginate,
-  Pagination,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
 
@@ -17,12 +16,9 @@ export class PostService {
     return this.postRepository.save({ userId: userId, ...dto });
   }
 
-  async getPosts(options: IPaginationOptions) {
+  getPosts(options: IPaginationOptions) {
     const queryBuilder = this.postRepository.createQueryBuilder();
-    const res = await paginate<PostModel>(queryBuilder, options);
-    console.log('\n\n\n', res)
-    return res
-    return this.postRepository.find();
+    return paginate<PostModel>(queryBuilder, options);
   }
 
   async updatePost(
