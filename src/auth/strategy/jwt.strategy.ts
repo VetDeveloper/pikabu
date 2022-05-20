@@ -24,6 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (!user || payload.email !== user.email) {
       throw new UnauthorizedException('Bad jwt token');
     }
-    return user;
+    const {password, ...res} = user;
+    return res;
   }
 }

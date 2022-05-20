@@ -7,8 +7,7 @@ import * as Joi from 'joi';
 import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { DataLoaderInterceptor } from 'nestjs-graphql-dataloader'
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
@@ -43,6 +42,7 @@ import { DataLoaderInterceptor } from 'nestjs-graphql-dataloader'
     }),
     UserModule,
     AuthModule,
+    PostModule,
   ],
 })
 export class AppModule {}

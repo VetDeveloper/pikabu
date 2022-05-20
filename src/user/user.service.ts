@@ -55,6 +55,13 @@ export class UserService {
 
   async updateOneUser(userId: number, dto: UpdateUserInput) : Promise<UserModel>  {
     const user: UserModel = await this.userRepository.findOneOrFail(userId);
+    
+    if(dto.email) {
+      const alreadyExist = await this.getUserByEmail(dto.email);
+      if (alreadyExist) {
+        throw new BadRequestException('Пользователь с таким email уже существует');
+      }
+    }
 
     const newUser = this.userRepository.create({
       ...user,

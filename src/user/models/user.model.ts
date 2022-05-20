@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { IsEmail, IsInt, IsPositive, IsString, Length } from 'class-validator';
+import { PostModel } from 'src/post/models/post.model';
+import { PostEntity } from 'src/post/post.entity';
 
 @ObjectType()
 export class UserModel {
@@ -17,4 +18,7 @@ export class UserModel {
 
   @Field()
   updatedAt: Date;
+
+  @Field(() => [PostModel], {nullable: true})
+  posts?: Array<PostModel>;
 }

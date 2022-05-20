@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { PostEntity } from 'src/post/post.entity';
 import {
   Column,
   CreateDateColumn,
@@ -31,4 +32,10 @@ export class UserEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(
+    () => PostEntity,
+    (post) => post.user,
+  )
+  posts?: PostEntity[];
 }
