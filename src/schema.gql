@@ -45,16 +45,44 @@ type AuthResponse {
   accessToken: String!
 }
 
+type PaginatedPost {
+  items: [PostModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
+type MetaType {
+  totalItems: Int!
+  itemCount: Int!
+  itemsPerPage: Int!
+  totalPages: Int!
+  currentPage: Int!
+}
+
+type LinksType {
+  first: String!
+  previous: String!
+  next: String!
+  last: String!
+}
+
 type Query {
   getUsers: [ResponseUser!]!
   login(loginUserArgs: CreateUserInput!): AuthResponse!
-  getPosts: [PostModel!]!
+  getPosts(paginateArgs: PaginateInput!): PaginatedPost!
 }
 
 input CreateUserInput {
   """"""
   email: String!
   password: String!
+}
+
+input PaginateInput {
+  limit: Int = 100
+  page: Int = 1
+  route: String
+  countQueries: Boolean
 }
 
 type Mutation {

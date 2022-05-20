@@ -3,6 +3,11 @@ import { CreatePostInput } from './inputs/create-post.input';
 import { UpdatePostInput } from './inputs/update-post.input';
 import { PostModel } from './models/post.model';
 import { PostRepository } from './post.repository';
+import {
+  paginate,
+  Pagination,
+  IPaginationOptions,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class PostService {
@@ -12,19 +17,27 @@ export class PostService {
     return this.postRepository.save({ userId: userId, ...dto });
   }
 
-  getPosts(): Promise<PostModel[]> {
+  async getPosts(options: IPaginationOptions) {
+    const queryBuilder = this.postRepository.createQueryBuilder();
+    const res = await paginate<PostModel>(queryBuilder, options);
+    console.log('\n\n\n', res)
+    return res
     return this.postRepository.find();
   }
 
-  async updatePost(userId: number, postId: number, dto: UpdatePostInput): Promise<PostModel> {
-    const post : PostModel = await this.postRepository.findOne(postId);
+  async updatePost(
+    userId: number,
+    postId: number,
+    dto: UpdatePostInput,
+  ): Promise<PostModel> {
+    const post: PostModel = await this.postRepository.findOne(postId);
     if (!post) {
-      throw new NotFoundException()
+      throw new NotFoundException();
     }
     if (post.userId !== userId) {
       throw new ForbiddenException();
     }
-    return this.postRepository.save({...post,...dto})
+    return this.postRepository.save({ ...post, ...dto });
   }
 
   async deletePost(userId: number, postId: number): Promise<PostModel> {
@@ -39,7 +52,7 @@ export class PostService {
     return post;
   }
 
-  findOne(id : number) {
-    return this.postRepository.findOneOrFail(id)
+  findOne(id: number) {
+    return this.postRepository.findOneOrFail(id);
   }
 }
