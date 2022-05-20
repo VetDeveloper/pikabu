@@ -7,13 +7,8 @@ import { CreatePostInput } from './inputs/create-post.input';
 import { UpdatePostInput } from './inputs/update-post.input';
 import { PostModel } from './models/post.model';
 import { PostService } from './post.service';
-import {
-  paginate,
-  Pagination,
-  IPaginationOptions,
-} from 'nestjs-typeorm-paginate';
 import { PaginatedPost } from './models/paginated-post.model';
-import { PaginateInput } from './inputs/paginate.input';
+import { defaultPaginateInput, PaginateInput } from './inputs/paginate.input';
 
 @Resolver()
 export class PostResolver {
@@ -29,8 +24,13 @@ export class PostResolver {
   }
 
   @Query(() => PaginatedPost)
-  getPosts(@Args('paginateArgs') args: PaginateInput) {
-    return this.postService.getPosts({...args});
+  getPosts(
+    @Args('paginateArgs', {
+      defaultValue: defaultPaginateInput,
+    })
+    args: PaginateInput,
+  ) {
+    return this.postService.getPosts({ ...args });
   }
 
   @Mutation(() => PostModel)

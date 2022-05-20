@@ -69,7 +69,7 @@ type LinksType {
 type Query {
   getUsers: [ResponseUser!]!
   login(loginUserArgs: CreateUserInput!): AuthResponse!
-  getPosts(paginateArgs: PaginateInput!): PaginatedPost!
+  getPosts(paginateArgs: PaginateInput = {limit: 20, page: 1}): PaginatedPost!
 }
 
 input CreateUserInput {
@@ -79,7 +79,7 @@ input CreateUserInput {
 }
 
 input PaginateInput {
-  limit: Int = 100
+  limit: Int = 20
   page: Int = 1
   route: String
   countQueries: Boolean

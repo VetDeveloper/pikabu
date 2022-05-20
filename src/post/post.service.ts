@@ -7,6 +7,7 @@ import {
   paginate,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
+import { PaginateInput } from './inputs/paginate.input';
 
 @Injectable()
 export class PostService {
@@ -16,8 +17,9 @@ export class PostService {
     return this.postRepository.save({ userId: userId, ...dto });
   }
 
-  getPosts(options: IPaginationOptions) {
+  getPosts(options: PaginateInput) {
     const queryBuilder = this.postRepository.createQueryBuilder();
+    queryBuilder.orderBy('PostEntity.createdAt', 'DESC'); //обратный порядок по дате создания
     return paginate<PostModel>(queryBuilder, options);
   }
 
