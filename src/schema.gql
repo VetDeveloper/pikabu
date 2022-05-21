@@ -66,9 +66,9 @@ type AuthResponse {
 }
 
 type Query {
+  getPosts(paginateArgs: PaginateInput = {limit: 20, page: 1}): PaginatedPost!
   getUsers: [UserModel!]!
   login(loginUserArgs: CreateUserInput!): AuthResponse!
-  getPosts(paginateArgs: PaginateInput = {limit: 20, page: 1}): PaginatedPost!
 }
 
 input CreateUserInput {
@@ -78,17 +78,11 @@ input CreateUserInput {
 }
 
 type Mutation {
-  registrateNewUser(newUserArgs: CreateUserInput!): AuthResponse!
-  updateUser(updateUserArgs: UpdateUserInput!): UserModel!
   createNewPost(newPostArgs: CreatePostInput!): PostModel!
   updatePost(postId: Float!, updatePostArgs: UpdatePostInput!): PostModel!
   deletePost(postId: Float!): PostModel!
-}
-
-input UpdateUserInput {
-  """"""
-  email: String
-  password: String
+  registrateNewUser(newUserArgs: CreateUserInput!): AuthResponse!
+  updateUser(updateUserArgs: UpdateUserInput!): UserModel!
 }
 
 input CreatePostInput {
@@ -108,4 +102,10 @@ input UpdatePostInput {
   description: String
   images: [ImageInput!]
   tags: [String!]
+}
+
+input UpdateUserInput {
+  """"""
+  email: String
+  password: String
 }

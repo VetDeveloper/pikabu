@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
 import { defaultPaginateInput, PaginateInput } from 'src/post/inputs/paginate.input';
@@ -11,6 +11,8 @@ import { UpdateUserInput } from './inputs/update-user.input';
 import { AuthResponse } from './models/auth-response.model';
 import { UserModel } from './models/user.model';
 import { UserService } from './user.service';
+import * as DataLoader from 'dataloader';
+import { PostEntity } from 'src/post/post.entity';
 
 @Resolver(UserModel)
 export class UserResolver {
@@ -44,14 +46,16 @@ export class UserResolver {
   }
 
   @ResolveField('posts', () => PaginatedPost)
-  posts(
+  async posts(
     @Parent() author: UserModel,
     @Args('paginateArgs', {
       defaultValue: defaultPaginateInput,
     })
     args: PaginateInput,
+    @Context('postsLoader') postsLoader: DataLoader<number, PostEntity>,
   ) {
     const { id } = author;
+    await postsLoader.loadMany([1])
     return this.postService.getPosts(args);
   }
 }

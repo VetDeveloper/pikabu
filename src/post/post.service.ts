@@ -13,6 +13,10 @@ import { PaginateInput } from './inputs/paginate.input';
 export class PostService {
   constructor(private postRepository: PostRepository) {}
 
+  getPostsByIds(ids: number[]) {
+    return this.postRepository.findByIds(ids);
+  }
+
   createOnePost(userId: number, dto: CreatePostInput): Promise<PostModel> {
     return this.postRepository.save({ userId: userId, ...dto });
   }

@@ -8,12 +8,21 @@ import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PostModule } from './post/post.module';
+import { PostService } from './post/post.service';
+import { createPostsLoader } from './post/dataloader/post.loader';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      imports: [PostModule],
+      inject: [PostService],
+      useFactory: (postService: PostService) => ({
+        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+        context: () => ({
+          postsLoader: createPostsLoader(postService),
+        }),
+      }),
     }),
     ConfigModule.forRoot({
       isGlobal: true,
