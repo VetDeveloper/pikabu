@@ -33,18 +33,6 @@ type UserModel {
   posts: [PostModel!]
 }
 
-type ResponseUser {
-  id: ID!
-  email: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type AuthResponse {
-  user: ResponseUser!
-  accessToken: String!
-}
-
 type PaginatedPost {
   items: [PostModel!]!
   meta: MetaType!
@@ -64,6 +52,19 @@ type LinksType {
   previous: String!
   next: String!
   last: String!
+}
+
+type ResponseUser {
+  id: ID!
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  posts: [PostModel!]
+}
+
+type AuthResponse {
+  user: ResponseUser!
+  accessToken: String!
 }
 
 type Query {

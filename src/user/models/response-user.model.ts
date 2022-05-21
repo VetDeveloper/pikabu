@@ -1,5 +1,5 @@
-import { ObjectType, PickType } from "@nestjs/graphql";
+import { ObjectType, OmitType, PickType } from "@nestjs/graphql";
 import { UserModel } from "./user.model";
 
 @ObjectType()
-export class ResponseUser extends PickType(UserModel, ['id', 'email', 'createdAt', 'updatedAt']) {}
+export class ResponseUser extends OmitType(UserModel, ['password']) {}

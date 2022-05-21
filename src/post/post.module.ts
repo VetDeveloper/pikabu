@@ -7,5 +7,6 @@ import { PostService } from './post.service';
 @Module({
   providers: [PostService, PostResolver],
   imports: [TypeOrmModule.forFeature([PostRepository])],
+  exports: [PostService]
 })
 export class PostModule {}

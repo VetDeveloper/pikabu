@@ -19,7 +19,7 @@ export class PostService {
 
   getPosts(options: PaginateInput) {
     const queryBuilder = this.postRepository.createQueryBuilder();
-    queryBuilder.orderBy('PostEntity.createdAt', 'DESC'); //обратный порядок по дате создания
+    queryBuilder.orderBy('PostEntity.createdAt', 'ASC'); //обратный прямой порядок по дате создания
     return paginate<PostModel>(queryBuilder, options);
   }
 
