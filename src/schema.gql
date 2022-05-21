@@ -2,6 +2,26 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserModel {
+  id: ID!
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  posts(paginateArgs: PaginateInput = {limit: 20, page: 1}): PaginatedPost!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input PaginateInput {
+  limit: Int = 20
+  page: Int = 1
+  route: String
+  countQueries: Boolean
+}
+
 type ImageModel {
   order: Int!
   link: String!
@@ -17,20 +37,6 @@ type PostModel {
   createdAt: DateTime!
   updatedAt: DateTime!
   user: UserModel
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-type UserModel {
-  id: ID!
-  email: String!
-  password: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  posts: [PostModel!]
 }
 
 type PaginatedPost {
@@ -54,21 +60,13 @@ type LinksType {
   last: String!
 }
 
-type ResponseUser {
-  id: ID!
-  email: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  posts: [PostModel!]
-}
-
 type AuthResponse {
-  user: ResponseUser!
+  user: UserModel!
   accessToken: String!
 }
 
 type Query {
-  getUsers: [ResponseUser!]!
+  getUsers: [UserModel!]!
   login(loginUserArgs: CreateUserInput!): AuthResponse!
   getPosts(paginateArgs: PaginateInput = {limit: 20, page: 1}): PaginatedPost!
 }
@@ -79,16 +77,9 @@ input CreateUserInput {
   password: String!
 }
 
-input PaginateInput {
-  limit: Int = 20
-  page: Int = 1
-  route: String
-  countQueries: Boolean
-}
-
 type Mutation {
   registrateNewUser(newUserArgs: CreateUserInput!): AuthResponse!
-  updateUser(updateUserArgs: UpdateUserInput!): ResponseUser!
+  updateUser(updateUserArgs: UpdateUserInput!): UserModel!
   createNewPost(newPostArgs: CreatePostInput!): PostModel!
   updatePost(postId: Float!, updatePostArgs: UpdatePostInput!): PostModel!
   deletePost(postId: Float!): PostModel!

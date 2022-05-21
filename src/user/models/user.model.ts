@@ -11,14 +11,8 @@ export class UserModel {
   email: string;
 
   @Field()
-  password: string;
-
-  @Field()
   createdAt: Date;
 
   @Field()
   updatedAt: Date;
-
-  @Field(() => [PostModel], {nullable: true})
-  posts?: Array<PostModel>;
 }
