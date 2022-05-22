@@ -72,6 +72,7 @@ input CreateUserInput {
 
 type Mutation {
   updateUser(updateUserArgs: UpdateUserInput!): UserModel!
+  deleteUser: UserModel!
   createNewPost(newPostArgs: CreatePostInput!): PostModel!
   updatePost(postId: Float!, updatePostArgs: UpdatePostInput!): PostModel!
   deletePost(postId: Float!): PostModel!

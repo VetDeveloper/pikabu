@@ -13,17 +13,21 @@ import { UserModel } from 'src/user/models/user.model';
 import { UserService } from 'src/user/services/user.service';
 
 @Resolver(UserModel)
+@UseGuards(GqlAuthGuard)
 export class UserMutationResolver {
-  constructor(
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Mutation(() => UserModel)
-  @UseGuards(GqlAuthGuard)
   updateUser(
-    @GetUser() user: UserModel,
+    @GetUser('id') id: number,
     @Args('updateUserArgs') dto: UpdateUserInput,
   ) {
-    return this.userService.updateOneUser(user.id, dto);
+    return this.userService.updateOneUser(id, dto);
+  }
+
+  @Mutation(() => UserModel)
+  deleteUser(@GetUser('id') id: number) {
+    console.log(id)
+    return this.userService.deleteUser(id);
   }
 }

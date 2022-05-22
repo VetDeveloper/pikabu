@@ -17,6 +17,12 @@ export class UserService {
     return this.userRepository.find();
   }
 
+  async deleteUser(id : number) : Promise<UserEntity> {
+    const user: UserEntity = await this.userRepository.findOne(id);
+    await this.userRepository.remove(user);
+    return user;
+  }
+
   async validateUser(email: string, pass: string): Promise<UserEntity> {
     const user = await this.getUserByEmail(email);
 
