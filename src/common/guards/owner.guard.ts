@@ -32,9 +32,4 @@ export abstract class OwnerGuard<Entity extends { userId: number }>
 
     return item.userId === authUserId;
   }
-
-  private getItemId(req: any): number {
-    const { body } = req;
-    return body.variables[this.idParam];
-  }
 }
