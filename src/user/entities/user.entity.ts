@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { PostReactionEntity } from 'src/post-reaction/entities/post-reaction.entity';
 import { PostEntity } from 'src/post/entities/post.entity';
 import {
   Column,
@@ -33,9 +34,9 @@ export class UserEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(
-    () => PostEntity,
-    (post) => post.user,
-  )
+  @OneToMany(() => PostEntity, (post) => post.user)
   posts?: PostEntity[];
+
+  @OneToMany(() => PostReactionEntity, (reaction) => reaction.user)
+  reactions?: PostReactionEntity[];
 }

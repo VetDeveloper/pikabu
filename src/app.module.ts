@@ -12,12 +12,13 @@ import { PostService } from './post/services/post.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { DataLoaderInterceptor } from '@app/dataloader';
 import { PostLoader } from './post/dataloader/post.loader';
+import { PostReactionModule } from './post-reaction/post-reaction.module';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql')
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -47,12 +48,13 @@ import { PostLoader } from './post/dataloader/post.loader';
     UserModule,
     AuthModule,
     PostModule,
+    PostReactionModule,
   ],
   providers: [
     {
       provide: APP_INTERCEPTOR,
       useClass: DataLoaderInterceptor,
     },
-  ]
+  ],
 })
 export class AppModule {}

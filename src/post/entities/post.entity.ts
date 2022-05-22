@@ -1,3 +1,4 @@
+import { PostReactionEntity } from 'src/post-reaction/entities/post-reaction.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
@@ -5,6 +6,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -46,4 +48,7 @@ export class PostEntity {
   })
   @JoinColumn({ name: 'userId' })
   user?: UserEntity;
+
+  @OneToMany(() => PostReactionEntity, (reaction) => reaction.post)
+  reactions?: PostReactionEntity[];
 }
