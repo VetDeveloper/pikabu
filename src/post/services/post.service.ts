@@ -1,13 +1,14 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreatePostInput } from './inputs/create-post.input';
-import { UpdatePostInput } from './inputs/update-post.input';
-import { PostModel } from './models/post.model';
-import { PostRepository } from './post.repository';
+import { CreatePostInput } from '../inputs/create-post.input';
+import { UpdatePostInput } from '../inputs/update-post.input';
+import { PostModel } from '../models/post.model';
+import { PostRepository } from '../post.repository';
 import {
   paginate,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
-import { PaginateInput } from './inputs/paginate.input';
+import { PaginateArgs } from '../args/paginate.args';
+import { SearchArgs } from '../args/search-post.args';
 
 @Injectable()
 export class PostService {
@@ -21,14 +22,15 @@ export class PostService {
     return this.postRepository.save({ userId: userId, ...dto });
   }
 
-  getPosts(options: PaginateInput) {
-    const queryBuilder = this.postRepository.createQueryBuilder();
-    queryBuilder.orderBy('PostEntity.createdAt', 'ASC'); //обратный прямой порядок по дате создания
-    return paginate<PostModel>(queryBuilder, options);
+  getPosts(paginateOptions: PaginateArgs, searchOptions: SearchArgs) {
+    return this.postRepository.getPosts(paginateOptions, searchOptions);
+  }
+
+  getUserPosts(userId: number, paginateArgs: PaginateArgs) {
+    return this.postRepository.getUserPosts(userId, paginateArgs);
   }
 
   async updatePost(
-    userId: number,
     postId: number,
     dto: UpdatePostInput,
   ): Promise<PostModel> {
@@ -36,19 +38,13 @@ export class PostService {
     if (!post) {
       throw new NotFoundException();
     }
-    if (post.userId !== userId) {
-      throw new ForbiddenException();
-    }
     return this.postRepository.save({ ...post, ...dto });
   }
 
-  async deletePost(userId: number, postId: number): Promise<PostModel> {
+  async deletePost(postId: number): Promise<PostModel> {
     const post: PostModel = await this.postRepository.findOne(postId);
     if (!post) {
       throw new NotFoundException();
-    }
-    if (post.userId !== userId) {
-      throw new ForbiddenException();
     }
     await this.postRepository.delete(postId);
     return post;

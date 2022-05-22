@@ -1,16 +1,23 @@
-import { PostEntity } from '../post.entity';
-import { PostService } from '../post.service';
-import * as DataLoader from 'dataloader';
+import { NestDataLoader } from "@app/dataloader";
+import { Injectable } from "@nestjs/common";
+import * as DataLoader from "dataloader";
+import { PostEntity } from "../entities/post.entity";
+import { PostRepository } from "../post.repository";
 
-export async function createPostsLoader(postService: PostService) {
-  return new DataLoader<number, PostEntity>(async (ids) => {
-    const posts : PostEntity[] = await postService.getPostsByIds(ids);
+@Injectable()
+export class PostLoader implements NestDataLoader<number, PostEntity> {
+  constructor(private readonly repo: PostRepository) { }
 
-    const postsMap = new Map(posts.map((post, i) => [i, post]));
+  generateDataLoader(): DataLoader<number, PostEntity> {
+    return new DataLoader<number, PostEntity>(async (keys) => {
+      const uniqueKeys : number[] = [...new Set(keys)];
+      const posts = await this.repo.findByIds(uniqueKeys);
+      return keys.map(
+        (key) =>
+          posts.find((post) => post.id === key) ||
+          new Error(`Could not load post with id: ${key}`),
+      );
 
-    console.log(posts);
-
-    return ids.map((id) => postsMap[id]);
-  });
+    });
+  }
 }
-

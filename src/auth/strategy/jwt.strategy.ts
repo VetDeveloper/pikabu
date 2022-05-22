@@ -2,9 +2,9 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/user/services/user.service';
 import { TokenPayload } from '../types/token-payload.type';
-import { UserEntity } from 'src/user/user.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -24,7 +24,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (!user || payload.email !== user.email) {
       throw new UnauthorizedException('Bad jwt token');
     }
-    const {password, ...res} = user;
-    return res;
+    return user;
   }
 }

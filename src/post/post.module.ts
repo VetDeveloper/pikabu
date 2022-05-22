@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserLoader } from 'src/user/dataloader/user.loader';
+import { UserRepository } from 'src/user/user.repository';
 import { PostRepository } from './post.repository';
-import { PostResolver } from './post.resolver';
-import { PostService } from './post.service';
+import { PostMutationResolver } from './resolvers/mutation/post-mutation.resolver';
+import { PostResolver } from './resolvers/post.resolver';
+import { PostQueryResolver } from './resolvers/query/post-query.resolver';
+import { PostService } from './services/post.service';
 
 @Module({
-  providers: [PostService, PostResolver],
-  imports: [TypeOrmModule.forFeature([PostRepository])],
+  providers: [PostService, PostResolver, PostQueryResolver, PostMutationResolver, UserLoader],
+  imports: [TypeOrmModule.forFeature([PostRepository, UserRepository])],
   exports: [PostService]
 })
 export class PostModule {}

@@ -8,21 +8,16 @@ import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PostModule } from './post/post.module';
-import { PostService } from './post/post.service';
-import { createPostsLoader } from './post/dataloader/post.loader';
+import { PostService } from './post/services/post.service';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { DataLoaderInterceptor } from '@app/dataloader';
+import { PostLoader } from './post/dataloader/post.loader';
 
 @Module({
   imports: [
-    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      imports: [PostModule],
-      inject: [PostService],
-      useFactory: (postService: PostService) => ({
-        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-        context: () => ({
-          postsLoader: createPostsLoader(postService),
-        }),
-      }),
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql')
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -53,5 +48,11 @@ import { createPostsLoader } from './post/dataloader/post.loader';
     AuthModule,
     PostModule,
   ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: DataLoaderInterceptor,
+    },
+  ]
 })
 export class AppModule {}

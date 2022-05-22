@@ -1,19 +1,19 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { ArgsType, Field, InputType, Int } from '@nestjs/graphql';
 import { IsBoolean, IsInt, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator';
 
-@InputType()
-export class PaginateInput {
-  @Field(() => Int)
+@ArgsType()
+export class PaginateArgs {
+  @Field(() => Int, {defaultValue: 15})
   @IsNumber()
   @IsInt()
   @IsPositive()
-  limit: number = 20;
+  limit: number;
 
-  @Field(() => Int)
+  @Field(() => Int, {defaultValue: 1})
   @IsNumber()
   @IsInt()
   @IsPositive()
-  page: number = 1;
+  page: number;
 
   @Field({ nullable: true })
   @IsString()
@@ -26,7 +26,7 @@ export class PaginateInput {
   countQueries?: boolean;
 }
 
-export const defaultPaginateInput: PaginateInput = {
+export const defaultPaginateInput: PaginateArgs = {
   limit: 20,
   page: 1
 };

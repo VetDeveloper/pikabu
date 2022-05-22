@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { PostEntity } from 'src/post/post.entity';
+import { PostEntity } from 'src/post/entities/post.entity';
 import {
   Column,
   CreateDateColumn,

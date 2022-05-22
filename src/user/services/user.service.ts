@@ -1,21 +1,13 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserRepository } from './user.repository';
+import { UserRepository } from '../user.repository';
 import * as bcrypt from 'bcryptjs';
-import { CreateUserInput } from './inputs/create-user.input';
-import { UserEntity } from './user.entity';
-import { UpdateUserInput } from './inputs/update-user.input';
-import { TokenPayload } from 'src/auth/types/token-payload.type';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
-import { AuthResponse } from './models/auth-response.model';
+import { CreateUserInput } from '../inputs/create-user.input';
+import { UserEntity } from '../entities/user.entity';
+import { UpdateUserInput } from '../inputs/update-user.input';
 
 @Injectable()
 export class UserService {
-  constructor(
-    private userRepository: UserRepository,
-    private jwtService: JwtService,
-    private configService: ConfigService,
-  ) {}
+  constructor(private userRepository: UserRepository) {}
 
   getUserByEmail(email: string): Promise<UserEntity> {
     return this.userRepository.getUserByEmail(email);
@@ -39,19 +31,6 @@ export class UserService {
     }
 
     throw new UnauthorizedException('Неправильный логин или пароль');
-  }
-
-  private getTokenObject(user: UserEntity): AuthResponse {
-    const payload: TokenPayload = { email: user.email, id: user.id };
-    return {
-      user: user,
-      accessToken: this.jwtService.sign(payload),
-    };
-  }
-
-  async login(dto: CreateUserInput): Promise<AuthResponse> {
-    const user: UserEntity = await this.validateUser(dto.email, dto.password);
-    return this.getTokenObject(user);
   }
 
   async updateOneUser(
@@ -79,19 +58,8 @@ export class UserService {
     return await this.userRepository.save(newUser);
   }
 
-  async registrateOne(dto: CreateUserInput): Promise<AuthResponse> {
-    const alreadyExist: UserEntity = await this.getUserByEmail(dto.email);
-    if (alreadyExist) {
-      throw new BadRequestException(
-        'Пользователь с таким email уже зарегистрирован',
-      );
-    }
-    const hashPassword: string = await bcrypt.hash(dto.password, 5);
-    const newUser: UserEntity = await this.userRepository.save({
-      ...dto,
-      password: hashPassword,
-    });
-    return this.getTokenObject(newUser);
+  registrateOneUser(user: CreateUserInput): Promise<UserEntity> {
+    return this.userRepository.save(user);
   }
 
   findOne(id: number): Promise<UserEntity> {

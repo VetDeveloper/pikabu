@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/user/user.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ImageModel } from './models/image.model';
+import { ImageModel } from '../models/image.model';
 
 @Entity()
 export class PostEntity {
