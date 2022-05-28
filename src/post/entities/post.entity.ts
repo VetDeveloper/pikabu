@@ -1,3 +1,4 @@
+import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
 import { PostReactionEntity } from 'src/post-reaction/entities/post-reaction.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
@@ -10,7 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ImageModel } from '../models/image.model';
+import { ImageModel } from '../../common/models/image.model';
 
 @Entity()
 export class PostEntity {
@@ -27,10 +28,10 @@ export class PostEntity {
     type: 'jsonb',
     default: [],
   })
-  images?: Array<ImageModel>;
+  images: Array<ImageModel>;
 
   @Column({ type: 'varchar', array: true, default: [] })
-  tags?: Array<string>;
+  tags: Array<string>;
 
   @Column({
     type: 'int',
@@ -51,4 +52,7 @@ export class PostEntity {
 
   @OneToMany(() => PostReactionEntity, (reaction) => reaction.post)
   reactions?: PostReactionEntity[];
+
+  @OneToMany(() => CommentaryEntity, (commentary) => commentary.post)
+  commentaries?: CommentaryEntity[];
 }

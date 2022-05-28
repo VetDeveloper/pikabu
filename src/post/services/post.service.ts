@@ -31,10 +31,9 @@ export class PostService {
   }
 
   async updatePost(
-    postId: number,
     dto: UpdatePostInput,
   ): Promise<PostModel> {
-    const post: PostModel = await this.postRepository.findOne(postId);
+    const post: PostModel = await this.postRepository.findOne(dto.postId);
     if (!post) {
       throw new NotFoundException();
     }

@@ -13,6 +13,8 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { DataLoaderInterceptor } from '@app/dataloader';
 import { PostLoader } from './post/dataloader/post.loader';
 import { PostReactionModule } from './post-reaction/post-reaction.module';
+import { CommentaryModule } from './commentary/commentary.module';
+import { CommentReactionModule } from './comment-reaction/comment-reaction.module';
 
 @Module({
   imports: [
@@ -49,6 +51,8 @@ import { PostReactionModule } from './post-reaction/post-reaction.module';
     AuthModule,
     PostModule,
     PostReactionModule,
+    CommentaryModule,
+    CommentReactionModule
   ],
   providers: [
     {

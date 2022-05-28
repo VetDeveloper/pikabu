@@ -1,4 +1,6 @@
 import { Exclude } from 'class-transformer';
+import { CommentaryReactionEntity } from 'src/comment-reaction/entities/comment-reaction.entity';
+import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
 import { PostReactionEntity } from 'src/post-reaction/entities/post-reaction.entity';
 import { PostEntity } from 'src/post/entities/post.entity';
 import {
@@ -38,5 +40,11 @@ export class UserEntity {
   posts?: PostEntity[];
 
   @OneToMany(() => PostReactionEntity, (reaction) => reaction.user)
-  reactions?: PostReactionEntity[];
+  postReactions?: PostReactionEntity[];
+
+  @OneToMany(() => CommentaryEntity, (commentary) => commentary.user)
+  commentaries?: CommentaryEntity[];
+
+  @OneToMany(() => CommentaryReactionEntity, (reaction) => reaction.user)
+  commentaryReactions?: CommentaryReactionEntity[];
 }

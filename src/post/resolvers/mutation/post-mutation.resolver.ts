@@ -29,10 +29,10 @@ export class PostMutationResolver {
   @Mutation(() => PostModel)
   @UseGuards(GqlAuthGuard, PostOwnerGuard)
   updatePost(
-    @Args('postId') postId: number,
-    @Args('updatePostArgs') args: UpdatePostInput,
+    @Args('updatePostInput') input: UpdatePostInput,
   ) {
-    return this.postService.updatePost(postId, args);
+    console.log(input.postId)
+    return this.postService.updatePost(input);
   }
 
   @Mutation(() => PostModel)

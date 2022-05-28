@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType} from "@nestjs/graphql";
-import { ImageModel } from "./image.model";
+import { ImageModel } from "../../common/models/image.model";
 import JSON from 'graphql-type-json';
 import { UserModel } from "src/user/models/user.model";
 
@@ -14,11 +14,11 @@ export class PostModel {
   @Field({ nullable: true })
   description?: string;
 
-  @Field(() => [ImageModel], {nullable: true})
-  images?: Array<ImageModel>;
+  @Field(() => [ImageModel], {defaultValue: []})
+  images: Array<ImageModel>;
 
-  @Field(() => [String], { nullable: true })
-  tags?: Array<string>;
+  @Field(() => [String], { defaultValue: []})
+  tags: Array<string>;
 
   @Field(() => ID)
   userId: number;
@@ -29,6 +29,6 @@ export class PostModel {
   @Field()
   updatedAt: Date;
 
-  @Field(() => UserModel, { nullable: true })
-  user?: UserModel;
+  // @Field(() => UserModel, { nullable: true })
+  // user?: UserModel;
 }
