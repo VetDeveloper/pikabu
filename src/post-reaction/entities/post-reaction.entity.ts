@@ -1,7 +1,7 @@
 import { PostEntity } from "src/post/entities/post.entity";
 import { UserEntity } from "src/user/entities/user.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
-import { Reaction } from "../../common/types/reaction.enum";
+import { Reaction } from "../../common/enums/reaction.enum";
 
 @Entity()
 @Unique(['userId', 'postId'])

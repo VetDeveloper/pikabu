@@ -1,5 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { PaginateArgs } from 'src/post/args/paginate.args';
+import { PaginateArgs } from 'src/common/args/paginate.args';
 import { SearchArgs } from 'src/post/args/search-post.args';
 import { PaginatedPost } from 'src/post/models/paginated-post.model';
 import { PostModel } from 'src/post/models/post.model';

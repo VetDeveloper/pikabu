@@ -7,7 +7,7 @@ import { CommentaryService } from "./services/commentary.service";
 
 @Module({
     imports: [TypeOrmModule.forFeature([CommentaryRepository,PostRepository])],
-    exports: [],
+    exports: [CommentaryService],
     providers: [CommentaryMutationResolver, CommentaryService]
 })
 export class CommentaryModule {}

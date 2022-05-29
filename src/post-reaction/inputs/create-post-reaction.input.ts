@@ -1,6 +1,6 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsEnum, IsInt, IsPositive } from 'class-validator';
-import { Reaction } from '../../common/types/reaction.enum';
+import { Reaction } from '../../common/enums/reaction.enum';
 
 @InputType()
 export class CreatePostReactionInput {

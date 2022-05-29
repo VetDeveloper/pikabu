@@ -1,5 +1,5 @@
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
-import { Reaction } from 'src/common/types/reaction.enum';
+import { Reaction } from 'src/common/enums/reaction.enum';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,

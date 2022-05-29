@@ -1,6 +1,6 @@
 import { paginate } from 'nestjs-typeorm-paginate';
 import { EntityRepository, Repository, SelectQueryBuilder } from 'typeorm';
-import { PaginateArgs } from './args/paginate.args';
+import { PaginateArgs } from '../common/args/paginate.args';
 import { SearchArgs } from './args/search-post.args';
 import { PostModel } from './models/post.model';
 import { PostEntity } from './entities/post.entity';

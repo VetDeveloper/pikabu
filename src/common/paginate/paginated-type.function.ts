@@ -2,8 +2,7 @@ import { Type } from '@nestjs/common';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { PostModel } from 'src/post/models/post.model';
 
-export function Paginated<T>(classRef: Type<T>): any {
-  @ObjectType({ isAbstract: true })
+@ObjectType({ isAbstract: true })
   abstract class MetaType {
     @Field(() => Int)
     totalItems: number;
@@ -28,6 +27,8 @@ export function Paginated<T>(classRef: Type<T>): any {
     @Field()
     last: string;
   }
+
+export function Paginated<T>(classRef: Type<T>): any {
 
   @ObjectType({ isAbstract: true })
   abstract class PaginatedType {

@@ -7,6 +7,21 @@ type ImageModel {
   link: String!
 }
 
+type CommentaryModel {
+  id: ID!
+  text: String
+  images: [ImageModel!]!
+  userId: Int!
+  postId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type PostModel {
   id: ID!
   title: String!
@@ -17,12 +32,18 @@ type PostModel {
   createdAt: DateTime!
   updatedAt: DateTime!
   user: UserModel!
+  commentaries(sort: Sort = CREATEDAT, order: Order = DESC, limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentary!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
+enum Sort {
+  CREATEDAT
+  LIKES
+}
+
+enum Order {
+  ASC
+  DESC
+}
 
 type UserModel {
   id: ID!
@@ -32,8 +53,8 @@ type UserModel {
   posts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedPost!
 }
 
-type PaginatedPost {
-  items: [PostModel!]!
+type PaginatedCommentary {
+  items: [CommentaryModel!]!
   meta: MetaType!
   links: LinksType!
 }
@@ -53,6 +74,12 @@ type LinksType {
   last: String!
 }
 
+type PaginatedPost {
+  items: [PostModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
 type AuthResponse {
   user: UserModel!
   accessToken: String!
@@ -70,16 +97,6 @@ type PostReactionModel {
 enum Reaction {
   LIKE
   DISLIKE
-}
-
-type CommentaryModel {
-  id: ID!
-  text: String
-  images: [ImageModel!]!
-  userId: Int!
-  postId: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
 }
 
 type CommentaryReactionModel {
@@ -109,13 +126,13 @@ type Mutation {
   createNewPost(newPostArgs: CreatePostInput!): PostModel!
   updatePost(updatePostInput: UpdatePostInput!): PostModel!
   deletePost(postId: Float!): PostModel!
+  createCommentary(CreateCommentaryInput: CreateCommentaryInput!): CommentaryModel!
+  updateCommentary(updateCommentaryInput: UpdateCommentaryInput!): CommentaryModel!
+  deleteCommentary(id: Int!): CommentaryModel!
   registrateNewUser(newUserArgs: CreateUserInput!): AuthResponse!
   createPostReaction(createPostReactionInput: CreatePostReactionInput!): PostReactionModel!
   updatePostReaction(updatePostReactionInput: UpdatePostReactionInput!): PostReactionModel!
   deletePostReaction(id: Int!): PostReactionModel!
-  createCommentary(CreateCommentaryInput: CreateCommentaryInput!): CommentaryModel!
-  updateCommentary(updateCommentaryInput: UpdateCommentaryInput!): CommentaryModel!
-  deleteCommentary(id: Int!): CommentaryModel!
   createCommentaryReaction(createCommentaryReactionInput: CreateCommentaryReactionInput!): CommentaryReactionModel!
   updateCommentaryReaction(updateCommentaryReactionInput: UpdateCommentaryReactionInput!): CommentaryReactionModel!
   deleteCommentaryReaction(id: Int!): CommentaryReactionModel!
@@ -147,16 +164,6 @@ input UpdatePostInput {
   postId: Int!
 }
 
-input CreatePostReactionInput {
-  reaction: Reaction!
-  postId: Int!
-}
-
-input UpdatePostReactionInput {
-  reaction: Reaction
-  id: Int!
-}
-
 input CreateCommentaryInput {
   text: String
   images: [ImageInput!] = []
@@ -166,6 +173,16 @@ input CreateCommentaryInput {
 input UpdateCommentaryInput {
   text: String
   images: [ImageInput!] = []
+  id: Int!
+}
+
+input CreatePostReactionInput {
+  reaction: Reaction!
+  postId: Int!
+}
+
+input UpdatePostReactionInput {
+  reaction: Reaction
   id: Int!
 }
 

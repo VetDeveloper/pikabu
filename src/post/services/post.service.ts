@@ -7,7 +7,7 @@ import {
   paginate,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
-import { PaginateArgs } from '../args/paginate.args';
+import { PaginateArgs } from '../../common/args/paginate.args';
 import { SearchArgs } from '../args/search-post.args';
 
 @Injectable()

@@ -8,7 +8,7 @@ import { PostRepository } from 'src/post/post.repository';
 import { PostReactionEntity } from '../entities/post-reaction.entity';
 import { CreatePostReactionInput } from '../inputs/create-post-reaction.input';
 import { PostReactionRepository } from '../post-reaction.repository';
-import { Reaction } from '../../common/types/reaction.enum';
+import { Reaction } from '../../common/enums/reaction.enum';
 import { UpdatePostReactionInput } from '../inputs/update-post-reaction.args';
 
 @Injectable()

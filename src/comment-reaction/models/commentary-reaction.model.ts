@@ -1,5 +1,5 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Reaction } from 'src/common/types/reaction.enum';
+import { Reaction } from 'src/common/enums/reaction.enum';
 
 @ObjectType()
 export class CommentaryReactionModel {
