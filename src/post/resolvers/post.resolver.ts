@@ -1,9 +1,4 @@
-import {
-  Args,
-  Parent,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { UserModel } from 'src/user/models/user.model';
 import { PostModel } from '../models/post.model';
 import { Loader } from '@app/dataloader';
@@ -17,7 +12,6 @@ import { PaginateArgs } from 'src/common/args/paginate.args';
 
 @Resolver(() => PostModel)
 export class PostResolver {
-
   constructor(private comServ: CommentaryService) {}
 
   @ResolveField(() => UserModel)
@@ -32,8 +26,8 @@ export class PostResolver {
   commentaries(
     @Parent() post: PostModel,
     @Args() sortArgs: SortArgs,
-    @Args() paginateArtgs: PaginateArgs
+    @Args() paginateArtgs: PaginateArgs,
   ) {
-    return this.comServ.getUserCommentaries(post.id, sortArgs, paginateArtgs);
+    return this.comServ.getPostCommentaries(post.id, sortArgs, paginateArtgs);
   }
 }
