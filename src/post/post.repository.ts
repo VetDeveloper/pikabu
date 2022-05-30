@@ -50,11 +50,11 @@ export class PostRepository extends Repository<PostEntity> {
           qb.orderBy('PostEntity.createdAt', sortArgs.order);
           break;
         case Sort.LIKES:
-          qb.addSelect('COUNT(reactions.reaction) as likesCount')
+          qb.addSelect('COUNT(likes_reactions.reaction) as likesCount')
             .leftJoin(
               'PostEntity.reactions',
-              'reactions',
-              'reactions.reaction = :react',
+              'likes_reactions',
+              'likes_reactions.reaction = :react',
               { react: Reaction.LIKE },
             )
             .groupBy('PostEntity.id')
