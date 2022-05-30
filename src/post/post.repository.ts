@@ -18,50 +18,24 @@ export class PostRepository extends Repository<PostEntity> {
     sortArgs: SortArgs,
     filterPostArgs: FilterArgs
   ) {
-    const qb = this.getQueryBuider(null, searchOptions, sortArgs, filterPostArgs);
+    const qb = this.getQueryBuider(searchOptions, sortArgs, filterPostArgs);
     return this.getPaginate(qb, paginateOptions);
   }
 
   getUserPosts(userId: number, paginateArgs: PaginateArgs) {
-    const qb = this.getQueryBuider(userId, {}, null, {});
+    const qb = this.createQueryBuilder();
+    qb.andWhere('PostEntity.userId = :userId', {
+      userId: userId,
+    });
     return this.getPaginate(qb, paginateArgs);
   }
 
   private getQueryBuider(
-    userId: number,
     searchOptions: SearchArgs,
     sortArgs: SortArgs,
     filterPostArgs: FilterArgs
   ) {
     const qb = this.createQueryBuilder();
-    if (userId) {
-      qb.andWhere('PostEntity.userId = :userId', {
-        userId: userId,
-      });
-    }
-    if (searchOptions.searchValue) {
-      qb.andWhere('title LIKE :searchValue', {
-        searchValue: `%${searchOptions.searchValue}%`,
-      });
-    }
-    if (sortArgs) {
-      switch (sortArgs.sort) {
-        case Sort.CREATEDAT:
-          qb.orderBy('PostEntity.createdAt', sortArgs.order);
-          break;
-        case Sort.LIKES:
-          qb.addSelect('COUNT(likes_reactions.reaction) as likesCount')
-            .leftJoin(
-              'PostEntity.reactions',
-              'likes_reactions',
-              'likes_reactions.reaction = :react',
-              { react: Reaction.LIKE },
-            )
-            .groupBy('PostEntity.id')
-            .orderBy('likesCount', sortArgs.order);
-          break;
-      }
-    }
     if(filterPostArgs) {
       if (filterPostArgs.tags) {
         qb.andWhere(':...tags = ANY(tags)', { tags: filterPostArgs.tags });
@@ -92,6 +66,30 @@ export class PostRepository extends Repository<PostEntity> {
       }
   
     }
+    if (searchOptions.searchValue) {
+      qb.andWhere('title LIKE :searchValue', {
+        searchValue: `%${searchOptions.searchValue}%`,
+      });
+    }
+    if (sortArgs) {
+      switch (sortArgs.sort) {
+        case Sort.CREATEDAT:
+          qb.orderBy('PostEntity.createdAt', sortArgs.order);
+          break;
+        case Sort.LIKES:
+          qb.addSelect('COUNT(likes_reactions.reaction) as likesCount')
+            .leftJoin(
+              'PostEntity.reactions',
+              'likes_reactions',
+              'likes_reactions.reaction = :react',
+              { react: Reaction.LIKE },
+            )
+            .groupBy('PostEntity.id')
+            .orderBy('likesCount', sortArgs.order);
+          break;
+      }
+    }
+    
     return qb;
   }
 
