@@ -7,6 +7,8 @@ import { PostEntity } from './entities/post.entity';
 import { SortArgs } from 'src/common/args/sort.args';
 import { Sort } from 'src/common/enums/sort.enum';
 import { Reaction } from 'src/common/enums/reaction.enum';
+import { FilterArgs } from './args/filter-post.args';
+import { Group } from './enums/group.enum';
 
 @EntityRepository(PostEntity)
 export class PostRepository extends Repository<PostEntity> {
@@ -14,13 +16,14 @@ export class PostRepository extends Repository<PostEntity> {
     paginateOptions: PaginateArgs,
     searchOptions: SearchArgs,
     sortArgs: SortArgs,
+    filterPostArgs: FilterArgs
   ) {
-    const qb = this.getQueryBuider(null, searchOptions, sortArgs);
+    const qb = this.getQueryBuider(null, searchOptions, sortArgs, filterPostArgs);
     return this.getPaginate(qb, paginateOptions);
   }
 
   getUserPosts(userId: number, paginateArgs: PaginateArgs) {
-    const qb = this.getQueryBuider(userId, {}, null);
+    const qb = this.getQueryBuider(userId, {}, null, {});
     return this.getPaginate(qb, paginateArgs);
   }
 
@@ -28,6 +31,7 @@ export class PostRepository extends Repository<PostEntity> {
     userId: number,
     searchOptions: SearchArgs,
     sortArgs: SortArgs,
+    filterPostArgs: FilterArgs
   ) {
     const qb = this.createQueryBuilder();
     if (userId) {
@@ -57,6 +61,36 @@ export class PostRepository extends Repository<PostEntity> {
             .orderBy('likesCount', sortArgs.order);
           break;
       }
+    }
+    if(filterPostArgs) {
+      if (filterPostArgs.tags) {
+        qb.andWhere(':...tags = ANY(tags)', { tags: filterPostArgs.tags });
+      }
+      if(filterPostArgs.group) {
+        switch (filterPostArgs.group) {
+          case Group.BEST:
+            qb
+            .innerJoin(
+              'PostEntity.reactions',
+              'reactions',
+              "reactions.reaction = :react AND reactions.createdAt >= Now() - INTERVAL '24 hours'",
+              { react: Reaction.LIKE },
+            )
+            break;
+          case Group.FRESH:
+            qb.andWhere("PostEntity.createdAt >= Now() - INTERVAL '24 hours'");
+            break;
+          case Group.HOT:
+            qb
+            .innerJoin(
+              'PostEntity.commentaries',
+              'commentaries',
+              "commentaries.createdAt >= Now() - INTERVAL '24 hours'"
+            )
+            break;
+        }
+      }
+  
     }
     return qb;
   }

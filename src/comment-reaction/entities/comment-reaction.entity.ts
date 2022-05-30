@@ -8,10 +8,12 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
+@Unique(['userId', 'commentaryId'])
 export class CommentaryReactionEntity {
   @PrimaryGeneratedColumn()
   id: number;

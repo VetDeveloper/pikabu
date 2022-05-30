@@ -110,8 +110,14 @@ type CommentaryReactionModel {
 
 type Query {
   getUsers: [UserModel!]!
-  getPosts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean, searchValue: String, sort: Sort = CREATEDAT, order: Order = DESC): PaginatedPost!
+  getPosts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean, searchValue: String, sort: Sort = CREATEDAT, order: Order = DESC, tags: [String!], group: Group): PaginatedPost!
   login(loginUserArgs: CreateUserInput!): AuthResponse!
+}
+
+enum Group {
+  FRESH
+  HOT
+  BEST
 }
 
 input CreateUserInput {

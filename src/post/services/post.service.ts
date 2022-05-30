@@ -1,15 +1,17 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePostInput } from '../inputs/create-post.input';
 import { UpdatePostInput } from '../inputs/update-post.input';
 import { PostModel } from '../models/post.model';
 import { PostRepository } from '../post.repository';
-import {
-  paginate,
-  IPaginationOptions,
-} from 'nestjs-typeorm-paginate';
+import { paginate, IPaginationOptions } from 'nestjs-typeorm-paginate';
 import { PaginateArgs } from '../../common/args/paginate.args';
 import { SearchArgs } from '../args/search-post.args';
 import { SortArgs } from 'src/common/args/sort.args';
+import { FilterArgs } from '../args/filter-post.args';
 
 @Injectable()
 export class PostService {
@@ -23,17 +25,25 @@ export class PostService {
     return this.postRepository.save({ userId: userId, ...dto });
   }
 
-  getPosts(paginateOptions: PaginateArgs, searchOptions: SearchArgs, sortArgs: SortArgs) {
-    return this.postRepository.getPosts(paginateOptions, searchOptions, sortArgs);
+  getPosts(
+    paginateOptions: PaginateArgs,
+    searchOptions: SearchArgs,
+    sortArgs: SortArgs,
+    filterPostArgs: FilterArgs,
+  ) {
+    return this.postRepository.getPosts(
+      paginateOptions,
+      searchOptions,
+      sortArgs,
+      filterPostArgs,
+    );
   }
 
   getUserPosts(userId: number, paginateArgs: PaginateArgs) {
     return this.postRepository.getUserPosts(userId, paginateArgs);
   }
 
-  async updatePost(
-    dto: UpdatePostInput,
-  ): Promise<PostModel> {
+  async updatePost(dto: UpdatePostInput): Promise<PostModel> {
     const post: PostModel = await this.postRepository.findOne(dto.postId);
     if (!post) {
       throw new NotFoundException();
