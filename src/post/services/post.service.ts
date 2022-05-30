@@ -9,6 +9,7 @@ import {
 } from 'nestjs-typeorm-paginate';
 import { PaginateArgs } from '../../common/args/paginate.args';
 import { SearchArgs } from '../args/search-post.args';
+import { SortArgs } from 'src/common/args/sort.args';
 
 @Injectable()
 export class PostService {
@@ -22,8 +23,8 @@ export class PostService {
     return this.postRepository.save({ userId: userId, ...dto });
   }
 
-  getPosts(paginateOptions: PaginateArgs, searchOptions: SearchArgs) {
-    return this.postRepository.getPosts(paginateOptions, searchOptions);
+  getPosts(paginateOptions: PaginateArgs, searchOptions: SearchArgs, sortArgs: SortArgs) {
+    return this.postRepository.getPosts(paginateOptions, searchOptions, sortArgs);
   }
 
   getUserPosts(userId: number, paginateArgs: PaginateArgs) {

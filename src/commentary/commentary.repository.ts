@@ -24,7 +24,7 @@ export class CommentaryRepository extends Repository<CommentaryEntity> {
         qb.orderBy('comments.createdAt', sortArgs.order);
         break;
       case Sort.LIKES:
-        qb.addSelect('COUNT(comments.id) as likesCount')
+        qb.addSelect('COUNT(reactions.reaction) as likesCount')
           .leftJoin(
             'comments.reactions',
             'reactions',

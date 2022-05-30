@@ -110,7 +110,7 @@ type CommentaryReactionModel {
 
 type Query {
   getUsers: [UserModel!]!
-  getPosts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean, searchValue: String): PaginatedPost!
+  getPosts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean, searchValue: String, sort: Sort = CREATEDAT, order: Order = DESC): PaginatedPost!
   login(loginUserArgs: CreateUserInput!): AuthResponse!
 }
 
