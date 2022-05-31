@@ -16,7 +16,7 @@ export class PostRepository extends Repository<PostEntity> {
     paginateOptions: PaginateArgs,
     searchOptions: SearchArgs,
     sortArgs: SortArgs,
-    filterPostArgs: FilterArgs
+    filterPostArgs: FilterArgs,
   ) {
     const qb = this.getQueryBuider(searchOptions, sortArgs, filterPostArgs);
     return this.getPaginate(qb, paginateOptions);
@@ -33,63 +33,58 @@ export class PostRepository extends Repository<PostEntity> {
   private getQueryBuider(
     searchOptions: SearchArgs,
     sortArgs: SortArgs,
-    filterPostArgs: FilterArgs
+    filterPostArgs: FilterArgs,
   ) {
     const qb = this.createQueryBuilder();
-    if(filterPostArgs) {
-      if (filterPostArgs.tags) {
-        qb.andWhere(':...tags = ANY(tags)', { tags: filterPostArgs.tags });
+    if (filterPostArgs.tags) {
+      qb.andWhere(':...tags = ANY(tags)', { tags: filterPostArgs.tags });
+    }
+    if (filterPostArgs.group) {
+      switch (filterPostArgs.group) {
+        case Group.BEST:
+          qb.innerJoin(
+            'PostEntity.reactions',
+            'reactions',
+            "reactions.reaction = :react AND reactions.createdAt >= Now() - INTERVAL '24 hours'",
+            { react: Reaction.LIKE },
+          );
+          break;
+        case Group.FRESH:
+          qb.andWhere("PostEntity.createdAt >= Now() - INTERVAL '24 hours'");
+          break;
+        case Group.HOT:
+          qb.innerJoin(
+            'PostEntity.commentaries',
+            'commentaries',
+            "commentaries.createdAt >= Now() - INTERVAL '24 hours'",
+          );
+          break;
       }
-      if(filterPostArgs.group) {
-        switch (filterPostArgs.group) {
-          case Group.BEST:
-            qb
-            .innerJoin(
-              'PostEntity.reactions',
-              'reactions',
-              "reactions.reaction = :react AND reactions.createdAt >= Now() - INTERVAL '24 hours'",
-              { react: Reaction.LIKE },
-            )
-            break;
-          case Group.FRESH:
-            qb.andWhere("PostEntity.createdAt >= Now() - INTERVAL '24 hours'");
-            break;
-          case Group.HOT:
-            qb
-            .innerJoin(
-              'PostEntity.commentaries',
-              'commentaries',
-              "commentaries.createdAt >= Now() - INTERVAL '24 hours'"
-            )
-            break;
-        }
-      }
-  
     }
     if (searchOptions.searchValue) {
       qb.andWhere('title LIKE :searchValue', {
         searchValue: `%${searchOptions.searchValue}%`,
       });
     }
-    if (sortArgs) {
-      switch (sortArgs.sort) {
-        case Sort.CREATEDAT:
-          qb.orderBy('PostEntity.createdAt', sortArgs.order);
-          break;
-        case Sort.LIKES:
-          qb.addSelect('COUNT(likes_reactions.reaction) as likesCount')
-            .leftJoin(
-              'PostEntity.reactions',
-              'likes_reactions',
-              'likes_reactions.reaction = :react',
-              { react: Reaction.LIKE },
-            )
-            .groupBy('PostEntity.id')
-            .orderBy('likesCount', sortArgs.order);
-          break;
-      }
+    switch (sortArgs.sort) {
+      case Sort.CREATEDAT:
+        qb.orderBy('PostEntity.createdAt', sortArgs.order);
+        break;
+      case Sort.LIKES:
+        qb.addSelect('COUNT(likes_reactions.reaction) as likesCount')
+          .leftJoin(
+            'PostEntity.reactions',
+            'likes_reactions',
+            filterPostArgs.group
+            ?"likes_reactions.reaction = :react AND likes_reactions.createdAt >= Now() - INTERVAL '24 hours'"
+            :'likes_reactions.reaction = :react',
+            { react: Reaction.LIKE },
+          )
+          .groupBy('PostEntity.id')
+          .orderBy('likesCount', sortArgs.order);
+        break;
     }
-    
+
     return qb;
   }
 
