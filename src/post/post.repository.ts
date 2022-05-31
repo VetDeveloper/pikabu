@@ -40,14 +40,16 @@ export class PostRepository extends Repository<PostEntity> {
       qb.andWhere(':...tags = ANY(tags)', { tags: filterPostArgs.tags });
     }
     if (filterPostArgs.group) {
+
       switch (filterPostArgs.group) {
         case Group.BEST:
+          qb.addSelect('COUNT(reactions.id) as group_count')
           qb.innerJoin(
             'PostEntity.reactions',
             'reactions',
             "reactions.reaction = :react AND reactions.createdAt >= Now() - INTERVAL '24 hours'",
             { react: Reaction.LIKE },
-          );
+          ).groupBy('PostEntity.id');
           break;
         case Group.FRESH:
           qb.andWhere("PostEntity.createdAt >= Now() - INTERVAL '24 hours'");
@@ -57,7 +59,7 @@ export class PostRepository extends Repository<PostEntity> {
             'PostEntity.commentaries',
             'commentaries',
             "commentaries.createdAt >= Now() - INTERVAL '24 hours'",
-          );
+          ).groupBy('PostEntity.id')
           break;
       }
     }
@@ -71,17 +73,19 @@ export class PostRepository extends Repository<PostEntity> {
         qb.orderBy('PostEntity.createdAt', sortArgs.order);
         break;
       case Sort.LIKES:
-        qb.addSelect('COUNT(likes_reactions.reaction) as likesCount')
+        filterPostArgs.group === Group.BEST?
+        qb
+        .orderBy('group_count', sortArgs.order)
+        :qb.addSelect('COUNT(likes_reactions.reaction) as likesCount')
           .leftJoin(
             'PostEntity.reactions',
             'likes_reactions',
-            filterPostArgs.group
-            ?"likes_reactions.reaction = :react AND likes_reactions.createdAt >= Now() - INTERVAL '24 hours'"
-            :'likes_reactions.reaction = :react',
+            'likes_reactions.reaction = :react',
             { react: Reaction.LIKE },
           )
           .groupBy('PostEntity.id')
-          .orderBy('likesCount', sortArgs.order);
+          .orderBy('likesCount', sortArgs.order)
+          
         break;
     }
 

@@ -15,6 +15,7 @@ import { PostLoader } from './post/dataloader/post.loader';
 import { PostReactionModule } from './post-reaction/post-reaction.module';
 import { CommentaryModule } from './commentary/commentary.module';
 import { CommentReactionModule } from './comment-reaction/comment-reaction.module';
+import { FavouritesModule } from './favourites/favourites.module';
 
 @Module({
   imports: [
@@ -52,7 +53,8 @@ import { CommentReactionModule } from './comment-reaction/comment-reaction.modul
     PostModule,
     PostReactionModule,
     CommentaryModule,
-    CommentReactionModule
+    CommentReactionModule,
+    FavouritesModule,
   ],
   providers: [
     {

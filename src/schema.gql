@@ -108,6 +108,18 @@ type CommentaryReactionModel {
   updatedAt: DateTime!
 }
 
+type FavouriteModel {
+  id: ID!
+  userId: Int!
+  entityId: Int!
+  entityType: EntityType!
+}
+
+enum EntityType {
+  POST
+  COMMENTARY
+}
+
 type Query {
   getUsers: [UserModel!]!
   getPosts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean, searchValue: String, sort: Sort = CREATEDAT, order: Order = DESC, tags: [String!], group: Group): PaginatedPost!
@@ -142,6 +154,7 @@ type Mutation {
   createCommentaryReaction(createCommentaryReactionInput: CreateCommentaryReactionInput!): CommentaryReactionModel!
   updateCommentaryReaction(updateCommentaryReactionInput: UpdateCommentaryReactionInput!): CommentaryReactionModel!
   deleteCommentaryReaction(id: Int!): CommentaryReactionModel!
+  createFavourite(createFavouriteInput: CreateFavouriteInput!): FavouriteModel!
 }
 
 input UpdateUserInput {
@@ -200,4 +213,9 @@ input CreateCommentaryReactionInput {
 input UpdateCommentaryReactionInput {
   reaction: Reaction
   commentaryReactionId: Int!
+}
+
+input CreateFavouriteInput {
+  entityId: Int!
+  entityType: EntityType!
 }
