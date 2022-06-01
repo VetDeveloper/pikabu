@@ -46,6 +46,8 @@ import { FavouritesModule } from './favourites/favourites.module';
         entities: ['dist/**/*.entity.js'],
         synchronize: configService.get<boolean>('DB_SYNCHRONIZE'),
         logging: true,
+        factories: ['dist/**/database/factories/**/*.js'],
+        seeds: ['dist/**/database/seeds/**/*.js'],
       }),
     }),
     UserModule,
