@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentaryModule } from 'src/commentary/commentary.module';
 import { FavouritesRepository } from 'src/favourites/favourites.repository';
+import { PostReactionModule } from 'src/post-reaction/post-reaction.module';
 import { UserLoader } from 'src/user/dataloader/user.loader';
 import { UserRepository } from 'src/user/user.repository';
 import { PostRepository } from './post.repository';
@@ -25,6 +26,7 @@ import { PostService } from './services/post.service';
       FavouritesRepository,
     ]),
     CommentaryModule,
+    PostReactionModule
   ],
   exports: [PostService],
 })

@@ -2,6 +2,39 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CommentaryReactionModel {
+  id: ID!
+  reaction: Reaction!
+  userId: Int!
+  commentaryId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: UserModel!
+  commentary: CommentaryModel!
+}
+
+enum Reaction {
+  LIKE
+  DISLIKE
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UserModel {
+  id: ID!
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  posts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedPost!
+  postReactions(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedPostReaction!
+  commentaries(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentary!
+  commentaryReactions(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentaryReaction!
+  favourites(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedFavourite!
+}
+
 type ImageModel {
   order: Int!
   link: String!
@@ -15,12 +48,10 @@ type CommentaryModel {
   postId: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
+  user: UserModel!
+  post: PostModel!
+  reactions(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentaryReaction!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type PostModel {
   id: ID!
@@ -33,6 +64,7 @@ type PostModel {
   updatedAt: DateTime!
   user: UserModel!
   commentaries(sort: Sort = CREATEDAT, order: Order = DESC, limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentary!
+  postReaction(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedPostReaction!
 }
 
 enum Sort {
@@ -45,17 +77,8 @@ enum Order {
   DESC
 }
 
-type UserModel {
-  id: ID!
-  email: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  posts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedPost!
-  favourites(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedFavourite!
-}
-
-type PaginatedCommentary {
-  items: [CommentaryModel!]!
+type PaginatedCommentaryReaction {
+  items: [CommentaryReactionModel!]!
   meta: MetaType!
   links: LinksType!
 }
@@ -75,6 +98,29 @@ type LinksType {
   last: String!
 }
 
+type PostReactionModel {
+  id: ID!
+  reaction: Reaction!
+  userId: Int!
+  postId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: UserModel!
+  post: PostModel!
+}
+
+type PaginatedCommentary {
+  items: [CommentaryModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
+type PaginatedPostReaction {
+  items: [PostReactionModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
 type PaginatedPost {
   items: [PostModel!]!
   meta: MetaType!
@@ -86,6 +132,7 @@ type FavouriteModel {
   userId: Int!
   entityId: Int!
   entityType: EntityType!
+  user: UserModel!
 }
 
 enum EntityType {
@@ -102,29 +149,6 @@ type PaginatedFavourite {
 type AuthResponse {
   user: UserModel!
   accessToken: String!
-}
-
-type PostReactionModel {
-  id: ID!
-  reaction: Reaction!
-  userId: Int!
-  postId: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-enum Reaction {
-  LIKE
-  DISLIKE
-}
-
-type CommentaryReactionModel {
-  id: ID!
-  reaction: Reaction!
-  userId: Int!
-  commentaryId: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
 }
 
 type Query {
@@ -154,15 +178,15 @@ type Mutation {
   createCommentary(CreateCommentaryInput: CreateCommentaryInput!): CommentaryModel!
   updateCommentary(updateCommentaryInput: UpdateCommentaryInput!): CommentaryModel!
   deleteCommentary(id: Int!): CommentaryModel!
-  createFavourite(createFavouriteInput: CreateFavouriteInput!): FavouriteModel!
-  deleteFavourite(id: Int!): FavouriteModel!
-  registrateNewUser(newUserArgs: CreateUserInput!): AuthResponse!
-  createPostReaction(createPostReactionInput: CreatePostReactionInput!): PostReactionModel!
-  updatePostReaction(updatePostReactionInput: UpdatePostReactionInput!): PostReactionModel!
-  deletePostReaction(id: Int!): PostReactionModel!
   createCommentaryReaction(createCommentaryReactionInput: CreateCommentaryReactionInput!): CommentaryReactionModel!
   updateCommentaryReaction(updateCommentaryReactionInput: UpdateCommentaryReactionInput!): CommentaryReactionModel!
   deleteCommentaryReaction(id: Int!): CommentaryReactionModel!
+  createPostReaction(createPostReactionInput: CreatePostReactionInput!): PostReactionModel!
+  updatePostReaction(updatePostReactionInput: UpdatePostReactionInput!): PostReactionModel!
+  deletePostReaction(id: Int!): PostReactionModel!
+  createFavourite(createFavouriteInput: CreateFavouriteInput!): FavouriteModel!
+  deleteFavourite(id: Int!): FavouriteModel!
+  registrateNewUser(newUserArgs: CreateUserInput!): AuthResponse!
 }
 
 input UpdateUserInput {
@@ -203,9 +227,14 @@ input UpdateCommentaryInput {
   id: Int!
 }
 
-input CreateFavouriteInput {
-  entityId: Int!
-  entityType: EntityType!
+input CreateCommentaryReactionInput {
+  reaction: Reaction!
+  commentaryId: Int!
+}
+
+input UpdateCommentaryReactionInput {
+  reaction: Reaction
+  commentaryReactionId: Int!
 }
 
 input CreatePostReactionInput {
@@ -218,12 +247,7 @@ input UpdatePostReactionInput {
   id: Int!
 }
 
-input CreateCommentaryReactionInput {
-  reaction: Reaction!
-  commentaryId: Int!
-}
-
-input UpdateCommentaryReactionInput {
-  reaction: Reaction
-  commentaryReactionId: Int!
+input CreateFavouriteInput {
+  entityId: Int!
+  entityType: EntityType!
 }

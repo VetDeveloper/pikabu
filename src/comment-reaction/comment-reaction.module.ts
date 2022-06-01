@@ -6,8 +6,13 @@ import { CommentariReactionResolver } from './resolvers/commentary-reaction.reso
 import { CommentaryReactionService } from './services/commentary-reaction.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CommentaryReactionRepository, CommentaryRepository])],
+  imports: [
+    TypeOrmModule.forFeature([
+      CommentaryReactionRepository,
+      CommentaryRepository,
+    ]),
+  ],
   providers: [CommentariReactionResolver, CommentaryReactionService],
-  exports: [],
+  exports: [CommentaryReactionService],
 })
-export class CommentReactionModule {}
+export class CommentaryReactionModule {}

@@ -11,6 +11,10 @@ import { UserService } from './services/user.service';
 import { UserQueryResolver } from './resolvers/query/user-query.resolver';
 import { UserMutationResolver } from './resolvers/mutation/user-mutation.resolver';
 import { FavouritesModule } from 'src/favourites/favourites.module';
+import { PostReactionModule } from 'src/post-reaction/post-reaction.module';
+import { CommentaryReactionModel } from 'src/comment-reaction/models/commentary-reaction.model';
+import { CommentaryModule } from 'src/commentary/commentary.module';
+import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.module';
 
 @Module({
   providers: [
@@ -33,7 +37,10 @@ import { FavouritesModule } from 'src/favourites/favourites.module';
       }),
     }),
     PostModule,
-    FavouritesModule
+    FavouritesModule,
+    PostReactionModule,
+    CommentaryReactionModule,
+    CommentaryModule
   ],
   exports: [UserService],
 })

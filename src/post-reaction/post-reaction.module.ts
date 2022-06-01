@@ -8,6 +8,6 @@ import { PostReactionService } from "./services/post-reaction.service";
 @Module({
   providers: [PostReactionService, PostReactionResolver],
   imports: [TypeOrmModule.forFeature([PostReactionRepository, PostRepository])],
-  exports: [],
+  exports: [PostReactionService],
 })
 export class PostReactionModule {}

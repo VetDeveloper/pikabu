@@ -38,4 +38,12 @@ export class CommentaryRepository extends Repository<CommentaryEntity> {
 
     return paginate<CommentaryModel>(qb, paginateArgs);
   }
+
+  getUserCommentaries(userId: number, paginateArgs: PaginateArgs) {
+    const qb = this.createQueryBuilder('com');
+    qb.andWhere('com.userId = :userId', {
+      userId: userId,
+    });
+    return paginate<CommentaryModel>(qb, paginateArgs);
+  }
 }

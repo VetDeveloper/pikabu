@@ -10,6 +10,7 @@ import { CreatePostReactionInput } from '../inputs/create-post-reaction.input';
 import { PostReactionRepository } from '../post-reaction.repository';
 import { Reaction } from '../../common/enums/reaction.enum';
 import { UpdatePostReactionInput } from '../inputs/update-post-reaction.args';
+import { PaginateArgs } from 'src/common/args/paginate.args';
 
 @Injectable()
 export class PostReactionService {
@@ -70,5 +71,13 @@ export class PostReactionService {
 
     await this.postReactionRepository.remove(postReaction);
     return postReaction;
+  }
+
+  getUserPostReactions(userId: number, paginateArgs: PaginateArgs) {
+    return this.postReactionRepository.getUserPostReactions(userId, paginateArgs);
+  }
+
+  getPostReaction(postId: number, paginateArgs: PaginateArgs) {
+    return this.postReactionRepository.getPostReaction(postId, paginateArgs);
   }
 }

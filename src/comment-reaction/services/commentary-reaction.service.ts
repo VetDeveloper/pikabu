@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { CommentaryRepository } from 'src/commentary/commentary.repository';
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
+import { PaginateArgs } from 'src/common/args/paginate.args';
 import { CommentaryReactionRepository } from '../comment-reaction.repository';
 import { CommentaryReactionEntity } from '../entities/comment-reaction.entity';
 import { CreateCommentaryReactionInput } from '../inputs/create-commentary-reaction.model';
@@ -73,5 +74,13 @@ export class CommentaryReactionService {
 
     await this.commentaryReactionRepository.remove(commentaryReaction);
     return commentaryReaction;
+  }
+
+  getUserCommentaryReactions(userId: number, paginateArgs: PaginateArgs) {
+    return this.commentaryReactionRepository.getUserCommentaryReactions(userId, paginateArgs);
+  }
+
+  getCommentaryReactions(commentId: number, paginateArgs: PaginateArgs) {
+    return this.commentaryReactionRepository.getCommentaryReactions(commentId, paginateArgs);
   }
 }

@@ -9,10 +9,12 @@ import { PaginatedCommentary } from 'src/commentary/models/paginated-commentaty.
 import { CommentaryService } from 'src/commentary/services/commentary.service';
 import { SortArgs } from 'src/common/args/sort.args';
 import { PaginateArgs } from 'src/common/args/paginate.args';
+import { PaginatedPostReaction } from 'src/post-reaction/models/paginated-post-reaction.model';
+import { PostReactionService } from 'src/post-reaction/services/post-reaction.service';
 
 @Resolver(() => PostModel)
 export class PostResolver {
-  constructor(private comServ: CommentaryService) {}
+  constructor(private comServ: CommentaryService, private postReactionService: PostReactionService) {}
 
   @ResolveField(() => UserModel)
   user(
@@ -29,5 +31,13 @@ export class PostResolver {
     @Args() paginateArtgs: PaginateArgs,
   ) {
     return this.comServ.getPostCommentaries(post.id, sortArgs, paginateArtgs);
+  }
+
+  @ResolveField(() => PaginatedPostReaction)
+  postReaction(
+    @Parent() post: PostModel,
+    @Args() paginateArtgs: PaginateArgs,
+  ) {
+    return this.postReactionService.getPostReaction(post.id, paginateArtgs);
   }
 }

@@ -14,7 +14,7 @@ import { DataLoaderInterceptor } from '@app/dataloader';
 import { PostLoader } from './post/dataloader/post.loader';
 import { PostReactionModule } from './post-reaction/post-reaction.module';
 import { CommentaryModule } from './commentary/commentary.module';
-import { CommentReactionModule } from './comment-reaction/comment-reaction.module';
+import { CommentaryReactionModule } from './comment-reaction/comment-reaction.module';
 import { FavouritesModule } from './favourites/favourites.module';
 
 @Module({
@@ -53,7 +53,7 @@ import { FavouritesModule } from './favourites/favourites.module';
     PostModule,
     PostReactionModule,
     CommentaryModule,
-    CommentReactionModule,
+    CommentaryReactionModule,
     FavouritesModule,
   ],
   providers: [

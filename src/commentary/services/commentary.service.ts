@@ -66,4 +66,8 @@ export class CommentaryService {
     }
     return this.commentaryRepository.getPostCommentaries(postId, sortArgs, paginateArgs);
   }
+
+  getUserCommentaries(userId: number, paginateArgs: PaginateArgs) {
+    return this.commentaryRepository.getUserCommentaries(userId, paginateArgs);
+  }
 }
