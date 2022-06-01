@@ -13,25 +13,26 @@ export class FavouriteService {
   constructor(
     private favouritesRepository: FavouritesRepository,
     private postRepository: PostRepository,
-    private commentaryRepository: CommentaryRepository
-    ) {}
+    private commentaryRepository: CommentaryRepository,
+  ) {}
 
   async createFavourite(
     userId: number,
     dto: CreateFavouriteInput,
   ): Promise<FavouritesEntity> {
-
-    
-    switch(dto.entityType) {
+    switch (dto.entityType) {
       case EntityType.POST:
-        const post : PostEntity = await this.postRepository.findOne(dto.entityId);
-        if(!post) {
+        const post: PostEntity = await this.postRepository.findOne(
+          dto.entityId,
+        );
+        if (!post) {
           throw new NotFoundException();
         }
         break;
       case EntityType.COMMENTARY:
-        const commentary: CommentaryEntity = await this.commentaryRepository.findOne(dto.entityId)
-        if(!commentary) {
+        const commentary: CommentaryEntity =
+          await this.commentaryRepository.findOne(dto.entityId);
+        if (!commentary) {
           throw new NotFoundException();
         }
         break;

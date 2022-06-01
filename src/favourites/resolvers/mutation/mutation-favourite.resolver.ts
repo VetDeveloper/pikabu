@@ -20,4 +20,6 @@ export class FavouriteMutationResolver {
         return this.favouriteService.createFavourite(userId, createFavouriteInput);
     }
 
+    
+
 }
