@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CommentaryRepository } from 'src/commentary/commentary.repository';
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
+import { PaginateArgs } from 'src/common/args/paginate.args';
 import { PostEntity } from 'src/post/entities/post.entity';
 import { PostRepository } from 'src/post/post.repository';
 import { FavouritesEntity } from '../entities/favourites.entity';
@@ -51,5 +52,9 @@ export class FavouriteService {
     }
     await this.favouritesRepository.delete(id);
     return entity;
+  }
+
+  getUserFavourites(userId: number, paginateArgs: PaginateArgs) {
+    return this.favouritesRepository.getUserFavourites(userId, paginateArgs);
   }
 }

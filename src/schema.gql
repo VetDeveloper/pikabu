@@ -51,6 +51,7 @@ type UserModel {
   createdAt: DateTime!
   updatedAt: DateTime!
   posts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedPost!
+  favourites(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedFavourite!
 }
 
 type PaginatedCommentary {
@@ -76,6 +77,24 @@ type LinksType {
 
 type PaginatedPost {
   items: [PostModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
+type FavouriteModel {
+  id: ID!
+  userId: Int!
+  entityId: Int!
+  entityType: EntityType!
+}
+
+enum EntityType {
+  POST
+  COMMENTARY
+}
+
+type PaginatedFavourite {
+  items: [FavouriteModel!]!
   meta: MetaType!
   links: LinksType!
 }
@@ -108,18 +127,6 @@ type CommentaryReactionModel {
   updatedAt: DateTime!
 }
 
-type FavouriteModel {
-  id: ID!
-  userId: Int!
-  entityId: Int!
-  entityType: EntityType!
-}
-
-enum EntityType {
-  POST
-  COMMENTARY
-}
-
 type Query {
   getUsers: [UserModel!]!
   getPosts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean, searchValue: String, sort: Sort = CREATEDAT, order: Order = DESC, tags: [String!], group: Group): PaginatedPost!
@@ -147,6 +154,8 @@ type Mutation {
   createCommentary(CreateCommentaryInput: CreateCommentaryInput!): CommentaryModel!
   updateCommentary(updateCommentaryInput: UpdateCommentaryInput!): CommentaryModel!
   deleteCommentary(id: Int!): CommentaryModel!
+  createFavourite(createFavouriteInput: CreateFavouriteInput!): FavouriteModel!
+  deleteFavourite(id: Int!): FavouriteModel!
   registrateNewUser(newUserArgs: CreateUserInput!): AuthResponse!
   createPostReaction(createPostReactionInput: CreatePostReactionInput!): PostReactionModel!
   updatePostReaction(updatePostReactionInput: UpdatePostReactionInput!): PostReactionModel!
@@ -154,8 +163,6 @@ type Mutation {
   createCommentaryReaction(createCommentaryReactionInput: CreateCommentaryReactionInput!): CommentaryReactionModel!
   updateCommentaryReaction(updateCommentaryReactionInput: UpdateCommentaryReactionInput!): CommentaryReactionModel!
   deleteCommentaryReaction(id: Int!): CommentaryReactionModel!
-  createFavourite(createFavouriteInput: CreateFavouriteInput!): FavouriteModel!
-  deleteFavourite(id: Float!): FavouriteModel!
 }
 
 input UpdateUserInput {
@@ -196,6 +203,11 @@ input UpdateCommentaryInput {
   id: Int!
 }
 
+input CreateFavouriteInput {
+  entityId: Int!
+  entityType: EntityType!
+}
+
 input CreatePostReactionInput {
   reaction: Reaction!
   postId: Int!
@@ -214,9 +226,4 @@ input CreateCommentaryReactionInput {
 input UpdateCommentaryReactionInput {
   reaction: Reaction
   commentaryReactionId: Int!
-}
-
-input CreateFavouriteInput {
-  entityId: Int!
-  entityType: EntityType!
 }

@@ -1,9 +1,9 @@
-import { ArgsType, Field } from "@nestjs/graphql";
+import { ArgsType, Field, Int } from "@nestjs/graphql";
 import { IsInt, IsPositive } from "class-validator";
 
 @ArgsType()
 export class DeleteFavouriteArgs {
-    @Field()
+    @Field(() => Int)
     @IsInt()
     @IsPositive()
     id: number;

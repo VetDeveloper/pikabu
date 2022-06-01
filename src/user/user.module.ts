@@ -10,9 +10,16 @@ import { UserResolver } from './resolvers/user.resolver';
 import { UserService } from './services/user.service';
 import { UserQueryResolver } from './resolvers/query/user-query.resolver';
 import { UserMutationResolver } from './resolvers/mutation/user-mutation.resolver';
+import { FavouritesModule } from 'src/favourites/favourites.module';
 
 @Module({
-  providers: [UserService, UserResolver, UserQueryResolver, UserMutationResolver, PostLoader],
+  providers: [
+    UserService,
+    UserResolver,
+    UserQueryResolver,
+    UserMutationResolver,
+    PostLoader,
+  ],
   imports: [
     TypeOrmModule.forFeature([UserRepository, PostRepository]),
     JwtModule.registerAsync({
@@ -26,6 +33,7 @@ import { UserMutationResolver } from './resolvers/mutation/user-mutation.resolve
       }),
     }),
     PostModule,
+    FavouritesModule
   ],
   exports: [UserService],
 })
