@@ -43,4 +43,13 @@ export class FavouriteService {
       userId: userId,
     });
   }
+
+  async deleteOne(id: number) {
+    const entity: FavouritesEntity = await this.favouritesRepository.findOne(id);
+    if(!entity) {
+      throw new NotFoundException();
+    }
+    await this.favouritesRepository.delete(id);
+    return entity;
+  }
 }

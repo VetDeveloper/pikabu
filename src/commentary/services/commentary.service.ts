@@ -48,6 +48,9 @@ export class CommentaryService {
   async deleteCommentary(id: number) {
     const commentaty: CommentaryEntity =
       await this.commentaryRepository.findOne(id);
+    if(!commentaty) {
+      throw new NotFoundException()
+    }
     await this.commentaryRepository.delete(id);
     return commentaty;
   }

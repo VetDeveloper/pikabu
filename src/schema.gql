@@ -155,6 +155,7 @@ type Mutation {
   updateCommentaryReaction(updateCommentaryReactionInput: UpdateCommentaryReactionInput!): CommentaryReactionModel!
   deleteCommentaryReaction(id: Int!): CommentaryReactionModel!
   createFavourite(createFavouriteInput: CreateFavouriteInput!): FavouriteModel!
+  deleteFavourite(id: Float!): FavouriteModel!
 }
 
 input UpdateUserInput {
