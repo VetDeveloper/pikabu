@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentaryModule } from 'src/commentary/commentary.module';
+import { FavouritesRepository } from 'src/favourites/favourites.repository';
 import { UserLoader } from 'src/user/dataloader/user.loader';
 import { UserRepository } from 'src/user/user.repository';
 import { PostRepository } from './post.repository';
@@ -10,8 +11,21 @@ import { PostQueryResolver } from './resolvers/query/post-query.resolver';
 import { PostService } from './services/post.service';
 
 @Module({
-  providers: [PostService, PostResolver, PostQueryResolver, PostMutationResolver, UserLoader],
-  imports: [TypeOrmModule.forFeature([PostRepository, UserRepository]), CommentaryModule],
-  exports: [PostService]
+  providers: [
+    PostService,
+    PostResolver,
+    PostQueryResolver,
+    PostMutationResolver,
+    UserLoader,
+  ],
+  imports: [
+    TypeOrmModule.forFeature([
+      PostRepository,
+      UserRepository,
+      FavouritesRepository,
+    ]),
+    CommentaryModule,
+  ],
+  exports: [PostService],
 })
 export class PostModule {}

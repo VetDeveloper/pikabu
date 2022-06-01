@@ -12,10 +12,14 @@ import { PaginateArgs } from '../../common/args/paginate.args';
 import { SearchArgs } from '../args/search-post.args';
 import { SortArgs } from 'src/common/args/sort.args';
 import { FilterArgs } from '../args/filter-post.args';
+import { FavouritesRepository } from 'src/favourites/favourites.repository';
 
 @Injectable()
 export class PostService {
-  constructor(private postRepository: PostRepository) {}
+  constructor(
+    private postRepository: PostRepository,
+    private favouriteRepository: FavouritesRepository,
+  ) {}
 
   getPostsByIds(ids: number[]) {
     return this.postRepository.findByIds(ids);
@@ -56,6 +60,7 @@ export class PostService {
     if (!post) {
       throw new NotFoundException();
     }
+    await this.favouriteRepository.deletePostFavourites(postId)
     await this.postRepository.delete(postId);
     return post;
   }
