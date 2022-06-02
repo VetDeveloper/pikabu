@@ -146,13 +146,19 @@ type PaginatedFavourite {
   links: LinksType!
 }
 
+type PaginatedUsers {
+  items: [UserModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
 type AuthResponse {
   user: UserModel!
   accessToken: String!
 }
 
 type Query {
-  getUsers: [UserModel!]!
+  getUsers(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedUsers!
   getPosts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean, searchValue: String, sort: Sort = CREATEDAT, order: Order = DESC, tags: [String!], group: Group): PaginatedPost!
   login(loginUserArgs: CreateUserInput!): AuthResponse!
 }

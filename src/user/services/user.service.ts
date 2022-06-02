@@ -4,6 +4,8 @@ import * as bcrypt from 'bcryptjs';
 import { CreateUserInput } from '../inputs/create-user.input';
 import { UserEntity } from '../entities/user.entity';
 import { UpdateUserInput } from '../inputs/update-user.input';
+import { PaginateArgs } from 'src/common/args/paginate.args';
+import { PaginatedUsers } from '../models/paginated-users.model';
 
 @Injectable()
 export class UserService {
@@ -13,8 +15,8 @@ export class UserService {
     return this.userRepository.getUserByEmail(email);
   }
 
-  getAllUsers(): Promise<UserEntity[]> {
-    return this.userRepository.find();
+  getAllUsers(paginateArgs: PaginateArgs): Promise<PaginatedUsers> {
+    return this.userRepository.getUsers(paginateArgs);
   }
 
   async deleteUser(id : number) : Promise<UserEntity> {

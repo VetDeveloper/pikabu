@@ -27,6 +27,6 @@ export class PaginateArgs {
 }
 
 export const defaultPaginateInput: PaginateArgs = {
-  limit: 20,
+  limit: 15,
   page: 1
 };
