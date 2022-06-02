@@ -15,12 +15,7 @@ export default class InitialDatabaseSeed implements Seeder {
     const postsCount: number = 10;
     const commentariesCount: number = postsCount;
 
-    const users: UserEntity[] = await factory(UserEntity)()
-      .map(async (user) => {
-        user.password = await bcrypt.hash(user.password, 5);
-        return user;
-      })
-      .createMany(usersCount);
+    const users: UserEntity[] = await factory(UserEntity)().createMany(usersCount);
 
     const posts: PostEntity[] = await factory(PostEntity)()
       .map(async (post) => {
