@@ -23,13 +23,12 @@ export abstract class OwnerGuard<Entity extends { userId: number }>
     const idItem = body.variables[this.idParam];
 
     if (!idItem) {
-      throw new BadRequestException(`Не найден query variable ${this.idParam} для совершения операции`)
+      throw new BadRequestException(`Query variable ${this.idParam} not found to make an operation`)
     }
 
     const repo: Repository<Entity> = getRepository(this.entity);
 
     const item: Entity | undefined = await repo.findOne(idItem);
-    console.log("idItem: ", idItem)
 
     if (!item) {
       throw new NotFoundException()

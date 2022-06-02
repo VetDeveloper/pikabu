@@ -25,7 +25,7 @@ export class PostReactionService {
   ): Promise<PostReactionEntity> {
     const post: PostEntity = await this.postRepository.findOne(dto.postId);
     if (!post) {
-      throw new NotFoundException('Поста с таким id не найден');
+      throw new NotFoundException('Post not found');
     }
 
     const alreadyExist: PostReactionEntity =
@@ -36,7 +36,7 @@ export class PostReactionService {
 
     if (alreadyExist) {
       throw new BadRequestException(
-        'Рекция от данного пользователя к этому посту уже существует',
+        'A comment from this user to this post already exists',
       );
     }
 
@@ -50,7 +50,7 @@ export class PostReactionService {
       await this.postReactionRepository.findOne(dto.id);
 
     if (!postReaction) {
-      throw new NotFoundException('Рекция не найдена');
+      throw new NotFoundException('Reaction not found');
     }
 
     const newReaction = dto.reaction ? dto.reaction : postReaction.reaction;
@@ -66,7 +66,7 @@ export class PostReactionService {
       await this.postReactionRepository.findOne(id);
 
     if (!postReaction) {
-      throw new NotFoundException('Рекция не найдена');
+      throw new NotFoundException('Reaction not found');
     }
 
     await this.postReactionRepository.remove(postReaction);

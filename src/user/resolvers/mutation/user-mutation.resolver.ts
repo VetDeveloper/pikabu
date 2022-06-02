@@ -27,7 +27,6 @@ export class UserMutationResolver {
 
   @Mutation(() => UserModel)
   deleteUser(@GetUser('id') id: number) {
-    console.log(id)
     return this.userService.deleteUser(id);
   }
 }

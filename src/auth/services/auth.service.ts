@@ -27,7 +27,7 @@ export class AuthService {
     );
     if (alreadyExist) {
       throw new BadRequestException(
-        'Пользователь с таким email уже зарегистрирован',
+        'User with this email is already registered',
       );
     }
     const newUser: UserEntity = await this.userService.registrateOneUser(dto);

@@ -26,7 +26,7 @@ export class CommentaryReactionService {
       await this.commentaryRepository.findOne(input.commentaryId);
 
     if (!commentary) {
-      throw new NotFoundException('Комментарий с таким id не найден');
+      throw new NotFoundException('Commentary with this id was not found');
     }
 
     const alreadyExist: CommentaryReactionEntity =
@@ -37,7 +37,7 @@ export class CommentaryReactionService {
 
     if (alreadyExist) {
       throw new BadRequestException(
-        'Рекция от данного пользователя к этому комментарию уже существует',
+        'A comment from this user already exists for this comment',
       );
     }
 
@@ -51,7 +51,7 @@ export class CommentaryReactionService {
       );
 
     if (!commentaryReaction) {
-      throw new NotFoundException('Рекция не найдена');
+      throw new NotFoundException('Reaction not found');
     }
 
     const newReaction = input.reaction
@@ -69,7 +69,7 @@ export class CommentaryReactionService {
       await this.commentaryReactionRepository.findOne(id);
 
     if (!commentaryReaction) {
-      throw new NotFoundException('Рекция не найдена');
+      throw new NotFoundException('Reaction not found');
     }
 
     await this.commentaryReactionRepository.remove(commentaryReaction);

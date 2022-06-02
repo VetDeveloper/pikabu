@@ -25,7 +25,7 @@ export class CommentaryService {
   ): Promise<CommentaryEntity> {
     const post: PostEntity = await this.postRepository.findOne(dto.postId);
     if (!post) {
-      throw new NotFoundException('Пост с таким id отсутствует');
+      throw new NotFoundException('Post not found');
     }
     return this.commentaryRepository.save({
       userId: userId,
@@ -37,7 +37,7 @@ export class CommentaryService {
     const commentary: CommentaryEntity =
       await this.commentaryRepository.findOne(dto.id);
     if (!commentary) {
-      throw new NotFoundException('Комментария с таким id не найдено');
+      throw new NotFoundException('Commentary not found');
     }
     return this.commentaryRepository.save({
       ...commentary,

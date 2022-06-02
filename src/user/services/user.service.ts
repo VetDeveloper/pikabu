@@ -27,7 +27,7 @@ export class UserService {
     const user = await this.getUserByEmail(email);
 
     if (!user) {
-      throw new UnauthorizedException('Неправильный логин или пароль');
+      throw new UnauthorizedException('Incorrect login or password');
     }
 
     const passwordEquals = await bcrypt.compare(pass, user.password);
@@ -36,7 +36,7 @@ export class UserService {
       return user;
     }
 
-    throw new UnauthorizedException('Неправильный логин или пароль');
+    throw new UnauthorizedException('Incorrect login or password');
   }
 
   async updateOneUser(
@@ -49,7 +49,7 @@ export class UserService {
       const alreadyExist = await this.getUserByEmail(dto.email);
       if (alreadyExist) {
         throw new BadRequestException(
-          'Пользователь с таким email уже существует',
+          'User with this email already exists',
         );
       }
     }

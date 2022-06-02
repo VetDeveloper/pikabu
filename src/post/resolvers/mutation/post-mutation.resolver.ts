@@ -31,7 +31,6 @@ export class PostMutationResolver {
   updatePost(
     @Args('updatePostInput') input: UpdatePostInput,
   ) {
-    console.log(input.postId)
     return this.postService.updatePost(input);
   }
 
