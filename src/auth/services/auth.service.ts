@@ -5,7 +5,6 @@ import { CreateUserInput } from "src/user/inputs/create-user.input";
 import { AuthResponse } from "src/auth/models/auth-response.model";
 import { UserService } from "src/user/services/user.service";
 import { TokenPayload } from "../types/token-payload.type";
-import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -31,11 +30,7 @@ export class AuthService {
         'Пользователь с таким email уже зарегистрирован',
       );
     }
-    const hashPassword: string = await bcrypt.hash(dto.password, 5);
-    const newUser: UserEntity = await this.userService.registrateOneUser({
-      ...dto,
-      password: hashPassword,
-    });
+    const newUser: UserEntity = await this.userService.registrateOneUser(dto);
     return this.getTokenObject(newUser);
   }
 

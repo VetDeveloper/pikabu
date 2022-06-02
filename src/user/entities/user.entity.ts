@@ -5,6 +5,7 @@ import { FavouritesEntity } from 'src/favourites/entities/favourites.entity';
 import { PostReactionEntity } from 'src/post-reaction/entities/post-reaction.entity';
 import { PostEntity } from 'src/post/entities/post.entity';
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -12,9 +13,16 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import * as bcrypt from 'bcryptjs';
 
 @Entity()
 export class UserEntity {
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 5);
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 

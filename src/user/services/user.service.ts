@@ -65,7 +65,8 @@ export class UserService {
   }
 
   registrateOneUser(user: CreateUserInput): Promise<UserEntity> {
-    return this.userRepository.save(user);
+    const userEntity: UserEntity = this.userRepository.create(user)
+    return this.userRepository.save(userEntity);
   }
 
   findOne(id: number): Promise<UserEntity> {
