@@ -64,7 +64,7 @@ export class PostRepository extends Repository<PostEntity> {
       }
     }
     if (searchOptions.searchValue) {
-      qb.andWhere('title LIKE :searchValue', {
+      qb.andWhere('title ILIKE :searchValue', {
         searchValue: `%${searchOptions.searchValue}%`,
       });
     }
