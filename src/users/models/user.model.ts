@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { PostModel } from 'src/post/models/post.model';
-import { PostEntity } from 'src/post/entities/post.entity';
+import { PostModel } from 'src/posts/models/post.model';
+import { PostsEntity } from 'src/posts/entities/posts.entity';
 
 @ObjectType()
 export class UserModel {

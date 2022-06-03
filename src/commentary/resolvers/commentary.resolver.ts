@@ -5,9 +5,9 @@ import { UserModel } from 'src/users/models/user.model';
 import { CommentaryModel } from '../models/commentary.model';
 import * as DataLoader from 'dataloader';
 import { UsersEntity } from 'src/users/entities/users.entity';
-import { PostLoader } from 'src/post/dataloader/post.loader';
-import { PostEntity } from 'src/post/entities/post.entity';
-import { PostModel } from 'src/post/models/post.model';
+import { PostsLoader } from 'src/posts/dataloader/posts.loader';
+import { PostsEntity } from 'src/posts/entities/posts.entity';
+import { PostModel } from 'src/posts/models/post.model';
 import { PaginatedCommentaryReaction } from 'src/comment-reaction/models/paginated-commentary-reaction.model';
 import { CommentaryReactionRepository } from 'src/comment-reaction/comment-reaction.repository';
 import { CommentaryReactionService } from 'src/comment-reaction/services/commentary-reaction.service';
@@ -28,7 +28,7 @@ export class CommentaryResolver {
   @ResolveField('post', () => PostModel)
   post(
     @Parent() comment: CommentaryModel,
-    @Loader(PostLoader) postLoader: DataLoader<number, PostEntity>,
+    @Loader(PostsLoader) postLoader: DataLoader<number, PostsEntity>,
   ) {
     return postLoader.load(comment.postId);
   }

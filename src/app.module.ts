@@ -7,11 +7,11 @@ import * as Joi from 'joi';
 import { join } from 'path';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { PostModule } from './post/post.module';
-import { PostService } from './post/services/post.service';
+import { PostsModule } from './posts/posts.module';
+import { PostsService } from './posts/services/posts.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { DataLoaderInterceptor } from '@app/dataloader';
-import { PostLoader } from './post/dataloader/post.loader';
+import { PostsLoader } from './posts/dataloader/posts.loader';
 import { PostReactionsModule } from './post-reactions/post-reactions.module';
 import { CommentaryModule } from './commentary/commentary.module';
 import { CommentaryReactionModule } from './comment-reaction/comment-reaction.module';
@@ -53,7 +53,7 @@ import { FavouritesModule } from './favourites/favourites.module';
     }),
     UsersModule,
     AuthModule,
-    PostModule,
+    PostsModule,
     PostReactionsModule,
     CommentaryModule,
     CommentaryReactionModule,

@@ -1,7 +1,7 @@
 import { StringValueNode } from 'graphql';
 import { CommentaryReactionEntity } from 'src/comment-reaction/entities/comment-reaction.entity';
 import { ImageModel } from 'src/common/models/image.model';
-import { PostEntity } from 'src/post/entities/post.entity';
+import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import {
   Column,
@@ -53,11 +53,11 @@ export class CommentaryEntity {
   @JoinColumn({ name: 'userId' })
   user?: UsersEntity;
 
-  @ManyToOne(() => PostEntity, (post) => post.commentaries, {
+  @ManyToOne(() => PostsEntity, (post) => post.commentaries, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'postId' })
-  post?: PostEntity;
+  post?: PostsEntity;
 
   @OneToMany(() => CommentaryReactionEntity, (reaction) => reaction.commentary)
   reactions?: CommentaryReactionEntity[];

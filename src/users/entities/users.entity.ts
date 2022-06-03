@@ -3,7 +3,7 @@ import { CommentaryReactionEntity } from 'src/comment-reaction/entities/comment-
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
 import { FavouritesEntity } from 'src/favourites/entities/favourites.entity';
 import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
-import { PostEntity } from 'src/post/entities/post.entity';
+import { PostsEntity } from 'src/posts/entities/posts.entity';
 import {
   BeforeInsert,
   Column,
@@ -44,8 +44,8 @@ export class UsersEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => PostEntity, (post) => post.user)
-  posts?: PostEntity[];
+  @OneToMany(() => PostsEntity, (post) => post.user)
+  posts?: PostsEntity[];
 
   @OneToMany(() => PostReactionsEntity, (reaction) => reaction.user)
   postReactions?: PostReactionsEntity[];

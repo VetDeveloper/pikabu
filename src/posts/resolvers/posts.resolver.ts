@@ -13,7 +13,7 @@ import { PaginatedPostReaction } from 'src/post-reactions/models/paginated-post-
 import { PostReactionsService } from 'src/post-reactions/services/post-reactions.service';
 
 @Resolver(() => PostModel)
-export class PostResolver {
+export class PostsResolver {
   constructor(
     private comServ: CommentaryService,
     private postReactionService: PostReactionsService,

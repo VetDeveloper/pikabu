@@ -1,21 +1,17 @@
 import { UseGuards } from '@nestjs/common';
-import {
-  Args,
-  Mutation,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
-import { PostOwnerGuard } from 'src/post/guards/post-owner.guard';
-import { CreatePostInput } from 'src/post/inputs/create-post.input';
-import { UpdatePostInput } from 'src/post/inputs/update-post.input';
-import { PostModel } from 'src/post/models/post.model';
-import { PostService } from 'src/post/services/post.service';
+import { PostOwnerGuard } from 'src/posts/guards/post-owner.guard';
+import { CreatePostInput } from 'src/posts/inputs/create-post.input';
+import { UpdatePostInput } from 'src/posts/inputs/update-post.input';
+import { PostModel } from 'src/posts/models/post.model';
+import { PostsService } from 'src/posts/services/posts.service';
 import { UserModel } from 'src/users/models/user.model';
 
 @Resolver(() => PostModel)
-export class PostMutationResolver {
-  constructor(private readonly postService: PostService) {}
+export class PostsMutationResolver {
+  constructor(private readonly postService: PostsService) {}
 
   @Mutation(() => PostModel)
   @UseGuards(GqlAuthGuard)
@@ -28,9 +24,7 @@ export class PostMutationResolver {
 
   @Mutation(() => PostModel)
   @UseGuards(GqlAuthGuard, PostOwnerGuard)
-  updatePost(
-    @Args('updatePostInput') input: UpdatePostInput,
-  ) {
+  updatePost(@Args('updatePostInput') input: UpdatePostInput) {
     return this.postService.updatePost(input);
   }
 

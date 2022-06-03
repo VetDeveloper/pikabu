@@ -1,4 +1,4 @@
-import { PostEntity } from 'src/post/entities/post.entity';
+import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import {
   Column,
@@ -46,9 +46,9 @@ export class PostReactionsEntity {
   @JoinColumn({ name: 'userId' })
   user?: UsersEntity;
 
-  @ManyToOne(() => PostEntity, (post) => post.reactions, {
+  @ManyToOne(() => PostsEntity, (post) => post.reactions, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'postId' })
-  post?: PostEntity;
+  post?: PostsEntity;
 }

@@ -6,7 +6,7 @@ import {
 import { CreatePostInput } from '../inputs/create-post.input';
 import { UpdatePostInput } from '../inputs/update-post.input';
 import { PostModel } from '../models/post.model';
-import { PostRepository } from '../post.repository';
+import { PostsRepository } from '../posts.repository';
 import { paginate, IPaginationOptions } from 'nestjs-typeorm-paginate';
 import { PaginateArgs } from '../../common/args/paginate.args';
 import { SearchArgs } from '../args/search-post.args';
@@ -15,9 +15,9 @@ import { FilterArgs } from '../args/filter-post.args';
 import { FavouritesRepository } from 'src/favourites/favourites.repository';
 
 @Injectable()
-export class PostService {
+export class PostsService {
   constructor(
-    private postRepository: PostRepository,
+    private postRepository: PostsRepository,
     private favouriteRepository: FavouritesRepository,
   ) {}
 
@@ -60,7 +60,7 @@ export class PostService {
     if (!post) {
       throw new NotFoundException();
     }
-    await this.favouriteRepository.deletePostFavourites(postId)
+    await this.favouriteRepository.deletePostFavourites(postId);
     await this.postRepository.delete(postId);
     return post;
   }

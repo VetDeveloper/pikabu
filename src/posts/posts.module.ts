@@ -5,29 +5,29 @@ import { FavouritesRepository } from 'src/favourites/favourites.repository';
 import { PostReactionsModule } from 'src/post-reactions/post-reactions.module';
 import { UsersLoader } from 'src/users/dataloader/users.loader';
 import { UserRepository } from 'src/users/users.repository';
-import { PostRepository } from './post.repository';
-import { PostMutationResolver } from './resolvers/mutation/post-mutation.resolver';
-import { PostResolver } from './resolvers/post.resolver';
-import { PostQueryResolver } from './resolvers/query/post-query.resolver';
-import { PostService } from './services/post.service';
+import { PostsRepository } from './posts.repository';
+import { PostsMutationResolver } from './resolvers/mutation/posts-mutation.resolver';
+import { PostsResolver } from './resolvers/posts.resolver';
+import { PostsQueryResolver } from './resolvers/query/posts-query.resolver';
+import { PostsService } from './services/posts.service';
 
 @Module({
   providers: [
-    PostService,
-    PostResolver,
-    PostQueryResolver,
-    PostMutationResolver,
+    PostsService,
+    PostsResolver,
+    PostsQueryResolver,
+    PostsMutationResolver,
     UsersLoader,
   ],
   imports: [
     TypeOrmModule.forFeature([
-      PostRepository,
+      PostsRepository,
       UserRepository,
       FavouritesRepository,
     ]),
     CommentaryModule,
     PostReactionsModule,
   ],
-  exports: [PostService],
+  exports: [PostsService],
 })
-export class PostModule {}
+export class PostsModule {}

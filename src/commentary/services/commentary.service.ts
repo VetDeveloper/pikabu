@@ -4,8 +4,8 @@ import { PaginateArgs } from 'src/common/args/paginate.args';
 import { SortArgs } from 'src/common/args/sort.args';
 import { Reaction } from 'src/common/enums/reaction.enum';
 import { Sort } from 'src/common/enums/sort.enum';
-import { PostEntity } from 'src/post/entities/post.entity';
-import { PostRepository } from 'src/post/post.repository';
+import { PostsEntity } from 'src/posts/entities/posts.entity';
+import { PostsRepository } from 'src/posts/posts.repository';
 import { CommentaryRepository } from '../commentary.repository';
 import { CommentaryEntity } from '../entities/commentary.entity';
 import { CreateCommentaryInput } from '../inputs/create-commentary.input';
@@ -16,14 +16,14 @@ import { CommentaryModel } from '../models/commentary.model';
 export class CommentaryService {
   constructor(
     private commentaryRepository: CommentaryRepository,
-    private postRepository: PostRepository,
+    private postRepository: PostsRepository,
   ) {}
 
   async createCommentary(
     userId: number,
     dto: CreateCommentaryInput,
   ): Promise<CommentaryEntity> {
-    const post: PostEntity = await this.postRepository.findOne(dto.postId);
+    const post: PostsEntity = await this.postRepository.findOne(dto.postId);
     if (!post) {
       throw new NotFoundException('Post not found');
     }
@@ -48,8 +48,8 @@ export class CommentaryService {
   async deleteCommentary(id: number) {
     const commentaty: CommentaryEntity =
       await this.commentaryRepository.findOne(id);
-    if(!commentaty) {
-      throw new NotFoundException()
+    if (!commentaty) {
+      throw new NotFoundException();
     }
     await this.commentaryRepository.delete(id);
     return commentaty;
@@ -60,11 +60,15 @@ export class CommentaryService {
     sortArgs: SortArgs,
     paginateArgs: PaginateArgs,
   ) {
-    const post: PostEntity = await this.postRepository.findOne(postId);
+    const post: PostsEntity = await this.postRepository.findOne(postId);
     if (!post) {
       throw new NotFoundException('Пост с таким id отсутствует');
     }
-    return this.commentaryRepository.getPostCommentaries(postId, sortArgs, paginateArgs);
+    return this.commentaryRepository.getPostCommentaries(
+      postId,
+      sortArgs,
+      paginateArgs,
+    );
   }
 
   getUserCommentaries(userId: number, paginateArgs: PaginateArgs) {

@@ -13,9 +13,9 @@ import { Loader } from '@app/dataloader';
 import { UsersLoader } from 'src/users/dataloader/users.loader';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import * as DataLoader from 'dataloader';
-import { PostModel } from 'src/post/models/post.model';
-import { PostLoader } from 'src/post/dataloader/post.loader';
-import { PostEntity } from 'src/post/entities/post.entity';
+import { PostModel } from 'src/posts/models/post.model';
+import { PostsLoader } from 'src/posts/dataloader/posts.loader';
+import { PostsEntity } from 'src/posts/entities/posts.entity';
 
 @Resolver(() => PostReactionModel)
 export class PostReactionsResolver {
@@ -30,7 +30,7 @@ export class PostReactionsResolver {
   @ResolveField(() => PostModel)
   post(
     @Parent() postReaction: PostReactionModel,
-    @Loader(PostLoader) postLoader: DataLoader<number, PostEntity>,
+    @Loader(PostsLoader) postLoader: DataLoader<number, PostsEntity>,
   ) {
     return postLoader.load(postReaction.postId);
   }

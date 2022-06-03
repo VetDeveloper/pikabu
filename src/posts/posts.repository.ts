@@ -3,15 +3,15 @@ import { EntityRepository, Repository, SelectQueryBuilder } from 'typeorm';
 import { PaginateArgs } from '../common/args/paginate.args';
 import { SearchArgs } from './args/search-post.args';
 import { PostModel } from './models/post.model';
-import { PostEntity } from './entities/post.entity';
+import { PostsEntity } from './entities/posts.entity';
 import { SortArgs } from 'src/common/args/sort.args';
 import { Sort } from 'src/common/enums/sort.enum';
 import { Reaction } from 'src/common/enums/reaction.enum';
 import { FilterArgs } from './args/filter-post.args';
 import { Group } from './enums/group.enum';
 
-@EntityRepository(PostEntity)
-export class PostRepository extends Repository<PostEntity> {
+@EntityRepository(PostsEntity)
+export class PostsRepository extends Repository<PostsEntity> {
   getPosts(
     paginateOptions: PaginateArgs,
     searchOptions: SearchArgs,
@@ -40,10 +40,9 @@ export class PostRepository extends Repository<PostEntity> {
       qb.andWhere(':...tags = ANY(tags)', { tags: filterPostArgs.tags });
     }
     if (filterPostArgs.group) {
-
       switch (filterPostArgs.group) {
         case Group.BEST:
-          qb.addSelect('COUNT(reactions.id) as group_count')
+          qb.addSelect('COUNT(reactions.id) as group_count');
           qb.innerJoin(
             'PostEntity.reactions',
             'reactions',
@@ -59,7 +58,7 @@ export class PostRepository extends Repository<PostEntity> {
             'PostEntity.commentaries',
             'commentaries',
             "commentaries.createdAt >= Now() - INTERVAL '24 hours'",
-          ).groupBy('PostEntity.id')
+          ).groupBy('PostEntity.id');
           break;
       }
     }
@@ -73,19 +72,19 @@ export class PostRepository extends Repository<PostEntity> {
         qb.orderBy('PostEntity.createdAt', sortArgs.order);
         break;
       case Sort.LIKES:
-        filterPostArgs.group === Group.BEST?
-        qb
-        .orderBy('group_count', sortArgs.order)
-        :qb.addSelect('COUNT(likes_reactions.reaction) as likesCount')
-          .leftJoin(
-            'PostEntity.reactions',
-            'likes_reactions',
-            'likes_reactions.reaction = :react',
-            { react: Reaction.LIKE },
-          )
-          .groupBy('PostEntity.id')
-          .orderBy('likesCount', sortArgs.order)
-          
+        filterPostArgs.group === Group.BEST
+          ? qb.orderBy('group_count', sortArgs.order)
+          : qb
+              .addSelect('COUNT(likes_reactions.reaction) as likesCount')
+              .leftJoin(
+                'PostEntity.reactions',
+                'likes_reactions',
+                'likes_reactions.reaction = :react',
+                { react: Reaction.LIKE },
+              )
+              .groupBy('PostEntity.id')
+              .orderBy('likesCount', sortArgs.order);
+
         break;
     }
 
@@ -93,7 +92,7 @@ export class PostRepository extends Repository<PostEntity> {
   }
 
   private getPaginate(
-    qb: SelectQueryBuilder<PostEntity>,
+    qb: SelectQueryBuilder<PostsEntity>,
     paginateArgs: PaginateArgs,
   ) {
     return paginate<PostModel>(qb, paginateArgs);

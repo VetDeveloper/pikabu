@@ -1,6 +1,6 @@
 import { Type } from '@nestjs/common';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { PostModel } from 'src/post/models/post.model';
+import { PostModel } from 'src/posts/models/post.model';
 
 @ObjectType({ isAbstract: true })
   abstract class MetaType {

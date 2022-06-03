@@ -14,7 +14,7 @@ import {
 import { ImageModel } from '../../common/models/image.model';
 
 @Entity()
-export class PostEntity {
+export class PostsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

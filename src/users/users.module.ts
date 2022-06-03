@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PostLoader } from 'src/post/dataloader/post.loader';
-import { PostModule } from 'src/post/post.module';
-import { PostRepository } from 'src/post/post.repository';
+import { PostsLoader } from 'src/posts/dataloader/posts.loader';
+import { PostsModule } from 'src/posts/posts.module';
+import { PostsRepository } from 'src/posts/posts.repository';
 import { UserRepository } from './users.repository';
 import { UsersResolver } from './resolvers/users.resolver';
 import { UserService } from './services/users.service';
@@ -22,10 +22,10 @@ import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.
     UsersResolver,
     UsersQueryResolver,
     UsersMutationResolver,
-    PostLoader,
+    PostsLoader,
   ],
   imports: [
-    TypeOrmModule.forFeature([UserRepository, PostRepository]),
+    TypeOrmModule.forFeature([UserRepository, PostsRepository]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -36,7 +36,7 @@ import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.
         },
       }),
     }),
-    PostModule,
+    PostsModule,
     FavouritesModule,
     PostReactionsModule,
     CommentaryReactionModule,

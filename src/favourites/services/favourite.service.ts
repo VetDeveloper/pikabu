@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CommentaryRepository } from 'src/commentary/commentary.repository';
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
 import { PaginateArgs } from 'src/common/args/paginate.args';
-import { PostEntity } from 'src/post/entities/post.entity';
-import { PostRepository } from 'src/post/post.repository';
+import { PostsEntity } from 'src/posts/entities/posts.entity';
+import { PostsRepository } from 'src/posts/posts.repository';
 import { FavouritesEntity } from '../entities/favourites.entity';
 import { EntityType } from '../enums/entity-type.enum';
 import { FavouritesRepository } from '../favourites.repository';
@@ -13,7 +13,7 @@ import { CreateFavouriteInput } from '../inputs/create-favourite.input';
 export class FavouriteService {
   constructor(
     private favouritesRepository: FavouritesRepository,
-    private postRepository: PostRepository,
+    private postRepository: PostsRepository,
     private commentaryRepository: CommentaryRepository,
   ) {}
 
@@ -23,7 +23,7 @@ export class FavouriteService {
   ): Promise<FavouritesEntity> {
     switch (dto.entityType) {
       case EntityType.POST:
-        const post: PostEntity = await this.postRepository.findOne(
+        const post: PostsEntity = await this.postRepository.findOne(
           dto.entityId,
         );
         if (!post) {
@@ -46,8 +46,10 @@ export class FavouriteService {
   }
 
   async deleteOne(id: number) {
-    const entity: FavouritesEntity = await this.favouritesRepository.findOne(id);
-    if(!entity) {
+    const entity: FavouritesEntity = await this.favouritesRepository.findOne(
+      id,
+    );
+    if (!entity) {
       throw new NotFoundException();
     }
     await this.favouritesRepository.delete(id);

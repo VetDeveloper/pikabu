@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PostEntity } from 'src/post/entities/post.entity';
-import { PostRepository } from 'src/post/post.repository';
+import { PostsEntity } from 'src/posts/entities/posts.entity';
+import { PostsRepository } from 'src/posts/posts.repository';
 import { PostReactionsEntity } from '../entities/post-reactions.entity';
 import { CreatePostReactionInput } from '../inputs/create-post-reaction.input';
 import { PostReactionsRepository } from '../post-reaction.repository';
@@ -16,14 +16,14 @@ import { PaginateArgs } from 'src/common/args/paginate.args';
 export class PostReactionsService {
   constructor(
     private postReactionRepository: PostReactionsRepository,
-    private postRepository: PostRepository,
+    private postRepository: PostsRepository,
   ) {}
 
   async createPostReaction(
     userId: number,
     dto: CreatePostReactionInput,
   ): Promise<PostReactionsEntity> {
-    const post: PostEntity = await this.postRepository.findOne(dto.postId);
+    const post: PostsEntity = await this.postRepository.findOne(dto.postId);
     if (!post) {
       throw new NotFoundException('Post not found');
     }

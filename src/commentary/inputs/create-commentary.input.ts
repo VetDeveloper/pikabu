@@ -1,7 +1,7 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsInt, IsOptional, IsPositive, IsString } from 'class-validator';
 import { ImageModel } from 'src/common/models/image.model';
-import { ImageInput } from 'src/post/inputs/image.input';
+import { ImageInput } from 'src/posts/inputs/image.input';
 
 @InputType()
 export class CreateCommentaryInput {

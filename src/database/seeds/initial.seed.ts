@@ -2,7 +2,7 @@ import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 import * as bcrypt from 'bcryptjs';
 import { UsersEntity } from 'src/users/entities/users.entity';
-import { PostEntity } from 'src/post/entities/post.entity';
+import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
 import { CommentaryReactionEntity } from 'src/comment-reaction/entities/comment-reaction.entity';
 import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
@@ -19,7 +19,7 @@ export default class InitialDatabaseSeed implements Seeder {
       usersCount,
     );
 
-    const posts: PostEntity[] = await factory(PostEntity)()
+    const posts: PostsEntity[] = await factory(PostsEntity)()
       .map(async (post) => {
         post.user = users[Math.floor(Math.random() * users.length)];
         return post;

@@ -11,14 +11,14 @@ import { FavouriteService } from 'src/favourites/services/favourite.service';
 import { PaginatedPostReaction } from 'src/post-reactions/models/paginated-post-reaction.model';
 import { PostReactionsRepository } from 'src/post-reactions/post-reaction.repository';
 import { PostReactionsService } from 'src/post-reactions/services/post-reactions.service';
-import { PaginatedPost } from 'src/post/models/paginated-post.model';
-import { PostService } from 'src/post/services/post.service';
+import { PaginatedPost } from 'src/posts/models/paginated-post.model';
+import { PostsService } from 'src/posts/services/posts.service';
 import { UserModel } from '../models/user.model';
 
 @Resolver(UserModel)
 export class UsersResolver {
   constructor(
-    private postService: PostService,
+    private postService: PostsService,
     private favouriteService: FavouriteService,
     private postReactionService: PostReactionsService,
     private commentaryReactionService: CommentaryReactionService,
