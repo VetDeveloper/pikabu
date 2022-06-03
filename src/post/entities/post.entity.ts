@@ -22,7 +22,7 @@ export class PostEntity {
   title: string;
 
   @Column({ nullable: true })
-  description?: string;
+  description: string | null;
 
   @Column({
     type: 'jsonb',
