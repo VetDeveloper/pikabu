@@ -6,23 +6,23 @@ import { Reaction } from 'src/common/enums/reaction.enum';
 import { Sort } from 'src/common/enums/sort.enum';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { PostsRepository } from 'src/posts/posts.repository';
-import { CommentaryRepository } from '../commentary.repository';
-import { CommentaryEntity } from '../entities/commentary.entity';
+import { CommentariesRepository } from '../commentaries.repository';
+import { CommentariesEntity } from '../entities/commentaries.entity';
 import { CreateCommentaryInput } from '../inputs/create-commentary.input';
 import { UpdateCommentaryInput } from '../inputs/update-commentary.input';
 import { CommentaryModel } from '../models/commentary.model';
 
 @Injectable()
-export class CommentaryService {
+export class CommentariesService {
   constructor(
-    private commentaryRepository: CommentaryRepository,
+    private commentaryRepository: CommentariesRepository,
     private postRepository: PostsRepository,
   ) {}
 
   async createCommentary(
     userId: number,
     dto: CreateCommentaryInput,
-  ): Promise<CommentaryEntity> {
+  ): Promise<CommentariesEntity> {
     const post: PostsEntity = await this.postRepository.findOne(dto.postId);
     if (!post) {
       throw new NotFoundException('Post not found');
@@ -34,7 +34,7 @@ export class CommentaryService {
   }
 
   async updateCommentary(dto: UpdateCommentaryInput) {
-    const commentary: CommentaryEntity =
+    const commentary: CommentariesEntity =
       await this.commentaryRepository.findOne(dto.id);
     if (!commentary) {
       throw new NotFoundException('Commentary not found');
@@ -46,7 +46,7 @@ export class CommentaryService {
   }
 
   async deleteCommentary(id: number) {
-    const commentaty: CommentaryEntity =
+    const commentaty: CommentariesEntity =
       await this.commentaryRepository.findOne(id);
     if (!commentaty) {
       throw new NotFoundException();

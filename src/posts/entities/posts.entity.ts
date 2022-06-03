@@ -1,4 +1,4 @@
-import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
+import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import {
@@ -53,6 +53,6 @@ export class PostsEntity {
   @OneToMany(() => PostReactionsEntity, (reaction) => reaction.post)
   reactions?: PostReactionsEntity[];
 
-  @OneToMany(() => CommentaryEntity, (commentary) => commentary.post)
-  commentaries?: CommentaryEntity[];
+  @OneToMany(() => CommentariesEntity, (commentary) => commentary.post)
+  commentaries?: CommentariesEntity[];
 }

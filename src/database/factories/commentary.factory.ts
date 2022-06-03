@@ -1,10 +1,10 @@
-import { define } from "typeorm-seeding";
+import { define } from 'typeorm-seeding';
 import * as Faker from 'faker';
-import { CommentaryEntity } from "src/commentary/entities/commentary.entity";
+import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 
-define(CommentaryEntity, (faker: typeof Faker) => {
-    const commentary: CommentaryEntity = new CommentaryEntity();
-    const text = faker.lorem.text()
-    commentary.text = text;
-    return commentary;
-  });
+define(CommentariesEntity, (faker: typeof Faker) => {
+  const commentary: CommentariesEntity = new CommentariesEntity();
+  const text = faker.lorem.text();
+  commentary.text = text;
+  return commentary;
+});

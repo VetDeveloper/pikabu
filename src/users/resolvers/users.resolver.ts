@@ -2,9 +2,9 @@ import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { CommentaryReactionRepository } from 'src/comment-reaction/comment-reaction.repository';
 import { PaginatedCommentaryReaction } from 'src/comment-reaction/models/paginated-commentary-reaction.model';
 import { CommentaryReactionService } from 'src/comment-reaction/services/commentary-reaction.service';
-import { CommentaryRepository } from 'src/commentary/commentary.repository';
-import { PaginatedCommentary } from 'src/commentary/models/paginated-commentaty.model';
-import { CommentaryService } from 'src/commentary/services/commentary.service';
+import { CommentariesRepository } from 'src/commentaries/commentaries.repository';
+import { PaginatedCommentary } from 'src/commentaries/models/paginated-commentaty.model';
+import { CommentariesService } from 'src/commentaries/services/commentaries.service';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { PaginatedFavourite } from 'src/favourites/models/paginated-favourite.model';
 import { FavouriteService } from 'src/favourites/services/favourite.service';
@@ -22,7 +22,7 @@ export class UsersResolver {
     private favouriteService: FavouriteService,
     private postReactionService: PostReactionsService,
     private commentaryReactionService: CommentaryReactionService,
-    private commentaryService: CommentaryService,
+    private commentaryService: CommentariesService,
   ) {}
 
   @ResolveField('posts', () => PaginatedPost)

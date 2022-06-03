@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CommentaryRepository } from 'src/commentary/commentary.repository';
-import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
+import { CommentariesRepository } from 'src/commentaries/commentaries.repository';
+import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { CommentaryReactionRepository } from '../comment-reaction.repository';
 import { CommentaryReactionEntity } from '../entities/comment-reaction.entity';
@@ -15,14 +15,14 @@ import { UpdateCommentaryReactionInput } from '../inputs/update-commentary-react
 export class CommentaryReactionService {
   constructor(
     private commentaryReactionRepository: CommentaryReactionRepository,
-    private commentaryRepository: CommentaryRepository,
+    private commentaryRepository: CommentariesRepository,
   ) {}
 
   async createCommentaryReaction(
     userId: number,
     input: CreateCommentaryReactionInput,
   ) {
-    const commentary: CommentaryEntity =
+    const commentary: CommentariesEntity =
       await this.commentaryRepository.findOne(input.commentaryId);
 
     if (!commentary) {
@@ -59,9 +59,9 @@ export class CommentaryReactionService {
       : commentaryReaction.reaction;
 
     return this.commentaryReactionRepository.save({
-        ...commentaryReaction,
-        reaction: newReaction
-    })
+      ...commentaryReaction,
+      reaction: newReaction,
+    });
   }
 
   async deleteCommentaryReaction(id: number) {
@@ -77,10 +77,16 @@ export class CommentaryReactionService {
   }
 
   getUserCommentaryReactions(userId: number, paginateArgs: PaginateArgs) {
-    return this.commentaryReactionRepository.getUserCommentaryReactions(userId, paginateArgs);
+    return this.commentaryReactionRepository.getUserCommentaryReactions(
+      userId,
+      paginateArgs,
+    );
   }
 
   getCommentaryReactions(commentId: number, paginateArgs: PaginateArgs) {
-    return this.commentaryReactionRepository.getCommentaryReactions(commentId, paginateArgs);
+    return this.commentaryReactionRepository.getCommentaryReactions(
+      commentId,
+      paginateArgs,
+    );
   }
 }

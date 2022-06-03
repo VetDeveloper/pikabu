@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommentaryRepository } from 'src/commentary/commentary.repository';
+import { CommentariesRepository } from 'src/commentaries/commentaries.repository';
 import { PostsRepository } from 'src/posts/posts.repository';
 import { FavouritesRepository } from './favourites.repository';
 import { FavouriteResolver } from './resolvers/favourite.resolver';
@@ -12,7 +12,7 @@ import { FavouriteService } from './services/favourite.service';
     TypeOrmModule.forFeature([
       FavouritesRepository,
       PostsRepository,
-      CommentaryRepository,
+      CommentariesRepository,
     ]),
   ],
   exports: [FavouriteService],

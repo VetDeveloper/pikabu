@@ -5,9 +5,9 @@ import { UsersLoader } from 'src/users/dataloader/users.loader';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import { UserModel } from 'src/users/models/user.model';
 import * as DataLoader from 'dataloader';
-import { CommentaryModel } from 'src/commentary/models/commentary.model';
-import { CommentaryLoader } from 'src/commentary/dataloader/commentary.loader';
-import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
+import { CommentaryModel } from 'src/commentaries/models/commentary.model';
+import { CommentaryLoader } from 'src/commentaries/dataloader/commentary.loader';
+import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 
 @Resolver(() => CommentaryReactionModel)
 export class CommentaryReactionResolver {
@@ -23,7 +23,7 @@ export class CommentaryReactionResolver {
   commentary(
     @Parent() commentReaction: CommentaryReactionModel,
     @Loader(CommentaryLoader)
-    commentaryLoader: DataLoader<number, CommentaryEntity>,
+    commentaryLoader: DataLoader<number, CommentariesEntity>,
   ) {
     return commentaryLoader.load(commentReaction.commentaryId);
   }

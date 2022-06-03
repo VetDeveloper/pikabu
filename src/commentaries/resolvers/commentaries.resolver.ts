@@ -14,7 +14,7 @@ import { CommentaryReactionService } from 'src/comment-reaction/services/comment
 import { PaginateArgs } from 'src/common/args/paginate.args';
 
 @Resolver(() => CommentaryModel)
-export class CommentaryResolver {
+export class CommentariesResolver {
   constructor(private commentaryReactionService: CommentaryReactionService) {}
 
   @ResolveField('user', () => UserModel)

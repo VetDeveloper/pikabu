@@ -1,4 +1,4 @@
-import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
+import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 import { Reaction } from 'src/common/enums/reaction.enum';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import {
@@ -46,9 +46,9 @@ export class CommentaryReactionEntity {
   @JoinColumn({ name: 'userId' })
   user?: UsersEntity;
 
-  @ManyToOne(() => CommentaryEntity, (commentary) => commentary.reactions, {
+  @ManyToOne(() => CommentariesEntity, (commentary) => commentary.reactions, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'commentaryId' })
-  commentary?: CommentaryEntity;
+  commentary?: CommentariesEntity;
 }

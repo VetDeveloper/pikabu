@@ -3,7 +3,7 @@ import { Factory, Seeder } from 'typeorm-seeding';
 import * as bcrypt from 'bcryptjs';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
-import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
+import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 import { CommentaryReactionEntity } from 'src/comment-reaction/entities/comment-reaction.entity';
 import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
 import { FavouritesEntity } from 'src/favourites/entities/favourites.entity';
@@ -26,7 +26,9 @@ export default class InitialDatabaseSeed implements Seeder {
       })
       .createMany(postsCount);
 
-    const commentaries: CommentaryEntity[] = await factory(CommentaryEntity)()
+    const commentaries: CommentariesEntity[] = await factory(
+      CommentariesEntity,
+    )()
       .map(async (comment) => {
         comment.user = users[Math.floor(Math.random() * users.length)];
         comment.post = posts[Math.floor(Math.random() * posts.length)];

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CommentaryRepository } from 'src/commentary/commentary.repository';
-import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
+import { CommentariesRepository } from 'src/commentaries/commentaries.repository';
+import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { PostsRepository } from 'src/posts/posts.repository';
@@ -14,7 +14,7 @@ export class FavouriteService {
   constructor(
     private favouritesRepository: FavouritesRepository,
     private postRepository: PostsRepository,
-    private commentaryRepository: CommentaryRepository,
+    private commentaryRepository: CommentariesRepository,
   ) {}
 
   async createFavourite(
@@ -31,7 +31,7 @@ export class FavouriteService {
         }
         break;
       case EntityType.COMMENTARY:
-        const commentary: CommentaryEntity =
+        const commentary: CommentariesEntity =
           await this.commentaryRepository.findOne(dto.entityId);
         if (!commentary) {
           throw new NotFoundException();

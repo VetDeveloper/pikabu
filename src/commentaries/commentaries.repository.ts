@@ -4,11 +4,11 @@ import { SortArgs } from 'src/common/args/sort.args';
 import { Reaction } from 'src/common/enums/reaction.enum';
 import { Sort } from 'src/common/enums/sort.enum';
 import { EntityRepository, Repository } from 'typeorm';
-import { CommentaryEntity } from './entities/commentary.entity';
+import { CommentariesEntity } from './entities/commentaries.entity';
 import { CommentaryModel } from './models/commentary.model';
 
-@EntityRepository(CommentaryEntity)
-export class CommentaryRepository extends Repository<CommentaryEntity> {
+@EntityRepository(CommentariesEntity)
+export class CommentariesRepository extends Repository<CommentariesEntity> {
   getPostCommentaries(
     postId: number,
     sortArgs: SortArgs,

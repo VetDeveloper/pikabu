@@ -5,8 +5,8 @@ import { Loader } from '@app/dataloader';
 import { UsersLoader } from 'src/users/dataloader/users.loader';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import * as DataLoader from 'dataloader';
-import { PaginatedCommentary } from 'src/commentary/models/paginated-commentaty.model';
-import { CommentaryService } from 'src/commentary/services/commentary.service';
+import { PaginatedCommentary } from 'src/commentaries/models/paginated-commentaty.model';
+import { CommentariesService } from 'src/commentaries/services/commentaries.service';
 import { SortArgs } from 'src/common/args/sort.args';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { PaginatedPostReaction } from 'src/post-reactions/models/paginated-post-reaction.model';
@@ -15,7 +15,7 @@ import { PostReactionsService } from 'src/post-reactions/services/post-reactions
 @Resolver(() => PostModel)
 export class PostsResolver {
   constructor(
-    private comServ: CommentaryService,
+    private comServ: CommentariesService,
     private postReactionService: PostReactionsService,
   ) {}
 

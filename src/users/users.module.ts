@@ -13,7 +13,7 @@ import { UsersMutationResolver } from './resolvers/mutation/users-mutation.resol
 import { FavouritesModule } from 'src/favourites/favourites.module';
 import { PostReactionsModule } from 'src/post-reactions/post-reactions.module';
 import { CommentaryReactionModel } from 'src/comment-reaction/models/commentary-reaction.model';
-import { CommentaryModule } from 'src/commentary/commentary.module';
+import { CommentariesModule } from 'src/commentaries/commentaries.module';
 import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.module';
 
 @Module({
@@ -40,7 +40,7 @@ import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.
     FavouritesModule,
     PostReactionsModule,
     CommentaryReactionModule,
-    CommentaryModule,
+    CommentariesModule,
   ],
   exports: [UserService],
 })

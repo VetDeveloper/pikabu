@@ -15,7 +15,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class CommentaryEntity {
+export class CommentariesEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
