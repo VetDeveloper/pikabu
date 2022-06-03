@@ -8,14 +8,14 @@ import { UsersEntity } from 'src/users/entities/users.entity';
 import { PostsLoader } from 'src/posts/dataloader/posts.loader';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { PostModel } from 'src/posts/models/post.model';
-import { PaginatedCommentaryReaction } from 'src/comment-reaction/models/paginated-commentary-reaction.model';
-import { CommentaryReactionRepository } from 'src/comment-reaction/comment-reaction.repository';
-import { CommentaryReactionService } from 'src/comment-reaction/services/commentary-reaction.service';
+import { PaginatedCommentaryReaction } from 'src/comment-reactions/models/paginated-commentary-reaction.model';
+import { CommentaryReactionsRepository } from 'src/comment-reactions/commentary-reactions.repository';
+import { CommentaryReactionsService } from 'src/comment-reactions/services/commentary-reactions.service';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 
 @Resolver(() => CommentaryModel)
 export class CommentariesResolver {
-  constructor(private commentaryReactionService: CommentaryReactionService) {}
+  constructor(private commentaryReactionService: CommentaryReactionsService) {}
 
   @ResolveField('user', () => UserModel)
   user(

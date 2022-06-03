@@ -12,9 +12,9 @@ import { UsersQueryResolver } from './resolvers/query/users-query.resolver';
 import { UsersMutationResolver } from './resolvers/mutation/users-mutation.resolver';
 import { FavouritesModule } from 'src/favourites/favourites.module';
 import { PostReactionsModule } from 'src/post-reactions/post-reactions.module';
-import { CommentaryReactionModel } from 'src/comment-reaction/models/commentary-reaction.model';
+import { CommentaryReactionModel } from 'src/comment-reactions/models/commentary-reaction.model';
 import { CommentariesModule } from 'src/commentaries/commentaries.module';
-import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.module';
+import { CommentaryReactionsModule } from 'src/comment-reactions/commentary-reactions.module';
 
 @Module({
   providers: [
@@ -39,7 +39,7 @@ import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.
     PostsModule,
     FavouritesModule,
     PostReactionsModule,
-    CommentaryReactionModule,
+    CommentaryReactionsModule,
     CommentariesModule,
   ],
   exports: [UserService],

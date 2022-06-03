@@ -14,7 +14,7 @@ import {
 
 @Entity()
 @Unique(['userId', 'commentaryId'])
-export class CommentaryReactionEntity {
+export class CommentaryReactionsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

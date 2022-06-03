@@ -4,7 +4,7 @@ import * as bcrypt from 'bcryptjs';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
-import { CommentaryReactionEntity } from 'src/comment-reaction/entities/comment-reaction.entity';
+import { CommentaryReactionsEntity } from 'src/comment-reactions/entities/commentary-reactions.entity';
 import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
 import { FavouritesEntity } from 'src/favourites/entities/favourites.entity';
 import { EntityType } from 'src/favourites/enums/entity-type.enum';
@@ -36,7 +36,7 @@ export default class InitialDatabaseSeed implements Seeder {
       })
       .createMany(commentariesCount);
 
-    const commentaryReactions: CommentaryReactionEntity[] = [];
+    const commentaryReactions: CommentaryReactionsEntity[] = [];
     const postReactions: PostReactionsEntity[] = [];
     const favourites: FavouritesEntity[] = [];
 
@@ -50,7 +50,7 @@ export default class InitialDatabaseSeed implements Seeder {
         const randomValue = Math.random();
         if (randomValue < 0.6) {
           commentaryReactions.push(
-            await factory(CommentaryReactionEntity)()
+            await factory(CommentaryReactionsEntity)()
               .map(async (comReact) => {
                 comReact.user = users[userId];
                 comReact.commentary = commentaries[commentaryAndPostId];

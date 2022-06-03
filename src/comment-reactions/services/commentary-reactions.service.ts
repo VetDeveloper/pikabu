@@ -6,15 +6,15 @@ import {
 import { CommentariesRepository } from 'src/commentaries/commentaries.repository';
 import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 import { PaginateArgs } from 'src/common/args/paginate.args';
-import { CommentaryReactionRepository } from '../comment-reaction.repository';
-import { CommentaryReactionEntity } from '../entities/comment-reaction.entity';
+import { CommentaryReactionsRepository } from '../commentary-reactions.repository';
+import { CommentaryReactionsEntity } from '../entities/commentary-reactions.entity';
 import { CreateCommentaryReactionInput } from '../inputs/create-commentary-reaction.model';
 import { UpdateCommentaryReactionInput } from '../inputs/update-commentary-reaction.input';
 
 @Injectable()
-export class CommentaryReactionService {
+export class CommentaryReactionsService {
   constructor(
-    private commentaryReactionRepository: CommentaryReactionRepository,
+    private commentaryReactionRepository: CommentaryReactionsRepository,
     private commentaryRepository: CommentariesRepository,
   ) {}
 
@@ -29,7 +29,7 @@ export class CommentaryReactionService {
       throw new NotFoundException('Commentary with this id was not found');
     }
 
-    const alreadyExist: CommentaryReactionEntity =
+    const alreadyExist: CommentaryReactionsEntity =
       await this.commentaryReactionRepository.findCommentaryReactionByCommentaryUserIds(
         userId,
         input.commentaryId,
@@ -45,7 +45,7 @@ export class CommentaryReactionService {
   }
 
   async updateCommentaryReaction(input: UpdateCommentaryReactionInput) {
-    const commentaryReaction: CommentaryReactionEntity =
+    const commentaryReaction: CommentaryReactionsEntity =
       await this.commentaryReactionRepository.findOne(
         input.commentaryReactionId,
       );
@@ -65,7 +65,7 @@ export class CommentaryReactionService {
   }
 
   async deleteCommentaryReaction(id: number) {
-    const commentaryReaction: CommentaryReactionEntity =
+    const commentaryReaction: CommentaryReactionsEntity =
       await this.commentaryReactionRepository.findOne(id);
 
     if (!commentaryReaction) {

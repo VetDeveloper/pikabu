@@ -1,17 +1,23 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Parent, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
-import { DeleteCommentaryReactionArgs } from 'src/comment-reaction/args/delete-commentary-reaction.args';
-import { CommentaryReactionOwnerGuard } from 'src/comment-reaction/guards/commentary-reaction-owner.guard';
-import { CreateCommentaryReactionInput } from 'src/comment-reaction/inputs/create-commentary-reaction.model';
-import { UpdateCommentaryReactionInput } from 'src/comment-reaction/inputs/update-commentary-reaction.input';
-import { CommentaryReactionModel } from 'src/comment-reaction/models/commentary-reaction.model';
-import { CommentaryReactionService } from 'src/comment-reaction/services/commentary-reaction.service';
+import { DeleteCommentaryReactionArgs } from 'src/comment-reactions/args/delete-commentary-reaction.args';
+import { CommentaryReactionOwnerGuard } from 'src/comment-reactions/guards/commentary-reaction-owner.guard';
+import { CreateCommentaryReactionInput } from 'src/comment-reactions/inputs/create-commentary-reaction.model';
+import { UpdateCommentaryReactionInput } from 'src/comment-reactions/inputs/update-commentary-reaction.input';
+import { CommentaryReactionModel } from 'src/comment-reactions/models/commentary-reaction.model';
+import { CommentaryReactionsService } from 'src/comment-reactions/services/commentary-reactions.service';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
 
 @Resolver(() => CommentaryReactionModel)
-export class CommentariReactionMutationResolver {
-  constructor(private commentaryReactionService: CommentaryReactionService) {}
+export class CommentariReactionsMutationResolver {
+  constructor(private commentaryReactionService: CommentaryReactionsService) {}
 
   @Mutation(() => CommentaryReactionModel)
   @UseGuards(GqlAuthGuard)
