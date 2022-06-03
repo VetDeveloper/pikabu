@@ -14,7 +14,7 @@ export class CommentaryEntity {
     type: 'varchar',
     nullable: true
   })
-  text?: string;
+  text: string | null;
 
   @Column({
     type: 'jsonb',
