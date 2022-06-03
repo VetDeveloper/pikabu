@@ -24,7 +24,7 @@ export class PostsRepository extends Repository<PostsEntity> {
 
   getUserPosts(userId: number, paginateArgs: PaginateArgs) {
     const qb = this.createQueryBuilder();
-    qb.andWhere('PostEntity.userId = :userId', {
+    qb.andWhere('PostsEntity.userId = :userId', {
       userId: userId,
     });
     return this.getPaginate(qb, paginateArgs);
@@ -44,21 +44,21 @@ export class PostsRepository extends Repository<PostsEntity> {
         case Group.BEST:
           qb.addSelect('COUNT(reactions.id) as group_count');
           qb.innerJoin(
-            'PostEntity.reactions',
+            'PostsEntity.reactions',
             'reactions',
             "reactions.reaction = :react AND reactions.createdAt >= Now() - INTERVAL '24 hours'",
             { react: Reaction.LIKE },
-          ).groupBy('PostEntity.id');
+          ).groupBy('PostsEntity.id');
           break;
         case Group.FRESH:
-          qb.andWhere("PostEntity.createdAt >= Now() - INTERVAL '24 hours'");
+          qb.andWhere("PostsEntity.createdAt >= Now() - INTERVAL '24 hours'");
           break;
         case Group.HOT:
           qb.innerJoin(
-            'PostEntity.commentaries',
+            'PostsEntity.commentaries',
             'commentaries',
             "commentaries.createdAt >= Now() - INTERVAL '24 hours'",
-          ).groupBy('PostEntity.id');
+          ).groupBy('PostsEntity.id');
           break;
       }
     }
@@ -69,7 +69,7 @@ export class PostsRepository extends Repository<PostsEntity> {
     }
     switch (sortArgs.sort) {
       case Sort.CREATEDAT:
-        qb.orderBy('PostEntity.createdAt', sortArgs.order);
+        qb.orderBy('PostsEntity.createdAt', sortArgs.order);
         break;
       case Sort.LIKES:
         filterPostArgs.group === Group.BEST
@@ -77,12 +77,12 @@ export class PostsRepository extends Repository<PostsEntity> {
           : qb
               .addSelect('COUNT(likes_reactions.reaction) as likesCount')
               .leftJoin(
-                'PostEntity.reactions',
+                'PostsEntity.reactions',
                 'likes_reactions',
                 'likes_reactions.reaction = :react',
                 { react: Reaction.LIKE },
               )
-              .groupBy('PostEntity.id')
+              .groupBy('PostsEntity.id')
               .orderBy('likesCount', sortArgs.order);
 
         break;
