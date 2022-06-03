@@ -8,7 +8,7 @@ import { SortArgs } from 'src/common/args/sort.args';
 import { Sort } from 'src/common/enums/sort.enum';
 import { Reaction } from 'src/common/enums/reaction.enum';
 import { FilterArgs } from './args/filter-post.args';
-import { Group } from './enums/group.enum';
+import { PostsGroup } from './enums/posts-group.enum';
 
 @EntityRepository(PostsEntity)
 export class PostsRepository extends Repository<PostsEntity> {
@@ -41,7 +41,7 @@ export class PostsRepository extends Repository<PostsEntity> {
     }
     if (filterPostArgs.group) {
       switch (filterPostArgs.group) {
-        case Group.BEST:
+        case PostsGroup.BEST:
           qb.addSelect('COUNT(reactions.id) as group_count');
           qb.innerJoin(
             'PostsEntity.reactions',
@@ -50,10 +50,10 @@ export class PostsRepository extends Repository<PostsEntity> {
             { react: Reaction.LIKE },
           ).groupBy('PostsEntity.id');
           break;
-        case Group.FRESH:
+        case PostsGroup.FRESH:
           qb.andWhere("PostsEntity.createdAt >= Now() - INTERVAL '24 hours'");
           break;
-        case Group.HOT:
+        case PostsGroup.HOT:
           qb.innerJoin(
             'PostsEntity.commentaries',
             'commentaries',
@@ -72,7 +72,7 @@ export class PostsRepository extends Repository<PostsEntity> {
         qb.orderBy('PostsEntity.createdAt', sortArgs.order);
         break;
       case Sort.LIKES:
-        filterPostArgs.group === Group.BEST
+        filterPostArgs.group === PostsGroup.BEST
           ? qb.orderBy('group_count', sortArgs.order)
           : qb
               .addSelect('COUNT(likes_reactions.reaction) as likesCount')

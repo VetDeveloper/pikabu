@@ -1,6 +1,6 @@
 import { ArgsType, Field } from '@nestjs/graphql';
 import { IsArray, IsEnum, IsOptional, IsString } from 'class-validator';
-import { Group } from '../enums/group.enum';
+import { PostsGroup } from '../enums/posts-group.enum';
 
 @ArgsType()
 export class FilterArgs {
@@ -11,10 +11,10 @@ export class FilterArgs {
   @IsOptional()
   tags?: Array<string>;
 
-  @Field(() => Group, {
+  @Field(() => PostsGroup, {
     nullable: true,
   })
-  @IsEnum(Group)
+  @IsEnum(PostsGroup)
   @IsOptional()
-  group?: Group;
+  group?: PostsGroup;
 }
