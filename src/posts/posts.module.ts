@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentariesModule } from 'src/commentaries/commentaries.module';
-import { FavouritesRepository } from 'src/favourites/favourites.repository';
+import { FavoritesRepository } from 'src/favorites/favorites.repository';
 import { PostReactionsModule } from 'src/post-reactions/post-reactions.module';
 import { UsersLoader } from 'src/users/dataloader/users.loader';
 import { UserRepository } from 'src/users/users.repository';
@@ -23,7 +23,7 @@ import { PostsService } from './services/posts.service';
     TypeOrmModule.forFeature([
       PostsRepository,
       UserRepository,
-      FavouritesRepository,
+      FavoritesRepository,
     ]),
     CommentariesModule,
     PostReactionsModule,

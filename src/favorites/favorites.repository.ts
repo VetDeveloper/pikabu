@@ -1,12 +1,12 @@
 import { paginate } from 'nestjs-typeorm-paginate';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { EntityRepository, Repository, SelectQueryBuilder } from 'typeorm';
-import { FavouritesEntity } from './entities/favourites.entity';
+import { FavoritesEntity } from './entities/favorites.entity';
 import { EntityType } from './enums/entity-type.enum';
-import { FavouriteModel } from './models/favourite.model';
+import { FavoriteModel } from './models/favorite.model';
 
-@EntityRepository(FavouritesEntity)
-export class FavouritesRepository extends Repository<FavouritesEntity> {
+@EntityRepository(FavoritesEntity)
+export class FavoritesRepository extends Repository<FavoritesEntity> {
   getUserFavourites(userId: number, paginateArgs: PaginateArgs) {
     const qb = this.createQueryBuilder('rep');
     qb.andWhere('rep.userId = :userId', {
@@ -16,29 +16,29 @@ export class FavouritesRepository extends Repository<FavouritesEntity> {
   }
 
   async deletePostFavourites(postId: number) {
-    const arr: FavouritesEntity[] = await this.find({
+    const arr: FavoritesEntity[] = await this.find({
       where: {
         entityType: EntityType.POST,
-        entityId: postId
-      }
-    })
+        entityId: postId,
+      },
+    });
     this.remove(arr);
   }
 
   async deleteCommentaryFavourites(commentaryId: number) {
-    const arr: FavouritesEntity[] = await this.find({
+    const arr: FavoritesEntity[] = await this.find({
       where: {
         entityType: EntityType.COMMENTARY,
-        entityId: commentaryId
-      }
-    })
+        entityId: commentaryId,
+      },
+    });
     await this.remove(arr);
   }
 
   private getPaginate(
-    qb: SelectQueryBuilder<FavouritesEntity>,
+    qb: SelectQueryBuilder<FavoritesEntity>,
     paginateArgs: PaginateArgs,
   ) {
-    return paginate<FavouriteModel>(qb, paginateArgs);
+    return paginate<FavoriteModel>(qb, paginateArgs);
   }
 }

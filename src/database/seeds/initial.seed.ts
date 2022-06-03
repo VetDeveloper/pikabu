@@ -6,8 +6,8 @@ import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 import { CommentaryReactionsEntity } from 'src/comment-reactions/entities/commentary-reactions.entity';
 import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
-import { FavouritesEntity } from 'src/favourites/entities/favourites.entity';
-import { EntityType } from 'src/favourites/enums/entity-type.enum';
+import { FavoritesEntity } from 'src/favorites/entities/favorites.entity';
+import { EntityType } from 'src/favorites/enums/entity-type.enum';
 
 export default class InitialDatabaseSeed implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<void> {
@@ -38,7 +38,7 @@ export default class InitialDatabaseSeed implements Seeder {
 
     const commentaryReactions: CommentaryReactionsEntity[] = [];
     const postReactions: PostReactionsEntity[] = [];
-    const favourites: FavouritesEntity[] = [];
+    const favourites: FavoritesEntity[] = [];
 
     // каждому комменту каждый юзер что-то ставит с вероятностью 60%, посту - 70%, 25% - add to favourites
     for (
@@ -74,7 +74,7 @@ export default class InitialDatabaseSeed implements Seeder {
           const choseEntityType: EntityType =
             Math.random() < 0.5 ? EntityType.COMMENTARY : EntityType.POST;
           favourites.push(
-            await factory(FavouritesEntity)()
+            await factory(FavoritesEntity)()
               .map(async (fav) => {
                 fav.entityId = commentaryAndPostId;
                 fav.entityType = choseEntityType;

@@ -4,23 +4,23 @@ import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entit
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { PostsRepository } from 'src/posts/posts.repository';
-import { FavouritesEntity } from '../entities/favourites.entity';
+import { FavoritesEntity } from '../entities/favorites.entity';
 import { EntityType } from '../enums/entity-type.enum';
-import { FavouritesRepository } from '../favourites.repository';
-import { CreateFavouriteInput } from '../inputs/create-favourite.input';
+import { FavoritesRepository } from '../favorites.repository';
+import { CreateFavoriteInput } from '../inputs/create-favorite.input';
 
 @Injectable()
-export class FavouriteService {
+export class FavoriteService {
   constructor(
-    private favouritesRepository: FavouritesRepository,
+    private favouritesRepository: FavoritesRepository,
     private postRepository: PostsRepository,
     private commentaryRepository: CommentariesRepository,
   ) {}
 
   async createFavourite(
     userId: number,
-    dto: CreateFavouriteInput,
-  ): Promise<FavouritesEntity> {
+    dto: CreateFavoriteInput,
+  ): Promise<FavoritesEntity> {
     switch (dto.entityType) {
       case EntityType.POST:
         const post: PostsEntity = await this.postRepository.findOne(
@@ -46,9 +46,7 @@ export class FavouriteService {
   }
 
   async deleteOne(id: number) {
-    const entity: FavouritesEntity = await this.favouritesRepository.findOne(
-      id,
-    );
+    const entity: FavoritesEntity = await this.favouritesRepository.findOne(id);
     if (!entity) {
       throw new NotFoundException();
     }
@@ -60,7 +58,7 @@ export class FavouriteService {
     return this.favouritesRepository.getUserFavourites(userId, paginateArgs);
   }
 
-  findOne(id:number) {
+  findOne(id: number) {
     return this.favouritesRepository.findOneOrFail(id);
   }
 }

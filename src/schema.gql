@@ -32,7 +32,7 @@ type UserModel {
   postReactions(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedPostReaction!
   commentaries(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentary!
   commentaryReactions(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentaryReaction!
-  favourites(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedFavourite!
+  favourites(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedFavorite!
 }
 
 type ImageModel {
@@ -127,7 +127,7 @@ type PaginatedPost {
   links: LinksType!
 }
 
-type FavouriteModel {
+type FavoriteModel {
   id: ID!
   userId: Int!
   entityId: Int!
@@ -140,8 +140,8 @@ enum EntityType {
   COMMENTARY
 }
 
-type PaginatedFavourite {
-  items: [FavouriteModel!]!
+type PaginatedFavorite {
+  items: [FavoriteModel!]!
   meta: MetaType!
   links: LinksType!
 }
@@ -165,7 +165,7 @@ type Query {
   getCommentary(id: Int!): CommentaryModel!
   getCommentaryReaction(id: Int!): CommentaryReactionModel!
   getPostReaction(id: Int!): PostReactionModel!
-  getFavorite(id: Int!): FavouriteModel!
+  getFavorite(id: Int!): FavoriteModel!
   login(loginUserArgs: CreateUserInput!): AuthResponse!
 }
 
@@ -196,8 +196,8 @@ type Mutation {
   createPostReaction(createPostReactionInput: CreatePostReactionInput!): PostReactionModel!
   updatePostReaction(updatePostReactionInput: UpdatePostReactionInput!): PostReactionModel!
   deletePostReaction(id: Int!): PostReactionModel!
-  createFavourite(createFavouriteInput: CreateFavouriteInput!): FavouriteModel!
-  deleteFavourite(id: Int!): FavouriteModel!
+  createFavourite(createFavouriteInput: CreateFavoriteInput!): FavoriteModel!
+  deleteFavourite(id: Int!): FavoriteModel!
   registrateNewUser(newUserArgs: CreateUserInput!): AuthResponse!
 }
 
@@ -259,7 +259,7 @@ input UpdatePostReactionInput {
   id: Int!
 }
 
-input CreateFavouriteInput {
+input CreateFavoriteInput {
   entityId: Int!
   entityType: EntityType!
 }

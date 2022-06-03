@@ -6,8 +6,8 @@ import { CommentariesRepository } from 'src/commentaries/commentaries.repository
 import { PaginatedCommentary } from 'src/commentaries/models/paginated-commentaty.model';
 import { CommentariesService } from 'src/commentaries/services/commentaries.service';
 import { PaginateArgs } from 'src/common/args/paginate.args';
-import { PaginatedFavourite } from 'src/favourites/models/paginated-favourite.model';
-import { FavouriteService } from 'src/favourites/services/favourite.service';
+import { PaginatedFavorite } from 'src/favorites/models/paginated-favorite.model';
+import { FavoriteService } from 'src/favorites/services/favorite.service';
 import { PaginatedPostReaction } from 'src/post-reactions/models/paginated-post-reaction.model';
 import { PostReactionsRepository } from 'src/post-reactions/post-reaction.repository';
 import { PostReactionsService } from 'src/post-reactions/services/post-reactions.service';
@@ -19,7 +19,7 @@ import { UserModel } from '../models/user.model';
 export class UsersResolver {
   constructor(
     private postService: PostsService,
-    private favouriteService: FavouriteService,
+    private favouriteService: FavoriteService,
     private postReactionService: PostReactionsService,
     private commentaryReactionService: CommentaryReactionsService,
     private commentaryService: CommentariesService,
@@ -60,7 +60,7 @@ export class UsersResolver {
     );
   }
 
-  @ResolveField('favourites', () => PaginatedFavourite)
+  @ResolveField('favourites', () => PaginatedFavorite)
   favourites(@Parent() author: UserModel, @Args() paginateArgs: PaginateArgs) {
     return this.favouriteService.getUserFavourites(author.id, paginateArgs);
   }

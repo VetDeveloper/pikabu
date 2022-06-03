@@ -2,26 +2,26 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentariesRepository } from 'src/commentaries/commentaries.repository';
 import { PostsRepository } from 'src/posts/posts.repository';
-import { FavouritesRepository } from './favourites.repository';
-import { FavouriteResolver } from './resolvers/favourite.resolver';
-import { FavouriteMutationResolver } from './resolvers/mutation/mutation-favourite.resolver';
+import { FavoritesRepository } from './favorites.repository';
+import { FavoriteResolver } from './resolvers/favorite.resolver';
+import { FavoriteMutationResolver } from './resolvers/mutation/mutation-favorite.resolver';
 import { QueryFavoriteResolver } from './resolvers/query/query-favorite.resolver';
-import { FavouriteService } from './services/favourite.service';
+import { FavoriteService } from './services/favorite.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      FavouritesRepository,
+      FavoritesRepository,
       PostsRepository,
       CommentariesRepository,
     ]),
   ],
-  exports: [FavouriteService],
+  exports: [FavoriteService],
   providers: [
-    FavouriteService,
-    FavouriteMutationResolver,
-    FavouriteResolver,
+    FavoriteService,
+    FavoriteMutationResolver,
+    FavoriteResolver,
     QueryFavoriteResolver,
   ],
 })
-export class FavouritesModule {}
+export class FavoritesModule {}

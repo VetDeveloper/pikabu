@@ -12,13 +12,13 @@ import { PaginateArgs } from '../../common/args/paginate.args';
 import { SearchArgs } from '../args/search-post.args';
 import { SortArgs } from 'src/common/args/sort.args';
 import { FilterArgs } from '../args/filter-post.args';
-import { FavouritesRepository } from 'src/favourites/favourites.repository';
+import { FavoritesRepository } from 'src/favorites/favorites.repository';
 
 @Injectable()
 export class PostsService {
   constructor(
     private postRepository: PostsRepository,
-    private favouriteRepository: FavouritesRepository,
+    private favouriteRepository: FavoritesRepository,
   ) {}
 
   getPostsByIds(ids: number[]) {

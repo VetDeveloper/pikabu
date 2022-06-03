@@ -9,7 +9,7 @@ import {
 import { EntityType } from '../enums/entity-type.enum';
 
 @Entity()
-export class FavouritesEntity {
+export class FavoritesEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

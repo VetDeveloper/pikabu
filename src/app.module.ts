@@ -15,7 +15,7 @@ import { PostsLoader } from './posts/dataloader/posts.loader';
 import { PostReactionsModule } from './post-reactions/post-reactions.module';
 import { CommentariesModule } from './commentaries/commentaries.module';
 import { CommentaryReactionsModule } from './comment-reactions/commentary-reactions.module';
-import { FavouritesModule } from './favourites/favourites.module';
+import { FavoritesModule } from './favorites/favorites.module';
 
 @Module({
   imports: [
@@ -57,7 +57,7 @@ import { FavouritesModule } from './favourites/favourites.module';
     PostReactionsModule,
     CommentariesModule,
     CommentaryReactionsModule,
-    FavouritesModule,
+    FavoritesModule,
   ],
   providers: [
     {

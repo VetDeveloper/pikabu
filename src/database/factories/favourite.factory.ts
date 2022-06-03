@@ -1,8 +1,8 @@
-import { define } from "typeorm-seeding";
+import { define } from 'typeorm-seeding';
 import * as Faker from 'faker';
-import { FavouritesEntity } from "src/favourites/entities/favourites.entity";
+import { FavoritesEntity } from 'src/favorites/entities/favorites.entity';
 
-define(FavouritesEntity, (faker: typeof Faker) => {
-    const favourite: FavouritesEntity = new FavouritesEntity();
-    return favourite;
-  });
+define(FavoritesEntity, (faker: typeof Faker) => {
+  const favourite: FavoritesEntity = new FavoritesEntity();
+  return favourite;
+});

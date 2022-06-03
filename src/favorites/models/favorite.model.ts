@@ -2,7 +2,7 @@ import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { EntityType } from '../enums/entity-type.enum';
 
 @ObjectType()
-export class FavouriteModel {
+export class FavoriteModel {
   @Field(() => ID)
   id: number;
 
