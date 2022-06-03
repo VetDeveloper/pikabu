@@ -1,10 +1,10 @@
 import { Loader } from '@app/dataloader';
 import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { UserLoader } from 'src/user/dataloader/user.loader';
-import { UserModel } from 'src/user/models/user.model';
+import { UsersLoader } from 'src/users/dataloader/users.loader';
+import { UserModel } from 'src/users/models/user.model';
 import { CommentaryModel } from '../models/commentary.model';
 import * as DataLoader from 'dataloader';
-import { UserEntity } from 'src/user/entities/user.entity';
+import { UsersEntity } from 'src/users/entities/users.entity';
 import { PostLoader } from 'src/post/dataloader/post.loader';
 import { PostEntity } from 'src/post/entities/post.entity';
 import { PostModel } from 'src/post/models/post.model';
@@ -15,13 +15,12 @@ import { PaginateArgs } from 'src/common/args/paginate.args';
 
 @Resolver(() => CommentaryModel)
 export class CommentaryResolver {
-
   constructor(private commentaryReactionService: CommentaryReactionService) {}
 
   @ResolveField('user', () => UserModel)
   user(
     @Parent() comment: CommentaryModel,
-    @Loader(UserLoader) userLoader: DataLoader<number, UserEntity>,
+    @Loader(UsersLoader) userLoader: DataLoader<number, UsersEntity>,
   ) {
     return userLoader.load(comment.userId);
   }
@@ -35,10 +34,10 @@ export class CommentaryResolver {
   }
 
   @ResolveField('reactions', () => PaginatedCommentaryReaction)
-  reactions(
-    @Parent() comment: CommentaryModel,
-    @Args() args: PaginateArgs,
-  ) {
-    return this.commentaryReactionService.getCommentaryReactions(comment.id, args);
+  reactions(@Parent() comment: CommentaryModel, @Args() args: PaginateArgs) {
+    return this.commentaryReactionService.getCommentaryReactions(
+      comment.id,
+      args,
+    );
   }
 }

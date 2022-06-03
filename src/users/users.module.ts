@@ -5,11 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostLoader } from 'src/post/dataloader/post.loader';
 import { PostModule } from 'src/post/post.module';
 import { PostRepository } from 'src/post/post.repository';
-import { UserRepository } from './user.repository';
-import { UserResolver } from './resolvers/user.resolver';
-import { UserService } from './services/user.service';
-import { UserQueryResolver } from './resolvers/query/user-query.resolver';
-import { UserMutationResolver } from './resolvers/mutation/user-mutation.resolver';
+import { UserRepository } from './users.repository';
+import { UsersResolver } from './resolvers/users.resolver';
+import { UserService } from './services/users.service';
+import { UsersQueryResolver } from './resolvers/query/users-query.resolver';
+import { UsersMutationResolver } from './resolvers/mutation/users-mutation.resolver';
 import { FavouritesModule } from 'src/favourites/favourites.module';
 import { PostReactionModule } from 'src/post-reaction/post-reaction.module';
 import { CommentaryReactionModel } from 'src/comment-reaction/models/commentary-reaction.model';
@@ -19,9 +19,9 @@ import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.
 @Module({
   providers: [
     UserService,
-    UserResolver,
-    UserQueryResolver,
-    UserMutationResolver,
+    UsersResolver,
+    UsersQueryResolver,
+    UsersMutationResolver,
     PostLoader,
   ],
   imports: [
@@ -40,8 +40,8 @@ import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.
     FavouritesModule,
     PostReactionModule,
     CommentaryReactionModule,
-    CommentaryModule
+    CommentaryModule,
   ],
   exports: [UserService],
 })
-export class UserModule {}
+export class UsersModule {}

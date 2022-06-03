@@ -1,20 +1,16 @@
 import { paginate } from 'nestjs-typeorm-paginate';
 import { PaginateArgs } from 'src/common/args/paginate.args';
-import {
-  EntityRepository,
-  Repository,
-  SelectQueryBuilder,
-} from 'typeorm';
-import { UserEntity } from './entities/user.entity';
+import { EntityRepository, Repository, SelectQueryBuilder } from 'typeorm';
+import { UsersEntity } from './entities/users.entity';
 import { UserModel } from './models/user.model';
 
-@EntityRepository(UserEntity)
-export class UserRepository extends Repository<UserEntity> {
-  getUserByEmail(email: string): Promise<UserEntity> {
+@EntityRepository(UsersEntity)
+export class UserRepository extends Repository<UsersEntity> {
+  getUserByEmail(email: string): Promise<UsersEntity> {
     return this.findOne({ where: { email } });
   }
 
-  findUserOrFail(id: number): Promise<UserEntity> {
+  findUserOrFail(id: number): Promise<UsersEntity> {
     return this.findOneOrFail({ where: { id } });
   }
 
@@ -24,7 +20,7 @@ export class UserRepository extends Repository<UserEntity> {
   }
 
   private getPaginate(
-    qb: SelectQueryBuilder<UserEntity>,
+    qb: SelectQueryBuilder<UsersEntity>,
     paginateArgs: PaginateArgs,
   ) {
     return paginate<UserModel>(qb, paginateArgs);

@@ -1,20 +1,16 @@
 import { UseGuards } from '@nestjs/common';
-import {
-  Args,
-  Mutation,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
-import { CreateUserInput } from 'src/user/inputs/create-user.input';
-import { UpdateUserInput } from 'src/user/inputs/update-user.input';
+import { CreateUserInput } from 'src/users/inputs/create-user.input';
+import { UpdateUserInput } from 'src/users/inputs/update-user.input';
 import { AuthResponse } from 'src/auth/models/auth-response.model';
-import { UserModel } from 'src/user/models/user.model';
-import { UserService } from 'src/user/services/user.service';
+import { UserModel } from 'src/users/models/user.model';
+import { UserService } from 'src/users/services/users.service';
 
 @Resolver(UserModel)
 @UseGuards(GqlAuthGuard)
-export class UserMutationResolver {
+export class UsersMutationResolver {
   constructor(private readonly userService: UserService) {}
 
   @Mutation(() => UserModel)

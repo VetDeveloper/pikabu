@@ -1,6 +1,6 @@
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
 import { Reaction } from 'src/common/enums/reaction.enum';
-import { UserEntity } from 'src/user/entities/user.entity';
+import { UsersEntity } from 'src/users/entities/users.entity';
 import {
   Column,
   CreateDateColumn,
@@ -40,11 +40,11 @@ export class CommentaryReactionEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.commentaryReactions, {
+  @ManyToOne(() => UsersEntity, (user) => user.commentaryReactions, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'userId' })
-  user?: UserEntity;
+  user?: UsersEntity;
 
   @ManyToOne(() => CommentaryEntity, (commentary) => commentary.reactions, {
     onDelete: 'CASCADE',

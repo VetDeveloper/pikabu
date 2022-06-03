@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType} from "@nestjs/graphql";
 import { ImageModel } from "../../common/models/image.model";
 import JSON from 'graphql-type-json';
-import { UserModel } from "src/user/models/user.model";
+import { UserModel } from "src/users/models/user.model";
 
 @ObjectType()
 export class PostModel {

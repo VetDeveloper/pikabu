@@ -1,6 +1,6 @@
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
 import { PostReactionEntity } from 'src/post-reaction/entities/post-reaction.entity';
-import { UserEntity } from 'src/user/entities/user.entity';
+import { UsersEntity } from 'src/users/entities/users.entity';
 import {
   Column,
   CreateDateColumn,
@@ -44,11 +44,11 @@ export class PostEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.posts, {
+  @ManyToOne(() => UsersEntity, (user) => user.posts, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'userId' })
-  user?: UserEntity;
+  user?: UsersEntity;
 
   @OneToMany(() => PostReactionEntity, (reaction) => reaction.post)
   reactions?: PostReactionEntity[];

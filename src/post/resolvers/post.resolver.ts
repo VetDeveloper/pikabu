@@ -1,9 +1,9 @@
 import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { UserModel } from 'src/user/models/user.model';
+import { UserModel } from 'src/users/models/user.model';
 import { PostModel } from '../models/post.model';
 import { Loader } from '@app/dataloader';
-import { UserLoader } from 'src/user/dataloader/user.loader';
-import { UserEntity } from 'src/user/entities/user.entity';
+import { UsersLoader } from 'src/users/dataloader/users.loader';
+import { UsersEntity } from 'src/users/entities/users.entity';
 import * as DataLoader from 'dataloader';
 import { PaginatedCommentary } from 'src/commentary/models/paginated-commentaty.model';
 import { CommentaryService } from 'src/commentary/services/commentary.service';
@@ -14,12 +14,15 @@ import { PostReactionService } from 'src/post-reaction/services/post-reaction.se
 
 @Resolver(() => PostModel)
 export class PostResolver {
-  constructor(private comServ: CommentaryService, private postReactionService: PostReactionService) {}
+  constructor(
+    private comServ: CommentaryService,
+    private postReactionService: PostReactionService,
+  ) {}
 
   @ResolveField(() => UserModel)
   user(
     @Parent() post: PostModel,
-    @Loader(UserLoader) userLoader: DataLoader<number, UserEntity>,
+    @Loader(UsersLoader) userLoader: DataLoader<number, UsersEntity>,
   ) {
     return userLoader.load(post.userId);
   }
@@ -34,10 +37,7 @@ export class PostResolver {
   }
 
   @ResolveField(() => PaginatedPostReaction)
-  postReaction(
-    @Parent() post: PostModel,
-    @Args() paginateArtgs: PaginateArgs,
-  ) {
+  postReaction(@Parent() post: PostModel, @Args() paginateArtgs: PaginateArgs) {
     return this.postReactionService.getPostReaction(post.id, paginateArtgs);
   }
 }

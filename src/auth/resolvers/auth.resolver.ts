@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { CreateUserInput } from "src/user/inputs/create-user.input";
+import { CreateUserInput } from "src/users/inputs/create-user.input";
 import { AuthResponse } from "src/auth/models/auth-response.model";
 import { AuthService } from "../services/auth.service";
 

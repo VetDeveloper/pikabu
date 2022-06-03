@@ -5,7 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 import { join } from 'path';
-import { UserModule } from './user/user.module';
+import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PostModule } from './post/post.module';
 import { PostService } from './post/services/post.service';
@@ -51,7 +51,7 @@ import { FavouritesModule } from './favourites/favourites.module';
         seeds: ['dist/**/database/seeds/**/*.js'],
       }),
     }),
-    UserModule,
+    UsersModule,
     AuthModule,
     PostModule,
     PostReactionModule,

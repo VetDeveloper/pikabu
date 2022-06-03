@@ -16,20 +16,17 @@ import { PostService } from 'src/post/services/post.service';
 import { UserModel } from '../models/user.model';
 
 @Resolver(UserModel)
-export class UserResolver {
+export class UsersResolver {
   constructor(
     private postService: PostService,
     private favouriteService: FavouriteService,
     private postReactionService: PostReactionService,
     private commentaryReactionService: CommentaryReactionService,
-    private commentaryService: CommentaryService
+    private commentaryService: CommentaryService,
   ) {}
 
   @ResolveField('posts', () => PaginatedPost)
-  posts(
-    @Parent() author: UserModel,
-    @Args() paginateArgs: PaginateArgs,
-  ) {
+  posts(@Parent() author: UserModel, @Args() paginateArgs: PaginateArgs) {
     return this.postService.getUserPosts(author.id, paginateArgs);
   }
 
@@ -38,7 +35,10 @@ export class UserResolver {
     @Parent() author: UserModel,
     @Args() paginateArgs: PaginateArgs,
   ) {
-    return this.postReactionService.getUserPostReactions(author.id, paginateArgs);
+    return this.postReactionService.getUserPostReactions(
+      author.id,
+      paginateArgs,
+    );
   }
 
   @ResolveField('commentaries', () => PaginatedCommentary)
@@ -54,14 +54,14 @@ export class UserResolver {
     @Parent() author: UserModel,
     @Args() paginateArgs: PaginateArgs,
   ) {
-    return this.commentaryReactionService.getUserCommentaryReactions(author.id, paginateArgs);
+    return this.commentaryReactionService.getUserCommentaryReactions(
+      author.id,
+      paginateArgs,
+    );
   }
 
-  @ResolveField('favourites', ()=> PaginatedFavourite)
-  favourites(
-    @Parent() author: UserModel,
-    @Args() paginateArgs: PaginateArgs,
-  ) {
+  @ResolveField('favourites', () => PaginatedFavourite)
+  favourites(@Parent() author: UserModel, @Args() paginateArgs: PaginateArgs) {
     return this.favouriteService.getUserFavourites(author.id, paginateArgs);
   }
 }

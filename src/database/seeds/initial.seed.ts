@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 import * as bcrypt from 'bcryptjs';
-import { UserEntity } from 'src/user/entities/user.entity';
+import { UsersEntity } from 'src/users/entities/users.entity';
 import { PostEntity } from 'src/post/entities/post.entity';
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
 import { CommentaryReactionEntity } from 'src/comment-reaction/entities/comment-reaction.entity';
@@ -15,7 +15,9 @@ export default class InitialDatabaseSeed implements Seeder {
     const postsCount: number = 10;
     const commentariesCount: number = postsCount;
 
-    const users: UserEntity[] = await factory(UserEntity)().createMany(usersCount);
+    const users: UsersEntity[] = await factory(UsersEntity)().createMany(
+      usersCount,
+    );
 
     const posts: PostEntity[] = await factory(PostEntity)()
       .map(async (post) => {
@@ -68,14 +70,16 @@ export default class InitialDatabaseSeed implements Seeder {
         }
         if (randomValue < 0.25) {
           const choseEntityType: EntityType =
-            Math.random() < 0.5 ? EntityType.COMMENTARY : EntityType.POST
+            Math.random() < 0.5 ? EntityType.COMMENTARY : EntityType.POST;
           favourites.push(
-            await factory(FavouritesEntity)().map(async (fav) => {
-              fav.entityId = commentaryAndPostId;
-              fav.entityType = choseEntityType;
-              fav.user = users[userId];
-              return fav;
-            }).create(),
+            await factory(FavouritesEntity)()
+              .map(async (fav) => {
+                fav.entityId = commentaryAndPostId;
+                fav.entityType = choseEntityType;
+                fav.user = users[userId];
+                return fav;
+              })
+              .create(),
           );
         }
       }

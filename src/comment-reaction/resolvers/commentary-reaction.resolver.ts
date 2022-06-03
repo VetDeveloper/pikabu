@@ -1,9 +1,9 @@
 import { Loader } from '@app/dataloader';
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { CommentaryReactionModel } from 'src/comment-reaction/models/commentary-reaction.model';
-import { UserLoader } from 'src/user/dataloader/user.loader';
-import { UserEntity } from 'src/user/entities/user.entity';
-import { UserModel } from 'src/user/models/user.model';
+import { UsersLoader } from 'src/users/dataloader/users.loader';
+import { UsersEntity } from 'src/users/entities/users.entity';
+import { UserModel } from 'src/users/models/user.model';
 import * as DataLoader from 'dataloader';
 import { CommentaryModel } from 'src/commentary/models/commentary.model';
 import { CommentaryLoader } from 'src/commentary/dataloader/commentary.loader';
@@ -14,7 +14,7 @@ export class CommentaryReactionResolver {
   @ResolveField(() => UserModel)
   user(
     @Parent() commentReaction: CommentaryReactionModel,
-    @Loader(UserLoader) userLoader: DataLoader<number, UserEntity>,
+    @Loader(UsersLoader) userLoader: DataLoader<number, UsersEntity>,
   ) {
     return userLoader.load(commentReaction.userId);
   }

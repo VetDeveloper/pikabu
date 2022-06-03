@@ -1,7 +1,16 @@
-import { PostEntity } from "src/post/entities/post.entity";
-import { UserEntity } from "src/user/entities/user.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
-import { Reaction } from "../../common/enums/reaction.enum";
+import { PostEntity } from 'src/post/entities/post.entity';
+import { UsersEntity } from 'src/users/entities/users.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Unique,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Reaction } from '../../common/enums/reaction.enum';
 
 @Entity()
 @Unique(['userId', 'postId'])
@@ -19,7 +28,7 @@ export class PostReactionEntity {
     type: 'int',
   })
   userId: number;
-  
+
   @Column({
     type: 'int',
   })
@@ -31,11 +40,11 @@ export class PostReactionEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.postReactions, {
+  @ManyToOne(() => UsersEntity, (user) => user.postReactions, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'userId' })
-  user?: UserEntity;
+  user?: UsersEntity;
 
   @ManyToOne(() => PostEntity, (post) => post.reactions, {
     onDelete: 'CASCADE',

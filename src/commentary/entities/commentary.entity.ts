@@ -2,8 +2,17 @@ import { StringValueNode } from 'graphql';
 import { CommentaryReactionEntity } from 'src/comment-reaction/entities/comment-reaction.entity';
 import { ImageModel } from 'src/common/models/image.model';
 import { PostEntity } from 'src/post/entities/post.entity';
-import { UserEntity } from 'src/user/entities/user.entity';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { UsersEntity } from 'src/users/entities/users.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class CommentaryEntity {
@@ -12,7 +21,7 @@ export class CommentaryEntity {
 
   @Column({
     type: 'varchar',
-    nullable: true
+    nullable: true,
   })
   text: string | null;
 
@@ -23,12 +32,12 @@ export class CommentaryEntity {
   images: Array<ImageModel>;
 
   @Column({
-      type: 'int'
+    type: 'int',
   })
   userId: number;
 
   @Column({
-      type: 'int'
+    type: 'int',
   })
   postId: number;
 
@@ -38,11 +47,11 @@ export class CommentaryEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.commentaries, {
+  @ManyToOne(() => UsersEntity, (user) => user.commentaries, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'userId' })
-  user?: UserEntity;
+  user?: UsersEntity;
 
   @ManyToOne(() => PostEntity, (post) => post.commentaries, {
     onDelete: 'CASCADE',

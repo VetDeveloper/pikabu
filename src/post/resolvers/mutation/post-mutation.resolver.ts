@@ -11,7 +11,7 @@ import { CreatePostInput } from 'src/post/inputs/create-post.input';
 import { UpdatePostInput } from 'src/post/inputs/update-post.input';
 import { PostModel } from 'src/post/models/post.model';
 import { PostService } from 'src/post/services/post.service';
-import { UserModel } from 'src/user/models/user.model';
+import { UserModel } from 'src/users/models/user.model';
 
 @Resolver(() => PostModel)
 export class PostMutationResolver {

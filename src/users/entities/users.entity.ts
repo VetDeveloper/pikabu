@@ -16,8 +16,7 @@ import {
 import * as bcrypt from 'bcryptjs';
 
 @Entity()
-export class UserEntity {
-
+export class UsersEntity {
   @BeforeInsert()
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 5);
@@ -57,6 +56,6 @@ export class UserEntity {
   @OneToMany(() => CommentaryReactionEntity, (reaction) => reaction.user)
   commentaryReactions?: CommentaryReactionEntity[];
 
-  @OneToMany(()=> FavouritesEntity, (fav) => fav.user )
+  @OneToMany(() => FavouritesEntity, (fav) => fav.user)
   favourites?: FavouritesEntity[];
 }

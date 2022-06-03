@@ -1,5 +1,11 @@
-import { UserEntity } from 'src/user/entities/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { UsersEntity } from 'src/users/entities/users.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { EntityType } from '../enums/entity-type.enum';
 
 @Entity()
@@ -23,9 +29,9 @@ export class FavouritesEntity {
   })
   entityType: EntityType;
 
-  @ManyToOne(() => UserEntity, (user) => user.favourites, {
+  @ManyToOne(() => UsersEntity, (user) => user.favourites, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'userId' })
-  user?: UserEntity;
+  user?: UsersEntity;
 }

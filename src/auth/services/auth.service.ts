@@ -1,10 +1,10 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { UserEntity } from "src/user/entities/user.entity";
-import { CreateUserInput } from "src/user/inputs/create-user.input";
-import { AuthResponse } from "src/auth/models/auth-response.model";
-import { UserService } from "src/user/services/user.service";
-import { TokenPayload } from "../types/token-payload.type";
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UsersEntity } from 'src/users/entities/users.entity';
+import { CreateUserInput } from 'src/users/inputs/create-user.input';
+import { AuthResponse } from 'src/auth/models/auth-response.model';
+import { UserService } from 'src/users/services/users.service';
+import { TokenPayload } from '../types/token-payload.type';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   async login(dto: CreateUserInput): Promise<AuthResponse> {
-    const user: UserEntity = await this.userService.validateUser(
+    const user: UsersEntity = await this.userService.validateUser(
       dto.email,
       dto.password,
     );
@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   async registrateOne(dto: CreateUserInput): Promise<AuthResponse> {
-    const alreadyExist: UserEntity = await this.userService.getUserByEmail(
+    const alreadyExist: UsersEntity = await this.userService.getUserByEmail(
       dto.email,
     );
     if (alreadyExist) {
@@ -30,11 +30,11 @@ export class AuthService {
         'User with this email is already registered',
       );
     }
-    const newUser: UserEntity = await this.userService.registrateOneUser(dto);
+    const newUser: UsersEntity = await this.userService.registrateOneUser(dto);
     return this.getTokenObject(newUser);
   }
 
-  private getTokenObject(user: UserEntity): AuthResponse {
+  private getTokenObject(user: UsersEntity): AuthResponse {
     const payload: TokenPayload = { email: user.email, id: user.id };
     return {
       user: user,
