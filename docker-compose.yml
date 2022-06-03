@@ -10,7 +10,7 @@ services:
   db:
     image: postgres
     env_file:
-      - .env
+      - env.test
     restart: always
     ports:
       - 6432:5432

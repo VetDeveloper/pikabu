@@ -25,6 +25,7 @@ import { FavouritesModule } from './favourites/favourites.module';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: 'env.test',
       validationSchema: Joi.object({
         APP_PORT: Joi.number().default(5000),
         POSTGRES_DB: Joi.string().required(),
