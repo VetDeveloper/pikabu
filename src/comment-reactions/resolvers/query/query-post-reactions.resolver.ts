@@ -1,7 +1,7 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { GetOneEntityArgs } from "src/common/args/get-one-entity.args";
-import { PostReactionModel } from "src/post-reactions/models/post-reaction.model";
-import { PostReactionsService } from "src/post-reactions/services/post-reactions.service";
+import { PostReactionModel } from "src/comment-reactions/models/post-reaction.model";
+import { PostReactionsService } from "src/comment-reactions/services/post-reactions.service";
 
 @Resolver(() => PostReactionModel)
 export class QueryPostReactionsResolver {

@@ -53,6 +53,17 @@ type CommentaryModel {
   reactions(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentaryReaction!
 }
 
+type PostReactionModel {
+  id: ID!
+  reaction: Reaction!
+  userId: Int!
+  postId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: UserModel!
+  post: PostModel!
+}
+
 type PostModel {
   id: ID!
   title: String!
@@ -96,17 +107,6 @@ type LinksType {
   previous: String!
   next: String!
   last: String!
-}
-
-type PostReactionModel {
-  id: ID!
-  reaction: Reaction!
-  userId: Int!
-  postId: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  user: UserModel!
-  post: PostModel!
 }
 
 type PaginatedCommentary {

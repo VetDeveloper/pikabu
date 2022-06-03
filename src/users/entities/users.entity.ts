@@ -2,7 +2,7 @@ import { Exclude } from 'class-transformer';
 import { CommentaryReactionsEntity } from 'src/comment-reactions/entities/commentary-reactions.entity';
 import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 import { FavoritesEntity } from 'src/favorites/entities/favorites.entity';
-import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
+import { PostReactionsEntity } from 'src/comment-reactions/entities/post-reactions.entity';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
 import {
   BeforeInsert,

@@ -9,8 +9,8 @@ import { PaginatedCommentary } from 'src/commentaries/models/paginated-commentat
 import { CommentariesService } from 'src/commentaries/services/commentaries.service';
 import { SortArgs } from 'src/common/args/sort.args';
 import { PaginateArgs } from 'src/common/args/paginate.args';
-import { PaginatedPostReaction } from 'src/post-reactions/models/paginated-post-reaction.model';
-import { PostReactionsService } from 'src/post-reactions/services/post-reactions.service';
+import { PaginatedPostReaction } from 'src/comment-reactions/models/paginated-post-reaction.model';
+import { PostReactionsService } from 'src/comment-reactions/services/post-reactions.service';
 
 @Resolver(() => PostModel)
 export class PostsResolver {

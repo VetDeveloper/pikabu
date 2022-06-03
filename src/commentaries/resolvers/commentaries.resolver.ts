@@ -9,7 +9,7 @@ import { PostsLoader } from 'src/posts/dataloader/posts.loader';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { PostModel } from 'src/posts/models/post.model';
 import { PaginatedCommentaryReaction } from 'src/comment-reactions/models/paginated-commentary-reaction.model';
-import { CommentaryReactionsRepository } from 'src/comment-reactions/commentary-reactions.repository';
+import { CommentaryReactionsRepository } from 'src/comment-reactions/repositories/commentary-reactions.repository';
 import { CommentaryReactionsService } from 'src/comment-reactions/services/commentary-reactions.service';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 

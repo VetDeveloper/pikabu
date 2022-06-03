@@ -5,7 +5,7 @@ import { UsersEntity } from 'src/users/entities/users.entity';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
 import { CommentaryReactionsEntity } from 'src/comment-reactions/entities/commentary-reactions.entity';
-import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
+import { PostReactionsEntity } from 'src/comment-reactions/entities/post-reactions.entity';
 import { FavoritesEntity } from 'src/favorites/entities/favorites.entity';
 import { EntityType } from 'src/favorites/enums/entity-type.enum';
 

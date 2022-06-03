@@ -12,9 +12,8 @@ import { PostsService } from './posts/services/posts.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { DataLoaderInterceptor } from '@app/dataloader';
 import { PostsLoader } from './posts/dataloader/posts.loader';
-import { PostReactionsModule } from './post-reactions/post-reactions.module';
 import { CommentariesModule } from './commentaries/commentaries.module';
-import { CommentaryReactionsModule } from './comment-reactions/commentary-reactions.module';
+import { ReactionsModule } from './comment-reactions/reactions.module';
 import { FavoritesModule } from './favorites/favorites.module';
 
 @Module({
@@ -54,9 +53,8 @@ import { FavoritesModule } from './favorites/favorites.module';
     UsersModule,
     AuthModule,
     PostsModule,
-    PostReactionsModule,
     CommentariesModule,
-    CommentaryReactionsModule,
+    ReactionsModule,
     FavoritesModule,
   ],
   providers: [

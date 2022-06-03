@@ -7,7 +7,7 @@ import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { PostsRepository } from 'src/posts/posts.repository';
 import { PostReactionsEntity } from '../entities/post-reactions.entity';
 import { CreatePostReactionInput } from '../inputs/create-post-reaction.input';
-import { PostReactionsRepository } from '../post-reaction.repository';
+import { PostReactionsRepository } from '../repositories/post-reaction.repository';
 import { Reaction } from '../../common/enums/reaction.enum';
 import { UpdatePostReactionInput } from '../inputs/update-post-reaction.args';
 import { PaginateArgs } from 'src/common/args/paginate.args';

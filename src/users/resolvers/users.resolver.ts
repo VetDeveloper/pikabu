@@ -1,5 +1,5 @@
 import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { CommentaryReactionsRepository } from 'src/comment-reactions/commentary-reactions.repository';
+import { CommentaryReactionsRepository } from 'src/comment-reactions/repositories/commentary-reactions.repository';
 import { PaginatedCommentaryReaction } from 'src/comment-reactions/models/paginated-commentary-reaction.model';
 import { CommentaryReactionsService } from 'src/comment-reactions/services/commentary-reactions.service';
 import { CommentariesRepository } from 'src/commentaries/commentaries.repository';
@@ -8,9 +8,9 @@ import { CommentariesService } from 'src/commentaries/services/commentaries.serv
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { PaginatedFavorite } from 'src/favorites/models/paginated-favorite.model';
 import { FavoriteService } from 'src/favorites/services/favorite.service';
-import { PaginatedPostReaction } from 'src/post-reactions/models/paginated-post-reaction.model';
-import { PostReactionsRepository } from 'src/post-reactions/post-reaction.repository';
-import { PostReactionsService } from 'src/post-reactions/services/post-reactions.service';
+import { PaginatedPostReaction } from 'src/comment-reactions/models/paginated-post-reaction.model';
+import { PostReactionsRepository } from 'src/comment-reactions/repositories/post-reaction.repository';
+import { PostReactionsService } from 'src/comment-reactions/services/post-reactions.service';
 import { PaginatedPost } from 'src/posts/models/paginated-post.model';
 import { PostsService } from 'src/posts/services/posts.service';
 import { UserModel } from '../models/user.model';

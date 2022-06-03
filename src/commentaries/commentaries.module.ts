@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommentaryReactionsModule } from 'src/comment-reactions/commentary-reactions.module';
+import { ReactionsModule } from 'src/comment-reactions/reactions.module';
 import { PostsRepository } from 'src/posts/posts.repository';
 import { CommentariesRepository } from './commentaries.repository';
 import { CommentariesResolver } from './resolvers/commentaries.resolver';
@@ -11,7 +11,7 @@ import { CommentariesService } from './services/commentaries.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([CommentariesRepository, PostsRepository]),
-    CommentaryReactionsModule,
+    ReactionsModule,
   ],
   exports: [CommentariesService],
   providers: [

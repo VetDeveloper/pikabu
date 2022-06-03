@@ -8,12 +8,12 @@ import {
 } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
-import { PostReactionModel } from 'src/post-reactions/models/post-reaction.model';
-import { PostReactionsService } from 'src/post-reactions/services/post-reactions.service';
-import { CreatePostReactionInput } from 'src/post-reactions/inputs/create-post-reaction.input';
-import { PostReactionOwnerGuard } from 'src/post-reactions/guards/post-reaction-owner.guard';
-import { UpdatePostReactionInput } from 'src/post-reactions/inputs/update-post-reaction.args';
-import { DeletePostReactionArgs } from 'src/post-reactions/args/delete-post-reaction.args';
+import { PostReactionModel } from 'src/comment-reactions/models/post-reaction.model';
+import { PostReactionsService } from 'src/comment-reactions/services/post-reactions.service';
+import { CreatePostReactionInput } from 'src/comment-reactions/inputs/create-post-reaction.input';
+import { PostReactionOwnerGuard } from 'src/comment-reactions/guards/post-reaction-owner.guard';
+import { UpdatePostReactionInput } from 'src/comment-reactions/inputs/update-post-reaction.args';
+import { DeletePostReactionArgs } from 'src/comment-reactions/args/delete-post-reaction.args';
 
 @Resolver(() => PostReactionModel)
 export class PostReactionsMutationResolver {

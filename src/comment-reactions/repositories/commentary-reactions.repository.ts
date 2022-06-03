@@ -1,8 +1,8 @@
 import { paginate } from 'nestjs-typeorm-paginate';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { EntityRepository, Repository } from 'typeorm';
-import { CommentaryReactionsEntity } from './entities/commentary-reactions.entity';
-import { CommentaryReactionModel } from './models/commentary-reaction.model';
+import { CommentaryReactionsEntity } from '../entities/commentary-reactions.entity';
+import { CommentaryReactionModel } from '../models/commentary-reaction.model';
 
 @EntityRepository(CommentaryReactionsEntity)
 export class CommentaryReactionsRepository extends Repository<CommentaryReactionsEntity> {

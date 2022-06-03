@@ -1,5 +1,5 @@
 import { CommentariesEntity } from 'src/commentaries/entities/commentaries.entity';
-import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
+import { PostReactionsEntity } from 'src/comment-reactions/entities/post-reactions.entity';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import {
   Column,
