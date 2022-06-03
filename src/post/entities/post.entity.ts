@@ -1,5 +1,5 @@
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
-import { PostReactionEntity } from 'src/post-reaction/entities/post-reaction.entity';
+import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
 import { UsersEntity } from 'src/users/entities/users.entity';
 import {
   Column,
@@ -50,8 +50,8 @@ export class PostEntity {
   @JoinColumn({ name: 'userId' })
   user?: UsersEntity;
 
-  @OneToMany(() => PostReactionEntity, (reaction) => reaction.post)
-  reactions?: PostReactionEntity[];
+  @OneToMany(() => PostReactionsEntity, (reaction) => reaction.post)
+  reactions?: PostReactionsEntity[];
 
   @OneToMany(() => CommentaryEntity, (commentary) => commentary.post)
   commentaries?: CommentaryEntity[];

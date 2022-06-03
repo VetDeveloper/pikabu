@@ -14,7 +14,7 @@ import { Reaction } from '../../common/enums/reaction.enum';
 
 @Entity()
 @Unique(['userId', 'postId'])
-export class PostReactionEntity {
+export class PostReactionsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

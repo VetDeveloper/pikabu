@@ -8,9 +8,9 @@ import { CommentaryService } from 'src/commentary/services/commentary.service';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { PaginatedFavourite } from 'src/favourites/models/paginated-favourite.model';
 import { FavouriteService } from 'src/favourites/services/favourite.service';
-import { PaginatedPostReaction } from 'src/post-reaction/models/paginated-post-reaction.model';
-import { PostReactionRepository } from 'src/post-reaction/post-reaction.repository';
-import { PostReactionService } from 'src/post-reaction/services/post-reaction.service';
+import { PaginatedPostReaction } from 'src/post-reactions/models/paginated-post-reaction.model';
+import { PostReactionsRepository } from 'src/post-reactions/post-reaction.repository';
+import { PostReactionsService } from 'src/post-reactions/services/post-reactions.service';
 import { PaginatedPost } from 'src/post/models/paginated-post.model';
 import { PostService } from 'src/post/services/post.service';
 import { UserModel } from '../models/user.model';
@@ -20,7 +20,7 @@ export class UsersResolver {
   constructor(
     private postService: PostService,
     private favouriteService: FavouriteService,
-    private postReactionService: PostReactionService,
+    private postReactionService: PostReactionsService,
     private commentaryReactionService: CommentaryReactionService,
     private commentaryService: CommentaryService,
   ) {}

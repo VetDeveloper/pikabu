@@ -7,7 +7,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { PostReactionModel } from '../models/post-reaction.model';
-import { PostReactionService } from '../services/post-reaction.service';
+import { PostReactionsService } from '../services/post-reactions.service';
 import { UserModel } from 'src/users/models/user.model';
 import { Loader } from '@app/dataloader';
 import { UsersLoader } from 'src/users/dataloader/users.loader';
@@ -18,7 +18,7 @@ import { PostLoader } from 'src/post/dataloader/post.loader';
 import { PostEntity } from 'src/post/entities/post.entity';
 
 @Resolver(() => PostReactionModel)
-export class PostReactionResolver {
+export class PostReactionsResolver {
   @ResolveField(() => UserModel)
   user(
     @Parent() postReaction: PostReactionModel,

@@ -11,7 +11,7 @@ import { UserService } from './services/users.service';
 import { UsersQueryResolver } from './resolvers/query/users-query.resolver';
 import { UsersMutationResolver } from './resolvers/mutation/users-mutation.resolver';
 import { FavouritesModule } from 'src/favourites/favourites.module';
-import { PostReactionModule } from 'src/post-reaction/post-reaction.module';
+import { PostReactionsModule } from 'src/post-reactions/post-reactions.module';
 import { CommentaryReactionModel } from 'src/comment-reaction/models/commentary-reaction.model';
 import { CommentaryModule } from 'src/commentary/commentary.module';
 import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.module';
@@ -38,7 +38,7 @@ import { CommentaryReactionModule } from 'src/comment-reaction/comment-reaction.
     }),
     PostModule,
     FavouritesModule,
-    PostReactionModule,
+    PostReactionsModule,
     CommentaryReactionModule,
     CommentaryModule,
   ],

@@ -5,7 +5,7 @@ import { UsersEntity } from 'src/users/entities/users.entity';
 import { PostEntity } from 'src/post/entities/post.entity';
 import { CommentaryEntity } from 'src/commentary/entities/commentary.entity';
 import { CommentaryReactionEntity } from 'src/comment-reaction/entities/comment-reaction.entity';
-import { PostReactionEntity } from 'src/post-reaction/entities/post-reaction.entity';
+import { PostReactionsEntity } from 'src/post-reactions/entities/post-reactions.entity';
 import { FavouritesEntity } from 'src/favourites/entities/favourites.entity';
 import { EntityType } from 'src/favourites/enums/entity-type.enum';
 
@@ -35,7 +35,7 @@ export default class InitialDatabaseSeed implements Seeder {
       .createMany(commentariesCount);
 
     const commentaryReactions: CommentaryReactionEntity[] = [];
-    const postReactions: PostReactionEntity[] = [];
+    const postReactions: PostReactionsEntity[] = [];
     const favourites: FavouritesEntity[] = [];
 
     // каждому комменту каждый юзер что-то ставит с вероятностью 60%, посту - 70%, 25% - add to favourites
@@ -59,7 +59,7 @@ export default class InitialDatabaseSeed implements Seeder {
         }
         if (randomValue < 0.7) {
           postReactions.push(
-            await factory(PostReactionEntity)()
+            await factory(PostReactionsEntity)()
               .map(async (postReact) => {
                 postReact.user = users[userId];
                 postReact.post = posts[commentaryAndPostId];

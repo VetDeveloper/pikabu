@@ -1,15 +1,15 @@
 import { paginate } from 'nestjs-typeorm-paginate';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { EntityRepository, Repository } from 'typeorm';
-import { PostReactionEntity } from './entities/post-reaction.entity';
+import { PostReactionsEntity } from './entities/post-reactions.entity';
 import { PostReactionModel } from './models/post-reaction.model';
 
-@EntityRepository(PostReactionEntity)
-export class PostReactionRepository extends Repository<PostReactionEntity> {
+@EntityRepository(PostReactionsEntity)
+export class PostReactionsRepository extends Repository<PostReactionsEntity> {
   findPostReactionByPostUserIds(
     userId: number,
     postId: number,
-  ): Promise<PostReactionEntity> {
+  ): Promise<PostReactionsEntity> {
     return this.findOne({
       where: {
         userId: userId,
