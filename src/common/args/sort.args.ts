@@ -1,17 +1,17 @@
 import { ArgsType, Field } from '@nestjs/graphql';
 import { IsEnum, IsIn, IsOptional } from 'class-validator';
 import { Order } from '../enums/order.enum';
-import { Sort } from '../enums/sort.enum';
+import { SortVariant } from '../enums/sort-variant.enum';
 
 @ArgsType()
 export class SortArgs {
-  @Field(()=> Sort ,{ defaultValue: Sort.CREATEDAT })
+  @Field(() => SortVariant, { defaultValue: SortVariant.CREATEDAT })
   @IsOptional()
-  @IsEnum(Sort)
-  sort: Sort;
+  @IsEnum(SortVariant)
+  sort: SortVariant;
 
   @Field(() => Order, { defaultValue: Order.DESC })
   @IsOptional()
   @IsEnum(Order)
-  order: Order
+  order: Order;
 }

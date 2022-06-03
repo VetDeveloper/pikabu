@@ -3,7 +3,7 @@ import { paginate } from 'nestjs-typeorm-paginate';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { SortArgs } from 'src/common/args/sort.args';
 import { Reaction } from 'src/common/enums/reaction.enum';
-import { Sort } from 'src/common/enums/sort.enum';
+import { SortVariant } from 'src/common/enums/sort-variant.enum';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
 import { PostsRepository } from 'src/posts/posts.repository';
 import { CommentariesRepository } from '../commentaries.repository';

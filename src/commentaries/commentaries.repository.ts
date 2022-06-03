@@ -2,7 +2,7 @@ import { paginate } from 'nestjs-typeorm-paginate';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { SortArgs } from 'src/common/args/sort.args';
 import { Reaction } from 'src/common/enums/reaction.enum';
-import { Sort } from 'src/common/enums/sort.enum';
+import { SortVariant } from 'src/common/enums/sort-variant.enum';
 import { EntityRepository, Repository } from 'typeorm';
 import { CommentariesEntity } from './entities/commentaries.entity';
 import { CommentaryModel } from './models/commentary.model';
@@ -20,10 +20,10 @@ export class CommentariesRepository extends Repository<CommentariesEntity> {
     });
 
     switch (sortArgs.sort) {
-      case Sort.CREATEDAT:
+      case SortVariant.CREATEDAT:
         qb.orderBy('comments.createdAt', sortArgs.order);
         break;
-      case Sort.LIKES:
+      case SortVariant.LIKES:
         qb.addSelect('COUNT(reactions.reaction) as likesCount')
           .leftJoin(
             'comments.reactions',

@@ -5,7 +5,7 @@ import { SearchArgs } from './args/search-post.args';
 import { PostModel } from './models/post.model';
 import { PostsEntity } from './entities/posts.entity';
 import { SortArgs } from 'src/common/args/sort.args';
-import { Sort } from 'src/common/enums/sort.enum';
+import { SortVariant } from 'src/common/enums/sort-variant.enum';
 import { Reaction } from 'src/common/enums/reaction.enum';
 import { FilterArgs } from './args/filter-post.args';
 import { PostsGroup } from './enums/posts-group.enum';
@@ -68,10 +68,10 @@ export class PostsRepository extends Repository<PostsEntity> {
       });
     }
     switch (sortArgs.sort) {
-      case Sort.CREATEDAT:
+      case SortVariant.CREATEDAT:
         qb.orderBy('PostsEntity.createdAt', sortArgs.order);
         break;
-      case Sort.LIKES:
+      case SortVariant.LIKES:
         filterPostArgs.group === PostsGroup.BEST
           ? qb.orderBy('group_count', sortArgs.order)
           : qb
