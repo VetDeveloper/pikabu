@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+import { GetOneEntityArgs } from 'src/common/args/get-one-entity.args';
 import { PaginateArgs } from 'src/common/args/paginate.args';
 import { SortArgs } from 'src/common/args/sort.args';
 import { FilterArgs } from 'src/posts/args/filter-post.args';
@@ -24,5 +25,12 @@ export class PostsQueryResolver {
       sortArgs,
       filterPostArgs,
     );
+  }
+
+  @Query(() => PostModel)
+  getPost(
+    @Args() args: GetOneEntityArgs
+  ) {
+    return this.postService.findOne(args.id)
   }
 }

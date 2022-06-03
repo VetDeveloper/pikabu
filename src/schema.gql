@@ -159,7 +159,13 @@ type AuthResponse {
 
 type Query {
   getUsers(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedUsers!
+  getUser(id: Int!): UserModel!
   getPosts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean, searchValue: String, sort: Sort = CREATEDAT, order: Order = DESC, tags: [String!], group: Group): PaginatedPost!
+  getPost(id: Int!): PostModel!
+  getCommentary(id: Int!): CommentaryModel!
+  getCommentaryReaction(id: Int!): CommentaryReactionModel!
+  getPostReaction(id: Int!): PostReactionModel!
+  getFavorite(id: Int!): FavouriteModel!
   login(loginUserArgs: CreateUserInput!): AuthResponse!
 }
 

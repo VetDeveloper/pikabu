@@ -74,4 +74,8 @@ export class CommentariesService {
   getUserCommentaries(userId: number, paginateArgs: PaginateArgs) {
     return this.commentaryRepository.getUserCommentaries(userId, paginateArgs);
   }
+
+  findOne(id: number) {
+    return this.commentaryRepository.findOneOrFail(id)
+  }
 }

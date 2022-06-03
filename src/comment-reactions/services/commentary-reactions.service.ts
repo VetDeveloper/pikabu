@@ -89,4 +89,8 @@ export class CommentaryReactionsService {
       paginateArgs,
     );
   }
+
+  findOne(id: number) {
+    return this.commentaryReactionRepository.findOneOrFail(id);
+  }
 }

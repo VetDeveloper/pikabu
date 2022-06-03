@@ -80,7 +80,11 @@ export class PostReactionsService {
     );
   }
 
-  getPostReaction(postId: number, paginateArgs: PaginateArgs) {
+  getPostReactions(postId: number, paginateArgs: PaginateArgs) {
     return this.postReactionRepository.getPostReaction(postId, paginateArgs);
+  }
+
+  findOne(id: number) {
+    return this.postReactionRepository.findOneOrFail(id)
   }
 }

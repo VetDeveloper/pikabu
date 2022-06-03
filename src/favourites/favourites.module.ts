@@ -5,6 +5,7 @@ import { PostsRepository } from 'src/posts/posts.repository';
 import { FavouritesRepository } from './favourites.repository';
 import { FavouriteResolver } from './resolvers/favourite.resolver';
 import { FavouriteMutationResolver } from './resolvers/mutation/mutation-favourite.resolver';
+import { QueryFavoriteResolver } from './resolvers/query/query-favorite.resolver';
 import { FavouriteService } from './services/favourite.service';
 
 @Module({
@@ -16,6 +17,11 @@ import { FavouriteService } from './services/favourite.service';
     ]),
   ],
   exports: [FavouriteService],
-  providers: [FavouriteService, FavouriteMutationResolver, FavouriteResolver],
+  providers: [
+    FavouriteService,
+    FavouriteMutationResolver,
+    FavouriteResolver,
+    QueryFavoriteResolver,
+  ],
 })
 export class FavouritesModule {}

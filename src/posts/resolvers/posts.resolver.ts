@@ -38,6 +38,6 @@ export class PostsResolver {
 
   @ResolveField(() => PaginatedPostReaction)
   postReaction(@Parent() post: PostModel, @Args() paginateArtgs: PaginateArgs) {
-    return this.postReactionService.getPostReaction(post.id, paginateArtgs);
+    return this.postReactionService.getPostReactions(post.id, paginateArtgs);
   }
 }

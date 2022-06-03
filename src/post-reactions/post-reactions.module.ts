@@ -4,6 +4,7 @@ import { PostsRepository } from 'src/posts/posts.repository';
 import { PostReactionsRepository } from './post-reaction.repository';
 import { PostReactionsMutationResolver } from './resolvers/mutation/mutation-post-reactions.resolver';
 import { PostReactionsResolver } from './resolvers/post-reactions.resolver';
+import { QueryPostReactionsResolver } from './resolvers/query/query-post-reactions.resolver';
 import { PostReactionsService } from './services/post-reactions.service';
 
 @Module({
@@ -11,6 +12,7 @@ import { PostReactionsService } from './services/post-reactions.service';
     PostReactionsService,
     PostReactionsResolver,
     PostReactionsMutationResolver,
+    QueryPostReactionsResolver
   ],
   imports: [
     TypeOrmModule.forFeature([PostReactionsRepository, PostsRepository]),

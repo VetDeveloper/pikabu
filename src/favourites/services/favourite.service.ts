@@ -59,4 +59,8 @@ export class FavouriteService {
   getUserFavourites(userId: number, paginateArgs: PaginateArgs) {
     return this.favouritesRepository.getUserFavourites(userId, paginateArgs);
   }
+
+  findOne(id:number) {
+    return this.favouritesRepository.findOneOrFail(id);
+  }
 }
