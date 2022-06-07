@@ -37,7 +37,9 @@ export class PostsRepository extends Repository<PostsEntity> {
   ) {
     const qb = this.createQueryBuilder();
     if (filterPostArgs.tags) {
-      qb.andWhere(':...tags = ANY(tags)', { tags: filterPostArgs.tags });
+      for(let i=0; i<filterPostArgs.tags.length; i++) {
+        qb.andWhere(':tag = ANY(tags)', { tag: filterPostArgs.tags[i] });
+      }
     }
     if (filterPostArgs.group) {
       switch (filterPostArgs.group) {
