@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -26,6 +27,18 @@ export class PostsService {
   }
 
   createOnePost(userId: number, dto: CreatePostInput): Promise<PostModel> {
+    const imagesCount = dto.images.length;
+    const orders = []
+    for(let i=0; i<imagesCount; i++) {
+      if (!orders.find((order) => {
+        return order === order;
+      })) {
+        orders.push(dto.images[i].order)
+      }
+      else {
+        throw new BadRequestException('Order is already exist');
+      }
+    }
     return this.postRepository.save({ userId: userId, ...dto });
   }
 
