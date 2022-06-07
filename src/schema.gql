@@ -1,0 +1,265 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CommentaryReactionModel {
+  id: ID!
+  reaction: Reaction!
+  userId: Int!
+  commentaryId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: UserModel!
+  commentary: CommentaryModel!
+}
+
+enum Reaction {
+  LIKE
+  DISLIKE
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UserModel {
+  id: ID!
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  posts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedPost!
+  postReactions(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedPostReaction!
+  commentaries(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentary!
+  commentaryReactions(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentaryReaction!
+  favourites(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedFavorite!
+}
+
+type ImageModel {
+  order: Int!
+  link: String!
+}
+
+type CommentaryModel {
+  id: ID!
+  text: String
+  images: [ImageModel!]!
+  userId: Int!
+  postId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: UserModel!
+  post: PostModel!
+  reactions(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentaryReaction!
+}
+
+type PostReactionModel {
+  id: ID!
+  reaction: Reaction!
+  userId: Int!
+  postId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: UserModel!
+  post: PostModel!
+}
+
+type PostModel {
+  id: ID!
+  title: String!
+  description: String
+  images: [ImageModel!]!
+  tags: [String!]!
+  userId: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: UserModel!
+  commentaries(sort: Sort = CREATEDAT, order: Order = DESC, limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedCommentary!
+  postReaction(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedPostReaction!
+}
+
+enum Sort {
+  CREATEDAT
+  LIKES
+}
+
+enum Order {
+  ASC
+  DESC
+}
+
+type PaginatedCommentaryReaction {
+  items: [CommentaryReactionModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
+type MetaType {
+  totalItems: Int!
+  itemCount: Int!
+  itemsPerPage: Int!
+  totalPages: Int!
+  currentPage: Int!
+}
+
+type LinksType {
+  first: String!
+  previous: String!
+  next: String!
+  last: String!
+}
+
+type PaginatedCommentary {
+  items: [CommentaryModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
+type PaginatedPostReaction {
+  items: [PostReactionModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
+type PaginatedPost {
+  items: [PostModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
+type FavoriteModel {
+  id: ID!
+  userId: Int!
+  entityId: Int!
+  entityType: EntityType!
+  user: UserModel!
+}
+
+enum EntityType {
+  POST
+  COMMENTARY
+}
+
+type PaginatedFavorite {
+  items: [FavoriteModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
+type PaginatedUsers {
+  items: [UserModel!]!
+  meta: MetaType!
+  links: LinksType!
+}
+
+type AuthResponse {
+  user: UserModel!
+  accessToken: String!
+}
+
+type Query {
+  getUsers(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean): PaginatedUsers!
+  getUser(id: Int!): UserModel!
+  getPosts(limit: Int = 15, page: Int = 1, route: String, countQueries: Boolean, searchValue: String, sort: Sort = CREATEDAT, order: Order = DESC, tags: [String!], group: Group): PaginatedPost!
+  getPost(id: Int!): PostModel!
+  getCommentary(id: Int!): CommentaryModel!
+  getCommentaryReaction(id: Int!): CommentaryReactionModel!
+  getPostReaction(id: Int!): PostReactionModel!
+  getFavorite(id: Int!): FavoriteModel!
+  login(loginUserArgs: CreateUserInput!): AuthResponse!
+}
+
+enum Group {
+  FRESH
+  HOT
+  BEST
+}
+
+input CreateUserInput {
+  """"""
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  updateUser(updateUserArgs: UpdateUserInput!): UserModel!
+  deleteUser: UserModel!
+  createNewPost(newPostArgs: CreatePostInput!): PostModel!
+  updatePost(updatePostInput: UpdatePostInput!): PostModel!
+  deletePost(postId: Float!): PostModel!
+  createCommentary(CreateCommentaryInput: CreateCommentaryInput!): CommentaryModel!
+  updateCommentary(updateCommentaryInput: UpdateCommentaryInput!): CommentaryModel!
+  deleteCommentary(id: Int!): CommentaryModel!
+  createCommentaryReaction(createCommentaryReactionInput: CreateCommentaryReactionInput!): CommentaryReactionModel!
+  updateCommentaryReaction(updateCommentaryReactionInput: UpdateCommentaryReactionInput!): CommentaryReactionModel!
+  deleteCommentaryReaction(id: Int!): CommentaryReactionModel!
+  createPostReaction(createPostReactionInput: CreatePostReactionInput!): PostReactionModel!
+  updatePostReaction(updatePostReactionInput: UpdatePostReactionInput!): PostReactionModel!
+  deletePostReaction(id: Int!): PostReactionModel!
+  createFavourite(createFavouriteInput: CreateFavoriteInput!): FavoriteModel!
+  deleteFavourite(id: Int!): FavoriteModel!
+  registrateNewUser(newUserArgs: CreateUserInput!): AuthResponse!
+}
+
+input UpdateUserInput {
+  """"""
+  email: String
+  password: String
+}
+
+input CreatePostInput {
+  title: String!
+  description: String
+  images: [ImageInput!]
+  tags: [String!]
+}
+
+input ImageInput {
+  order: Int!
+  link: String!
+}
+
+input UpdatePostInput {
+  title: String
+  description: String
+  images: [ImageInput!]
+  tags: [String!]
+  postId: Int!
+}
+
+input CreateCommentaryInput {
+  text: String
+  images: [ImageInput!] = []
+  postId: Int!
+}
+
+input UpdateCommentaryInput {
+  text: String
+  images: [ImageInput!] = []
+  id: Int!
+}
+
+input CreateCommentaryReactionInput {
+  reaction: Reaction!
+  commentaryId: Int!
+}
+
+input UpdateCommentaryReactionInput {
+  reaction: Reaction
+  commentaryReactionId: Int!
+}
+
+input CreatePostReactionInput {
+  reaction: Reaction!
+  postId: Int!
+}
+
+input UpdatePostReactionInput {
+  reaction: Reaction
+  id: Int!
+}
+
+input CreateFavoriteInput {
+  entityId: Int!
+  entityType: EntityType!
+}
